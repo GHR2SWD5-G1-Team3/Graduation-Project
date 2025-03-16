@@ -39,7 +39,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AppliedCoupons");
+                    b.ToTable("AppliedCoupons", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Cart", b =>
@@ -58,7 +58,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Cart_Products", b =>
@@ -81,7 +81,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartProducts");
+                    b.ToTable("CartProducts", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Category", b =>
@@ -103,7 +103,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Coupon", b =>
@@ -140,7 +140,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.FavoriteProduct", b =>
@@ -163,7 +163,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavoriteProducts");
+                    b.ToTable("FavoriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Order", b =>
@@ -209,7 +209,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Payment", b =>
@@ -236,7 +236,7 @@ namespace DAL.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Product", b =>
@@ -280,7 +280,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.Review", b =>
@@ -313,7 +313,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.SubCategory", b =>
@@ -343,7 +343,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategories");
+                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.User", b =>
@@ -373,7 +373,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Enities.AppliedCoupon", b =>
