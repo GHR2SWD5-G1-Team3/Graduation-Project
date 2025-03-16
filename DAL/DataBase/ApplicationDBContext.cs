@@ -4,7 +4,7 @@
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-A0LMSG6\\SD;Database=Graduation Project;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true ");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-ED1BTG5\\SQLEXPRESS;Database=Graduation Project;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true ");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }

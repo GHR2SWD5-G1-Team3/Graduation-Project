@@ -1,17 +1,48 @@
-﻿namespace DAL.Enities
+﻿using DAL.Shared;
+namespace DAL.Enities
 {
-    public class User(long id, string name, string image)
+    public class User(long id, string name, string image) : IDeletable, IEditable
     {
         public long Id { get; set; } = id;
         public string Name { get; set; } = name;
         public string Image { get; set; } = image;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastUpdatedAt { get; set; }
-        public bool IsDeleted { get; set; }=false;
+        public bool IsDeleted { get; set; } = false;
+        public string? DeletedBy { get; private set; }
+        public DateTime DeletedOn { get; set; }
+        public string? ModifiedBy { get; private set; }
+        public DateTime ModifiedOn { get; private set; }
         public List<Review>? Reviews { get; set; }
         public List<Product>? Products { get; set; }
         public List<FavoriteProduct>? FavoriteProducts { get; set; }
         public List<Coupon>? Coupons { get; set; }
+        public bool Delete(string? User)
+        {
+            if (User == null) return false;
 
+            IsDeleted = !IsDeleted;
+            DeletedBy = User;
+            DeletedOn = DateTime.Now;
+            return true;
+        }
+        public bool Edit(string? user, Dictionary<string, object> updatedProperties)
+        {
+            if (user == null) return false;
+
+            var properties = this.GetType().GetProperties();
+            foreach (var property in updatedProperties)
+            {
+                var propInfo = properties.FirstOrDefault(p => p.Name == property.Key && p.CanWrite);
+                if (propInfo != null)
+                {
+                    propInfo.SetValue(this, Convert.ChangeType(property.Value, propInfo.PropertyType));
+                }
+            }
+
+            ModifiedBy = user;
+            ModifiedOn = DateTime.Now;
+            return true;
+        }
     }
 }
