@@ -1,3 +1,7 @@
+using DAL.DataBase;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace PLL
 {
     public class Program
@@ -8,6 +12,9 @@ namespace PLL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

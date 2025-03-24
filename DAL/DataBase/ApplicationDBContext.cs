@@ -1,13 +1,12 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAL.DataBase
 {
     public class ApplicationDBContext :DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=Graduation Project;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true ");
-        }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options){}
+
         public DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
