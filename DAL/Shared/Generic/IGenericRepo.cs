@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace DAL.Shared.Generic
+﻿namespace DAL.Shared.Generic
 {
     public interface IGenericRepo<T> where T : class
     {

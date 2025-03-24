@@ -1,6 +1,6 @@
 ﻿namespace DAL.Enities
 {
-    public class Review(string comment, int rate, DateTime createdAt, long userId)
+    public class Review(string comment, int rate, DateTime createdAt, long userId, long productId)
     {
         public long Id { get; private set; }
         public string Comment { get; private set; } = comment;
@@ -10,7 +10,7 @@
         public long UserId { get; set; } = userId;
         public User? User { get; set; }
         [ForeignKey(nameof(Product))]
-        public long ProductId { get; set; }
+        public long ProductId { get; set; } = productId;
         public Product? Product { get; set; }
     }
 }

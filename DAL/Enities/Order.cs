@@ -11,9 +11,7 @@
         public string City { get; private set; } = city;
         public string Street { get; private set; } = street;
         public string PaymentMethod { get; private set; } = paymentMethod;
-        [ForeignKey(nameof(Cart))]
-        public long CartId { get; set; }
-        public Cart? Cart { get; set; }
         public Payment? Payment { get; set; }
+        public required List<OrderDetails> Details { get;  set; }
     }
 }

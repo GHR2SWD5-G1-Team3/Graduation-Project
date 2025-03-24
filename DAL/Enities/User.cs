@@ -17,6 +17,7 @@ namespace DAL.Enities
         public List<Product>? Products { get; set; }
         public List<FavoriteProduct>? FavoriteProducts { get; set; }
         public List<Coupon>? Coupons { get; set; }
+        public Cart? Cart { get; set; }
         public bool Delete(string? User)
         {
             if (User == null) return false;

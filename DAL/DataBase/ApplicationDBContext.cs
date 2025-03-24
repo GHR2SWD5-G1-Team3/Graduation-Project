@@ -1,12 +1,10 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace DAL.DataBase
+﻿namespace DAL.DataBase
 {
     public class ApplicationDBContext :DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=Graduation Project;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true ");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-A0LMSG6\\SD;Database=Graduation Project;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true ");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
@@ -16,7 +14,8 @@ namespace DAL.DataBase
         public DbSet<Cart> Carts { get; set; }
         public DbSet<AppliedCoupon> AppliedCoupons { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Cart_Products> CartProducts { get; set; }
+        public DbSet<CartDetails> CartProducts { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
