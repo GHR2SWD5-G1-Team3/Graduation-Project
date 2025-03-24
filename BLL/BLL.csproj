@@ -7,12 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <Compile Remove="Helper\**" />
+    <Compile Remove="ModelVM\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <EmbeddedResource Remove="ModelVM\**" />
+    <None Remove="Helper\**" />
+    <None Remove="ModelVM\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ModelVM\" />
-    <Folder Include="Helper\" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
 </Project>
