@@ -3,9 +3,9 @@ using DAL.DataBase;
 
 namespace DAL.Shared.Generic
 {
-    public class GenericRepo<T> : IGenericRepo<T> where T : class, IDeletable,IEditable
+    public class GenericRepo<T> : IGenericRepo<T> where T : class
     {
-        private readonly ApplicationDBContext Db;
+        protected readonly ApplicationDBContext Db;
         public GenericRepo(ApplicationDBContext context)
         {
             Db = context;
@@ -22,49 +22,6 @@ namespace DAL.Shared.Generic
             catch (Exception ex)
             {
                 return (false, $"An error occurred: {ex.Message}");
-            }
-        }
-
-        public bool Delete(long Id)
-        {
-            try
-            {
-                var entity = Db.Set<T>().Find(Id);
-                if (entity == null)
-                    return false;
-                var result = entity.Delete("Admin");
-                if (result)
-                {
-                    Db.SaveChanges();
-                    return (true);
-                }
-                return (false);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting entity: {ex.Message}");
-                return false;
-            }
-        }
-
-        public (bool, string?) Edit(long id ,string? user, Dictionary<string, object> updatedProperties)
-        {
-            try
-            {
-                var entity = Db.Set<T>().Find(id);
-                if (entity == null)
-                    return (false, "Invalid ID: Id not found");
-                bool isEdited = entity.Edit(user , updatedProperties);
-                if (isEdited)
-                {
-                    Db.SaveChanges();
-                    return (true, "");
-                }
-                return (false, "Error updating Entity");
-            }
-            catch (Exception ex)
-            {
-                return (false, $"Error editing entity: {ex.Message}");
             }
         }
 

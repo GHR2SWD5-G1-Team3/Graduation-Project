@@ -9,7 +9,8 @@ namespace PLL
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            // Get the connection string from appsettings.json
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             // Add services to the container.
             builder.Services.AddControllersWithViews()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -20,7 +21,7 @@ namespace PLL
                 });
 
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
-             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+             options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 

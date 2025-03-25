@@ -1,10 +1,12 @@
 ﻿using DAL.Shared;
 namespace DAL.Enities
 {
-    public class User(long id, string name, string image) : IDeletable, IEditable
+    public class User(long id, string name, string image) 
     {
         public long Id { get; set; } = id;
         public string Name { get; set; } = name;
+
+       
         public string Image { get; set; } = image;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastUpdatedAt { get; set; }
@@ -27,20 +29,11 @@ namespace DAL.Enities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user, Dictionary<string, object> updatedProperties)
+        public bool Edit(string? user, string name)
         {
             if (user == null) return false;
-
-            var properties = this.GetType().GetProperties();
-            foreach (var property in updatedProperties)
-            {
-                var propInfo = properties.FirstOrDefault(p => p.Name == property.Key && p.CanWrite);
-                if (propInfo != null)
-                {
-                    propInfo.SetValue(this, Convert.ChangeType(property.Value, propInfo.PropertyType));
-                }
-            }
-
+            Name = name;
+            
             ModifiedBy = user;
             ModifiedOn = DateTime.Now;
             return true;

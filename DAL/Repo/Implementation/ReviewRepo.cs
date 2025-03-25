@@ -1,19 +1,18 @@
-﻿using DAL.DataBase;
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
-    public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
+    public class ReviewRepo : GenericRepo<Review>, IReviewRepo
     {
-        public CategoryRepo(ApplicationDBContext context) : base(context)
+        public ReviewRepo(ApplicationDBContext context) : base(context)
         {
         }
-        public (bool, string?) Edit(string user,Category category ,int Id)
+        public (bool, string?) Edit(string user, Review review, long Id)
         {
             try
             {
-                var cat = Db.Categories.Where(c => c.Id == Id).FirstOrDefault();
-                if (cat == null)
-                    return (false, "category Not Found Database");
-                var result = cat.Edit(user, category.Name, category.Description,category.Image);
+                var Review = Db.Reviews.Where(r => r.Id == Id).FirstOrDefault();
+                if (Review == null)
+                    return (false, "review Not Found Database");
+                var result = Review.Edit(user,Review.Comment,Review.Rate ,Review.UserId,Review.ProductId);
                 if (result)
                 {
                     Db.SaveChanges();
@@ -27,14 +26,14 @@ namespace DAL.Repo.Implementation
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user,int Id)
+        public bool DeleteById(string user, long Id)
         {
             try
             {
-                var category = Db.Categories.FirstOrDefault(cat => cat.Id == Id);
-                if (category == null)
+                var review = Db.Reviews.FirstOrDefault(cat => cat.Id == Id);
+                if (review == null)
                     return false;
-                var result = category.Delete(user);
+                var result = review.Delete(user);
                 if (result)
                 {
                     Db.SaveChanges();
@@ -48,7 +47,6 @@ namespace DAL.Repo.Implementation
                 return false;
             }
         }
-
 
     }
 }

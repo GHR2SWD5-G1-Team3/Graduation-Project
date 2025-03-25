@@ -1,19 +1,18 @@
-﻿using DAL.DataBase;
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
-    public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
+    public class CouponRepo : GenericRepo<Coupon>, ICouponRepo
     {
-        public CategoryRepo(ApplicationDBContext context) : base(context)
+        public CouponRepo(ApplicationDBContext context) : base(context)
         {
         }
-        public (bool, string?) Edit(string user,Category category ,int Id)
+        public (bool, string?) Edit(string user, Coupon coupon , long Id)
         {
             try
             {
-                var cat = Db.Categories.Where(c => c.Id == Id).FirstOrDefault();
-                if (cat == null)
-                    return (false, "category Not Found Database");
-                var result = cat.Edit(user, category.Name, category.Description,category.Image);
+                var Coupon = Db.Coupons.Where(c => c.Id == Id).FirstOrDefault();
+                if (Coupon == null)
+                    return (false, "coupon Not Found Database");
+                var result = Coupon.Edit(user, coupon.Code, coupon.ExpiredAt,coupon.UsageLimit,coupon.Discount);
                 if (result)
                 {
                     Db.SaveChanges();
@@ -27,14 +26,14 @@ namespace DAL.Repo.Implementation
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user,int Id)
+        public bool DeleteById(string user, long Id)
         {
             try
             {
-                var category = Db.Categories.FirstOrDefault(cat => cat.Id == Id);
-                if (category == null)
+                var coupon = Db.Coupons.FirstOrDefault(cat => cat.Id == Id);
+                if (coupon == null)
                     return false;
-                var result = category.Delete(user);
+                var result = coupon.Delete(user);
                 if (result)
                 {
                     Db.SaveChanges();
@@ -48,7 +47,6 @@ namespace DAL.Repo.Implementation
                 return false;
             }
         }
-
 
     }
 }

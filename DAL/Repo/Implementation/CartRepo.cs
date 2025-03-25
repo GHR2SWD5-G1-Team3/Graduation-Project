@@ -1,19 +1,18 @@
-﻿using DAL.DataBase;
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
-    public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
+    public class CartRepo : GenericRepo<Cart>, ICartRepo
     {
-        public CategoryRepo(ApplicationDBContext context) : base(context)
+        public CartRepo(ApplicationDBContext context) : base(context)
         {
         }
-        public (bool, string?) Edit(string user,Category category ,int Id)
+        public (bool, string?) Edit(string user, Cart cart , long Id)
         {
             try
             {
-                var cat = Db.Categories.Where(c => c.Id == Id).FirstOrDefault();
-                if (cat == null)
-                    return (false, "category Not Found Database");
-                var result = cat.Edit(user, category.Name, category.Description,category.Image);
+                var Cart = Db.Carts.Where(c => c.Id == Id).FirstOrDefault();
+                if (Cart == null)
+                    return (false, "Cart Not Found in Database");
+                var result = Cart.Edit(user,Cart.UserId );
                 if (result)
                 {
                     Db.SaveChanges();
@@ -27,14 +26,14 @@ namespace DAL.Repo.Implementation
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user,int Id)
+        public bool DeleteById(string user, long Id)
         {
             try
             {
-                var category = Db.Categories.FirstOrDefault(cat => cat.Id == Id);
-                if (category == null)
+                var cart = Db.Carts.FirstOrDefault(c => c.Id == Id);
+                if (cart == null)
                     return false;
-                var result = category.Delete(user);
+                var result = cart.Delete(user);
                 if (result)
                 {
                     Db.SaveChanges();
@@ -48,7 +47,5 @@ namespace DAL.Repo.Implementation
                 return false;
             }
         }
-
-
     }
 }
