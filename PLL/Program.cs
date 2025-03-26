@@ -1,7 +1,3 @@
-using DAL.DataBase;
-using Microsoft.EntityFrameworkCore;
-using System;
-
 namespace PLL
 {
     public class Program
@@ -22,7 +18,12 @@ namespace PLL
 
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
              options.UseSqlServer(connectionString));
-
+            //Scopped Repos
+            builder.Services.AddScoped<IOrderRepo,OrderRepo>();
+            //Scopped Services
+            builder.Services.AddScoped<IOrderServices, OrderServices>();
+            //Mapping
+            builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             var app = builder.Build();
 
 

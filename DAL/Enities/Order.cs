@@ -30,7 +30,7 @@ namespace DAL.Enities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user, decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod)
+        public bool Edit(string? user, decimal totalPrice, string phoneNumber, string city, string street, string paymentMethod)
         {
             if (user == null) return false;
             TotalPrice = totalPrice;

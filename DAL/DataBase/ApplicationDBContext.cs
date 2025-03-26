@@ -11,6 +11,7 @@ namespace DAL.DataBase
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<AppliedCoupon> AppliedCoupons { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<CartDetails> CartProducts { get; set; }

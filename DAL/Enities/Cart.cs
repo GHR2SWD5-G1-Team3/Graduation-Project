@@ -7,7 +7,7 @@ namespace DAL.Enities
         public long Id { get; private set; }
         public DateTime CreatedAt { get; private set; }= DateTime.Now;
         public bool IsChecked { get; private set; }= false;
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; private set; } = false;
         public string? DeletedBy { get; private set; }
         public DateTime DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
