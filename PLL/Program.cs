@@ -53,11 +53,11 @@ namespace PLL
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures,
-                RequestCultureProviders = new List<IRequestCultureProvider>
-                {
+                RequestCultureProviders =
+                [
                 new QueryStringRequestCultureProvider(),
                 new CookieRequestCultureProvider()
-                }
+                ]
             });
             app.MapControllerRoute(
                 name: "default",
