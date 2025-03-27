@@ -20,10 +20,13 @@ namespace PLL
              options.UseSqlServer(connectionString));
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
-            //Scopped Services
-            builder.Services.AddScoped<IOrderServices, OrderServices>();
-            //Mapping
-            builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
+			//Scopped Services
+			builder.Services.AddScoped<IOrderServices, OrderServices>();
+			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
+
+			//Mapping
+			builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             var app = builder.Build();
 
 

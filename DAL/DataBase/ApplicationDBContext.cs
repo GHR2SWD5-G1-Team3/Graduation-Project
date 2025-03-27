@@ -7,6 +7,7 @@ namespace DAL.DataBase
 
         public DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
+        public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -21,7 +22,12 @@ namespace DAL.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppliedCoupon>().HasKey(c => new { c.CouponId, c.ProductId, c.UserId });
-            base.OnModelCreating(modelBuilder);
+			modelBuilder.Entity<CartDetails>()
+	           .HasOne(cd => cd.Product)
+	           .WithMany(p => p.CartProducts)
+	           .HasForeignKey(cd => cd.ProductId)
+	           .OnDelete(DeleteBehavior.NoAction);
+			base.OnModelCreating(modelBuilder);
         }
 
     }
