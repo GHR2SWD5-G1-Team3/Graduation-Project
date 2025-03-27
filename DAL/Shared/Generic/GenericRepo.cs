@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using DAL.DataBase;
-
-namespace DAL.Shared.Generic
+﻿namespace DAL.Shared.Generic
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : class
     {

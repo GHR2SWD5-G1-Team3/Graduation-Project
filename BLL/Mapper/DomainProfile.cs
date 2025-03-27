@@ -6,7 +6,6 @@
         {
             //Order
             CreateMap<Order, CreateOrderVM>();
-            CreateMap<Order, UpdateOrderVM>();
             CreateMap<Order, DisplayOrderVM>();
 
 
