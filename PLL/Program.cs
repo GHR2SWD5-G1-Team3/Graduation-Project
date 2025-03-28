@@ -21,9 +21,12 @@ namespace PLL
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
+			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
+
 			//Scopped Services
 			builder.Services.AddScoped<IOrderServices, OrderServices>();
 			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
+			builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
 
 			//Mapping
 			builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
