@@ -7,7 +7,8 @@
             //Order
             CreateMap<Order, CreateOrderVM>();
             CreateMap<Order, DisplayOrderVM>();
-
+            //coupon
+            CreateMap<dynamic, Coupon>();
 
         }
     }
