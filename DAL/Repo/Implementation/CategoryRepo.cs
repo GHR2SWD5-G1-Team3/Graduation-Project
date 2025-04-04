@@ -13,13 +13,15 @@ namespace DAL.Repo.Implementation
                 var cat = Db.Categories.Where(c => c.Id == Id).FirstOrDefault();
                 if (cat == null)
                     return (false, "category Not Found Database");
-                var result = cat.Edit(user, category.Name, category.Description,category.Image);
+                var imagePath = category.Image is not null ? category.Image : cat.Image;
+
+                var result = cat.Edit(user, category.Name, category.Description,imagePath);
                 if (result)
                 {
                     Db.SaveChanges();
                     return (true, null);
                 }
-                return (false, "Please Enter User Modifier");
+                return (false, "Error updating Category");
 
             }
             catch (Exception ex)
@@ -27,7 +29,7 @@ namespace DAL.Repo.Implementation
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user,int Id)
+        public bool Delete(string user,int Id)
         {
             try
             {
@@ -44,11 +46,12 @@ namespace DAL.Repo.Implementation
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting entity: {ex.Message}");
+                Console.WriteLine($"Error deleting category: {ex.Message}");
                 return false;
             }
         }
 
-
+        
+        
     }
 }

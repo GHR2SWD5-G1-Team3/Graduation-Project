@@ -17,11 +17,15 @@ namespace DAL.Enities
         public int CategoryId { get; private set; } = categoryId;
         public Category? Category { get; set; }
         public List<Product>? Products { get; set; }
-
+        public void UpdateImagePath(string imagePath)
+        {
+            ImagePath = imagePath;
+        }
         public bool Delete(string? User)
         {
             if (User == null) return false;
-
+            if (IsDeleted)
+                return false;
             IsDeleted = !IsDeleted;
             DeletedBy = User;
             DeletedOn = DateTime.Now;
@@ -32,7 +36,10 @@ namespace DAL.Enities
             if (user == null) return false;
             Name = name;
             Description = description;
-            imagePath = imagePath;
+            if (imagePath is not null) // Only update if a new image is uploaded
+            {
+                ImagePath = imagePath;
+            }
             CategoryId = categoryId;
             ModifiedBy = user;
             ModifiedOn = DateTime.Now;

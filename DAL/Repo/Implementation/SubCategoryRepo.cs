@@ -1,4 +1,8 @@
-﻿namespace DAL.Repo.Implementation
+﻿
+using DAL.Enities;
+using Microsoft.EntityFrameworkCore;
+
+namespace DAL.Repo.Implementation
 {
     public class SubCategoryRepo : GenericRepo<SubCategory>, ISubCategoryRepo
     {
@@ -6,20 +10,21 @@
         {
         }
         //Edit
-        public (bool, string) Edit(SubCategory subCategory, string user, int id)
+        public (bool, string) Edit(string user, int id,SubCategory subCategory)
         {
             try
             {
-                var cat = Db.SubCategories.Where(c => c.Id == id).FirstOrDefault();
-                if (cat == null)
+                var subCat = Db.SubCategories.Where(c => c.Id == id).FirstOrDefault();
+                if (subCat == null)
                     return (false, "SubCategory Not Found in Database");
-                var result = cat.Edit(user, subCategory.Name, subCategory.Description, subCategory.ImagePath, subCategory.CategoryId);
+                var imagePath = subCategory.ImagePath is not null ? subCategory.ImagePath : subCat.ImagePath;
+                var result = subCat.Edit(user, subCategory.Name, subCategory.Description, imagePath, subCategory.CategoryId);
                 if (result)
                 {
                     Db.SaveChanges();
                     return (true, null);
                 }
-                return (false, "Please Enter User Modifier");
+                return (false, "Error updating SubCategory:Please Enter User Modifier");
 
             }
             catch (Exception ex)
@@ -28,7 +33,7 @@
             }
         }
         //delete
-        public bool DeleteById(string user, int Id)
+        public bool Delete(int Id,string user)
         {
             try
             {
@@ -50,5 +55,23 @@
             }
         }
 
+        public List<SubCategory> All(Expression<Func<SubCategory, bool>>? filter = null)
+        {
+            //using Explicit Loading
+            List<SubCategory> subCategories;
+            if (filter == null)
+            {
+                subCategories = Db.SubCategories.ToList();
+            }
+            else
+            {
+                subCategories = Db.SubCategories.Where(filter).ToList();
+            }
+            foreach (var item in subCategories)
+            {
+                Db.Entry(item).Reference(e => e.Category).Load();
+            }
+            return subCategories;
+        }
     }
 }

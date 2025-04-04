@@ -14,12 +14,16 @@ namespace DAL.Enities
         public string? ModifiedBy { get; private set; }
         public DateTime ModifiedOn { get; private set; }
         public List<SubCategory>? SubCategories { get; set; }
-
+        public void UpdateImagePath(string imagePath)
+        {
+            Image = imagePath;
+        }
 
         public bool Delete(string? User)
         {
             if (User == null) return false;
-
+            if (IsDeleted)
+                return false;
             IsDeleted = !IsDeleted;
             DeletedBy = User;
             DeletedOn = DateTime.Now;
@@ -30,7 +34,10 @@ namespace DAL.Enities
             if (user == null) return false;
             Name = name;
             Description = description;
-            Image = image;
+            if (image is not null) // Only update if a new image is uploaded
+            {
+                Image = image;
+            }
             ModifiedBy = user;
             ModifiedOn = DateTime.Now;
             return true;

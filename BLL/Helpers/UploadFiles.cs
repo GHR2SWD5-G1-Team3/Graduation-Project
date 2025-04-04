@@ -2,8 +2,6 @@
 {
     public static  class UploadFiles
     {
-
-
         public static string UploadFile(string FolderName, IFormFile File)
         {
 
@@ -11,7 +9,7 @@
             {
                 //catch the folder Path and the file name in server
                 // 1 ) Get Directory
-                string FolderPath = Directory.GetCurrentDirectory() + "/wwwroot/Files/" + FolderName;
+                string FolderPath = Directory.GetCurrentDirectory() + "/wwwroot/" + FolderName;
 
 
                 //2) Get File Name
