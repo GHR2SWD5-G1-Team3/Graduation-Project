@@ -7,5 +7,5 @@ global using DAL.DataBase;
 global using DAL.Repo.Abstract;
 global using System.Linq.Expressions;
 global using Microsoft.EntityFrameworkCore.Infrastructure;
-
-
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

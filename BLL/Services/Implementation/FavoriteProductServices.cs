@@ -9,7 +9,7 @@ namespace BLL.Services.Implementation
         private readonly IFavoriteProductRepo favoriteProductRepo = favoriteProductRepo;
 
         //Command
-        public (bool, string?) Create(long userId, long productId)
+        public (bool, string?) Create(string userId, long productId)
         {
             try
             {

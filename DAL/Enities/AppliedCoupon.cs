@@ -1,9 +1,9 @@
 ﻿namespace DAL.Enities
 {
-    public class AppliedCoupon(long userId, long productId, long couponId)
+    public class AppliedCoupon(string userId, long productId, long couponId)
     {
         [ForeignKey(nameof(User))]
-        public long UserId { get; private set; } = userId;
+        public string UserId { get; private set; } = userId;
         public User? User { get; set; }
         [ForeignKey(nameof(Product))]
         public long ProductId { get; private set; } = productId;

@@ -7,3 +7,5 @@ global using BLL.Services.Abstract;
 global using DAL.DataBase;
 global using DAL.Repo.Abstract;
 global using System.Collections.Generic;
+global using BLL.ModelVM.Account;
+global using Microsoft.AspNetCore.Identity;

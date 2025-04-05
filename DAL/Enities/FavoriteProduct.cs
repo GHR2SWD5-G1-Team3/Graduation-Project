@@ -2,7 +2,7 @@
 
 namespace DAL.Enities
 {
-    public class FavoriteProduct(long userId,long productId)
+    public class FavoriteProduct(string userId,long productId)
     {
         public int Id { get; private set; }
         public bool IsDeleted { get; set; } = false;
@@ -11,7 +11,7 @@ namespace DAL.Enities
         public string? ModifiedBy { get; private set; }
         public DateTime ModifiedOn { get; private set; }
         [ForeignKey(nameof(User))]
-        public long UserId { get;private set; } = userId;
+        public string UserId { get;private set; } = userId;
         public User? User { get;  set; }
         [ForeignKey(nameof(Product))]
         public long ProductId { get; set; } = productId;
@@ -25,7 +25,7 @@ namespace DAL.Enities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user, long userId, long productId)
+        public bool Edit(string? user, string userId, long productId)
         {
             if (user == null) return false;
             UserId = userId;

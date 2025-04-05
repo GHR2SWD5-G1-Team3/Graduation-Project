@@ -1,9 +1,6 @@
 ﻿namespace DAL.Repo.Implementation
 {
-    public class UserRepo : GenericRepo<User>, IUserRepo
+    public class UserRepo(ApplicationDBContext context) : GenericRepo<User>(context), IUserRepo
     {
-        public UserRepo(ApplicationDBContext context) : base(context)
-        {
-        }
     }
 }

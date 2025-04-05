@@ -22,14 +22,29 @@ namespace PLL
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
 			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
+            builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 
 			//Scopped Services
 			builder.Services.AddScoped<IOrderServices, OrderServices>();
 			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
 			builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
+            builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 			//Mapping
 			builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+            //Identity
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new PathString("/Account/Login");
+                });
+
+            builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<ApplicationDBContext>()
+                            .AddSignInManager<SignInManager<User>>()
+                            .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
             var app = builder.Build();
 
 
@@ -52,7 +67,7 @@ namespace PLL
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseRequestLocalization(new RequestLocalizationOptions
             {

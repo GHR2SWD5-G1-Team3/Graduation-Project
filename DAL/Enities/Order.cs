@@ -2,7 +2,7 @@
 
 namespace DAL.Enities
 {
-    public class Order(decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod)
+    public class Order(decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod, string userId)
     {
         public long Id { get; private set; }
         public decimal TotalPrice { get; private set; } = totalPrice;
@@ -13,6 +13,8 @@ namespace DAL.Enities
         public string City { get; private set; } = city;
         public string Street { get; private set; } = street;
         public string PaymentMethod { get; private set; } = paymentMethod;
+        [ForeignKey(nameof(User))]
+        public string UserId { get; private set; } = userId;
         public bool IsDeleted { get; set; } = false;
         public string? DeletedBy { get; private set; }
         public DateTime DeletedOn { get; set; }

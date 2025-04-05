@@ -1,11 +1,5 @@
 ﻿using BLL.Helpers;
 using BLL.ModelVM.Category;
-using BLL.Services.Abstract;
-using DAL.Enities;
-using DAL.Repo.Abstract;
-using DAL.Repo.Implementation;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 namespace BLL.Services.Implementation
 {
     public class CategoryServices : ICategoryServices
@@ -36,7 +30,6 @@ namespace BLL.Services.Implementation
                 return (false, ex.Message);
             }
         }
-
         public (bool, string?) DeleteByID(int id, string user)
         {
             try

@@ -2,7 +2,7 @@
 
 namespace DAL.Enities
 {
-    public class Review(string comment, int rate, DateTime createdAt, long userId, long productId)
+    public class Review(string comment, int rate, DateTime createdAt, string userId, long productId)
     {
         public long Id { get; private set; }
         public string Comment { get; private set; } = comment;
@@ -14,7 +14,7 @@ namespace DAL.Enities
         public string? ModifiedBy { get; private set; }
         public DateTime ModifiedOn { get; private set; }
         [ForeignKey(nameof(User))]
-        public long UserId { get; set; } = userId;
+        public string UserId { get; set; } = userId;
         public User? User { get; set; }
         [ForeignKey(nameof(Product))]
         public long ProductId { get; set; } = productId;
@@ -29,7 +29,7 @@ namespace DAL.Enities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user, string comment, int rate, long userId, long productId)
+        public bool Edit(string? user, string comment, int rate, string userId, long productId)
         {
             if (user == null) return false;
             Comment = comment;

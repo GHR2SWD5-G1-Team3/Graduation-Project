@@ -1,10 +1,7 @@
 ﻿namespace DAL.Repo.Implementation
 {
-    public class ReviewRepo : GenericRepo<Review>, IReviewRepo
+    public class ReviewRepo(ApplicationDBContext context) : GenericRepo<Review>(context), IReviewRepo
     {
-        public ReviewRepo(ApplicationDBContext context) : base(context)
-        {
-        }
         public (bool, string?) Edit(string user, Review review, long Id)
         {
             try

@@ -9,4 +9,6 @@ global using BLL.Services.Abstract;
 global using DAL.Repo.Abstract;
 global using DAL.Repo.Implementation;
 global using BLL.Services.Implementation;
-
+global using DAL.Enities;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.AspNetCore.Identity;

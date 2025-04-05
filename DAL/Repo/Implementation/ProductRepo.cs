@@ -1,10 +1,7 @@
 ﻿namespace DAL.Repo.Implementation
 {
-    public class ProductRepo : GenericRepo<Product>, IProductRepo
+    public class ProductRepo(ApplicationDBContext context) : GenericRepo<Product>(context), IProductRepo
     {
-        public ProductRepo(ApplicationDBContext context) : base(context)
-        {
-        }
         public (bool, string?) Edit(string user, Product product , long Id)
         {
             try

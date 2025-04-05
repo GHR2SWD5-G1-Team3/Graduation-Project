@@ -2,7 +2,7 @@
 
 namespace DAL.Enities
 {
-    public class Cart(long userId)
+    public class Cart(string userId)
     {
         public long Id { get; private set; }
         public DateTime CreatedAt { get; private set; }= DateTime.Now;
@@ -13,7 +13,7 @@ namespace DAL.Enities
         public string? ModifiedBy { get; private set; }
         public DateTime ModifiedOn { get; private set; }
         [ForeignKey(nameof(User))]
-        public long UserId { get; private set; } = userId;
+        public string UserId { get; private set; } = userId;
         public User? User { get;  set; }
         public List<CartDetails>? CartProducts { get; set; }
         public bool Delete(string? User)
@@ -25,7 +25,7 @@ namespace DAL.Enities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user,long userId)
+        public bool Edit(string? user,string userId)
         {
             if (user == null) return false;
             UserId = userId;

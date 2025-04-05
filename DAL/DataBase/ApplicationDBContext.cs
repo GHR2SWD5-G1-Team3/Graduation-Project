@@ -1,11 +1,10 @@
 
+
 namespace DAL.DataBase
 {
-    public class ApplicationDBContext :DbContext
+    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext<User>(options)
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options){}
-
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<Coupon> Coupons { get; set; }

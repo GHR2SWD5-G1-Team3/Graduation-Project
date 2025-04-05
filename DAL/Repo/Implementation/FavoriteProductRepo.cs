@@ -1,10 +1,7 @@
 ﻿namespace DAL.Repo.Implementation
 {
-    public class FavoriteProductRepo : GenericRepo<FavoriteProduct>, IFavoriteProductRepo
+    public class FavoriteProductRepo(ApplicationDBContext context) : GenericRepo<FavoriteProduct>(context), IFavoriteProductRepo
     {
-        public FavoriteProductRepo(ApplicationDBContext context) : base(context)
-        {
-        }
         public (bool, string?) Edit(string user, FavoriteProduct favoriteProduct , int Id)
         {
             try

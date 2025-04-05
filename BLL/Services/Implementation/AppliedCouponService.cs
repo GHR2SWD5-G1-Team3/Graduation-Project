@@ -14,7 +14,7 @@ namespace BLL.Services.Implementation
 			_appliedCouponRepo = appliedCouponRepo;
 			_mapper = mapper;
 		}
-		public (bool success, string message) ApplyCoupon(long userId, long productId, long couponId)
+		public (bool success, string message) ApplyCoupon(string userId, long productId, long couponId)
 		{
 			if (_appliedCouponRepo.Exists(userId ,productId ,couponId))
 			{
@@ -37,12 +37,12 @@ namespace BLL.Services.Implementation
 			return _appliedCouponRepo.GetByProduct(productId);
 		}
 
-		public List<AppliedCoupon> GetAppliedCouponsByUser(long userId)
+		public List<AppliedCoupon> GetAppliedCouponsByUser(string userId)
 		{
 			return _appliedCouponRepo.GetByUser(userId);
 		}
 
-		public (bool success, string message) RemoveAppliedCoupon(long userId, long productId, long couponId)
+		public (bool success, string message) RemoveAppliedCoupon(string userId, long productId, long couponId)
 		{
 			try
 			{

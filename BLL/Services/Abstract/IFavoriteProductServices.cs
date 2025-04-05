@@ -3,7 +3,7 @@
     public interface IFavoriteProductServices
     {
         //Command
-        (bool, string?) Create(long userId, long productId);
+        (bool, string?) Create(string userId, long productId);
         (bool, string?) Delete(long id, string deletedBy);
         //Query
        // DisplayOrderVM Get(Expression<Func<Order, bool>>? filter = null);
