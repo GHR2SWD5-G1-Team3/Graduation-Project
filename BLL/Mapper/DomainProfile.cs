@@ -1,4 +1,5 @@
 ﻿using BLL.ModelVM.Category;
+using BLL.ModelVM.Product;
 using BLL.ModelVM.SubCategory;
 
 namespace BLL.Mapper
@@ -38,7 +39,8 @@ namespace BLL.Mapper
             .ForMember(dest => dest.ImagePath, opt => opt.Condition(src => src.Image != null));
             #endregion
 
-
+            //Product
+            CreateMap<Product, DisplayProductInShopVM>().ReverseMap();
         }
     }
 }

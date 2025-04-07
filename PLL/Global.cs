@@ -12,3 +12,5 @@ global using BLL.Services.Implementation;
 global using DAL.Enities;
 global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Identity;
+global using BLL.ModelVM.Product;
+

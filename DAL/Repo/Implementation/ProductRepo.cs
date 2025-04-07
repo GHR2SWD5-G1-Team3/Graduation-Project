@@ -2,17 +2,17 @@
 {
     public class ProductRepo(ApplicationDBContext context) : GenericRepo<Product>(context), IProductRepo
     {
-        public (bool, string?) Edit(string user, Product product , long Id)
+        public async Task<(bool, string?)> Edit(string user, Product product , long Id)
         {
             try
             {
-                var prod = Db.Products.Where(p => p.Id == Id).FirstOrDefault();
+                var prod = await Db.Products.Where(p => p.Id == Id).FirstOrDefaultAsync();
                 if (prod == null)
                     return (false, "product Not Found Database");
                 var result = prod.Edit(user, product.Name, product.Description,product.ImagePath,product.UnitPrice,product.Quantity,product.DiscountPrecentage, product.UserId, product.SubCategoryId);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true, null);
                 }
                 return (false, "Please Enter User Modifier");
@@ -23,17 +23,17 @@
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user, long Id)
+        public async Task<bool> DeleteById(string user, long Id)
         {
             try
             {
-                var Product = Db.Products.FirstOrDefault(prod => prod.Id == Id);
+                var Product = await Db.Products.FirstOrDefaultAsync(prod => prod.Id == Id);
                 if (Product == null)
                     return false;
                 var result = Product.Delete(user);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true);
                 }
                 return (false);
