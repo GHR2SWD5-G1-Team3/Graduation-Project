@@ -11,11 +11,12 @@ namespace DAL.Enities
         public decimal UnitPrice { get; private set; } = unitPrice;
         public long Quantity { get; private set; } = quantity;
         public long SoldCount { get;private set; } = 0;
+        public DateTime CreatedOn { get; private set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
         public string? DeletedBy { get; private set; }
-        public DateTime DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
-        public DateTime ModifiedOn { get; private set; }
+        public DateTime? ModifiedOn { get; private set; }
         public int? DiscountPrecentage { get; set; } = discountPrecentage;
         [ForeignKey(nameof(User))]
         public string UserId { get; private set; } = userId;

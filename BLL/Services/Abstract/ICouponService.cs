@@ -2,10 +2,10 @@
 {
     public interface ICouponService
     {
-        bool Create(string code, DateTime? expiredAt, int? usageLimit, int discount);
-        bool Update(string code, DateTime? expiredAt, int? usageLimit, int discount);
-        List<Coupon> GetAll(Expression<Func<Coupon, bool>>? filter = null);
-        Coupon GetById(int id);
-        bool Delete (int id);
+        Task<bool> CreateCouponAsync(Coupon newCoupon);
+        Task<bool> UpdateCouponAsync(long couponId, Coupon updatedCoupon, string userName);
+        Task<List<Coupon>> GetAllCouponsAsync(Expression<Func<Coupon, bool>>? filter = null, params Expression<Func<Coupon, object>>[] includeProperty);
+        Task<Coupon> GetCouponAsync(Expression<Func<Coupon, bool>>? filter = null);
+        Task<bool> DeleteCouponAsync(long productId, string userName);
     }
 }

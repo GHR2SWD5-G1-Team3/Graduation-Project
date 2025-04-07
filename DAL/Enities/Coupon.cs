@@ -1,21 +1,23 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using Azure.Identity;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DAL.Enities
 {
-    public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount)
+    public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount, string userName)
     {
         public long Id { get; private set; }
         public string Code { get; private set; } = code;
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
+        public string CreatedBy { get; private set; } = userName;
         public DateTime? ExpiredAt { get; private set; } = expiredAt;
         public int? UsageLimit { get; private set; } = usageLimit;
         public int Discount { get;private set; } = discount;
         public int UsedNumber { get; private set; } = 0;
         public bool IsDeleted { get; set; } = false;
         public string? DeletedBy { get; private set; }
-        public DateTime DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
-        public DateTime ModifiedOn { get; private set; }
+        public DateTime? ModifiedOn { get; private set; }
 
         public bool Delete(string? User)
         {

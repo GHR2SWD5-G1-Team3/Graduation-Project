@@ -6,56 +6,57 @@ namespace BLL.Services.Implementation
 {
 	public class AppliedCouponService : IAppliedCouponService
 	{
-		private readonly IAppliedCouponRepo _appliedCouponRepo;
-		private readonly IMapper _mapper;
+        private readonly IProductRepo productRepo;
+        private readonly ICouponRepo couponRepo;
+        private readonly IAppliedCouponRepo appliedCouponRepo;
 
-		public AppliedCouponService(IAppliedCouponRepo appliedCouponRepo, IMapper mapper)
+        public AppliedCouponService(IProductRepo productRepo, ICouponRepo couponRepo, IAppliedCouponRepo appliedCouponRepo)
 		{
-			_appliedCouponRepo = appliedCouponRepo;
-			_mapper = mapper;
-		}
-		public (bool success, string message) ApplyCoupon(string userId, long productId, long couponId)
-		{
-			if (_appliedCouponRepo.Exists(userId ,productId ,couponId))
-			{
-				return (false, "Coupon already applied to this product.");
-			}
+            this.productRepo = productRepo;
+            this.couponRepo = couponRepo;
+            this.appliedCouponRepo = appliedCouponRepo;
+        }
 
-			var coupon = _appliedCouponRepo.Get(c=>c.CouponId == couponId);
-			if (coupon == null || coupon.Coupon.ExpiredAt < DateTime.Now)
-			{
-				return (false, "Invalid or expired coupon.");
-			}
+        public Task<(bool success, string message)> ApplyCoupon(string userId, long productId, long couponId)
+        {
+            throw new NotImplementedException();
+        }
 
-			var appliedCoupon = new AppliedCoupon(userId, productId, couponId);
-			_appliedCouponRepo.Create(appliedCoupon);
-			return (true, "Coupon applied successfully.");
-		}
+        public async Task<(bool success, string message)> AssignCouponToProduct(string userId, long productId, long couponId)
+        {
+            // get product that belonge to the Vendor
+            var product = await productRepo.GetAsync(p => p.Id == productId && p.UserId == userId);
+            if (product == null)
+                return (false, "Product not found or does not belong to this vendor.");
+            var coupon = await couponRepo.GetAsync(c => c.Id == couponId);
+            if (coupon == null)
+                return (false, "Coupon not found.");
+            var existingAssignment = await appliedCouponRepo.GetAsync(pc => pc.ProductId == productId && pc.CouponId == couponId);
+            if (existingAssignment != null)
+                return (false, "Coupon is already assigned to this product.");
+            var appliedCoupon = new AppliedCoupon(userId, productId, couponId);
+            var result = await appliedCouponRepo.CreateAsync(appliedCoupon);
 
-		public List<AppliedCoupon> GetAppliedCouponsByProduct(long productId)
-		{
-			return _appliedCouponRepo.GetByProduct(productId);
-		}
+            if (result.Item1)
+                return (true, "Coupon assigned to product successfully.");
+            else
+                return (false, result.Item2 ?? "Failed to assign coupon.");
 
-		public List<AppliedCoupon> GetAppliedCouponsByUser(string userId)
-		{
-			return _appliedCouponRepo.GetByUser(userId);
-		}
+        }
 
-		public (bool success, string message) RemoveAppliedCoupon(string userId, long productId, long couponId)
-		{
-			try
-			{
-				if (!_appliedCouponRepo.Exists(userId, productId, couponId))
-					return (false, "Applied Coupon not found!");
+        public Task<List<AppliedCoupon>> GetAllAppliedCoupons(Expression<Func<AppliedCoupon, bool>>? filte = null, params Expression<Func<AppliedCoupon, object>>[] includeProperties)
+        {
+            throw new NotImplementedException();
+        }
 
-				_appliedCouponRepo.RemoveAppliedCoupon(userId, productId, couponId);
-				return (true, "Applied Coupon removed successfully.");
-			}
-			catch (Exception ex)
-			{
-				return (false, $"An error occurred: {ex.Message}");
-			}
-		}
-	}
+        public Task<AppliedCoupon> GetAppliedCoupon(Expression<Func<AppliedCoupon, bool>>? filte = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(bool success, string message)> RemoveAppliedCoupon(string userId, long productId, long couponId)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
