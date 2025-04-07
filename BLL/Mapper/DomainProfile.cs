@@ -40,7 +40,9 @@ namespace BLL.Mapper
             #endregion
 
             //Product
-            CreateMap<Product, DisplayProductInShopVM>().ReverseMap();
+            CreateMap<Product, DisplayProductInShopVM>()
+                .ForMember(dest => dest.CategoryName,
+                           opt => opt.MapFrom(src => src.SubCategory.Category.Name)).ReverseMap();
         }
     }
 }

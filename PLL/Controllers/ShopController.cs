@@ -15,7 +15,7 @@ namespace PLL.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await productService.GetAllProductsAsync();
+            var products = await productService.GetAllProductsAsync(null, p=>p.SubCategory,p=>p.SubCategory.Category);
             var mappedProduct = mapper.Map<List<DisplayProductInShopVM>>(products);
             return View(mappedProduct);
         }
