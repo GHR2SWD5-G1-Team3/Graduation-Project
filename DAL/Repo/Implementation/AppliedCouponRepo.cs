@@ -6,33 +6,25 @@ namespace DAL.Repo.Implementation
 {
     public class AppliedCouponRepo(ApplicationDBContext context) : GenericRepo<AppliedCoupon>(context), IAppliedCouponRepo
     {
-        public bool Exists(string userId, long productId, long couponId)
+		public async Task<bool> RemoveAppliedCouponAsync(string userId, long productId, long couponId)
 		{
-			return Get(ac => ac.UserId == userId && ac.ProductId == productId && ac.CouponId == couponId) != null;
-		}
-
-		public AppliedCoupon? GetByIds(string userId, long productId, long couponId)
-		{
-			return Get(ac => ac.UserId == userId && ac.ProductId == productId && ac.CouponId == couponId);
-		}
-
-		public List<AppliedCoupon> GetByProduct(long productId)
-		{
-			return GetAll(ac => ac.ProductId == productId);
-		}
-
-		public List<AppliedCoupon> GetByUser(string userId)
-		{
-			return GetAll(ac => ac.UserId == userId);
-		}
-		public void RemoveAppliedCoupon(string userId, long productId, long couponId)
-		{
-			var appliedCoupon = Get(ac => ac.UserId == userId && ac.ProductId == productId && ac.CouponId == couponId);
-			if (appliedCoupon != null)
-			{
-				Db.AppliedCoupons.Remove(appliedCoupon);
-				Db.SaveChanges();
-			}
+            try
+            {
+                var appliedCoupon = await GetAsync(ac => ac.UserId == userId && ac.ProductId == productId && ac.CouponId == couponId);
+                if (appliedCoupon != null)
+                {
+                    Db.Remove(appliedCoupon);
+                    var result = await Db.SaveChangesAsync();
+                    if (result > 0)
+                        return true;
+                    return false;
+                }
+                return false;
+            } catch(Exception ex)
+            {
+                return false;
+            }
+			
 		}
 	}
 }

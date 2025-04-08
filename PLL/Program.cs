@@ -27,7 +27,8 @@ namespace PLL
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
-            builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
+            builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
+
 
             //Scopped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
@@ -36,12 +37,14 @@ namespace PLL
             builder.Services.AddScoped<IAccountServices, AccountServices>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICouponService,CouponService>();
+            builder.Services.AddScoped<IUsedCouponService, UsedCouponService>();
+
 
 
             //Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             //Identity
-            builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
                             .AddSignInManager<SignInManager<User>>()
                             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);

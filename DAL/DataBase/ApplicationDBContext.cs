@@ -8,6 +8,7 @@ namespace DAL.DataBase
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<UsedCoupons> UsedCoupons { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
