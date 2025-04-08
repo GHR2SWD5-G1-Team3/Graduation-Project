@@ -23,15 +23,23 @@ namespace PLL
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
 			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+            builder.Services.AddScoped<IProductRepo, ProductRepo>();
+            builder.Services.AddScoped<ICouponRepo, CouponRepo>();
+            builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
 
-			//Scopped Services
-			builder.Services.AddScoped<IOrderServices, OrderServices>();
+
+
+
+            //Scopped Services
+            builder.Services.AddScoped<IOrderServices, OrderServices>();
 			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
 			builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
             builder.Services.AddScoped<IAccountServices, AccountServices>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
-			//Mapping
-			builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+
+            //Mapping
+            builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             //Identity
             builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
