@@ -2,20 +2,17 @@
 
 namespace BLL.Services.Implementation
 {
-    public class CouponService : ICouponService
+    public class CouponService(ICouponRepo couponRepo) : ICouponService
     {
-        private readonly ICouponRepo couponRepo;
-        public CouponService(ICouponRepo couponRepo)
-        {
-            this.couponRepo = couponRepo;
-        }
+        private readonly ICouponRepo couponRepo = couponRepo;
+
         public async Task<bool> CreateCouponAsync(Coupon newCoupon)
         {
             try
             {
                 if (newCoupon != null)
                 {
-                    var result = await couponRepo.CreateAsync(newCoupon);
+                    var result =  await couponRepo.CreateAsync(newCoupon);
                     return true;
                 }
                 return false;

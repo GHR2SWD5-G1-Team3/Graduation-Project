@@ -1,3 +1,5 @@
+using DAL.Shared.Generic;
+
 namespace PLL
 {
     public class Program
@@ -27,15 +29,13 @@ namespace PLL
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
             builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
 
-
-
-
             //Scopped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
 			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
 			builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
             builder.Services.AddScoped<IAccountServices, AccountServices>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ICouponService,CouponService>();
 
 
             //Mapping
