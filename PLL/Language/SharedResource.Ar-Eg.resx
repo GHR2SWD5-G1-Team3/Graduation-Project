@@ -117,7 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User Not Found" xml:space="preserve">
+  <data name=" clickhere" xml:space="preserve">
+    <value>اضغط هنا</value>
+  </data>
+  <data name="createone" xml:space="preserve">
+    <value>سجل الان</value>
+  </data>
+  <data name="don'thaveanaccount?" xml:space="preserve">
+    <value>لا تمتلك حسابًا ؟</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الأول</value>
+  </data>
+  <data name="fnameplace" xml:space="preserve">
+    <value>ادخل اسمك الاول....</value>
+  </data>
+  <data name="ForgetthePassword?" xml:space="preserve">
+    <value>نسيت كلمة المرور ؟</value>
+  </data>
+  <data name="userimage" xml:space="preserve">
+    <value>ارفع صورتك</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اسم العائلة</value>
+  </data>
+  <data name="lnameplace" xml:space="preserve">
+    <value>ادخل اسم العائلة....</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="PasswordPlace" xml:space="preserve">
+    <value>ادخل كلمة السر...</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>تسجيل البيانات</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>تذكرني</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="UserNamePlace" xml:space="preserve">
+    <value>ادخل اسم المستخدم....</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
     <value>المستخدم غير موجود</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>الايميل</value>
+  </data>
+  <data name="EmailPlace" xml:space="preserve">
+    <value>ادخل الايميل الخاص بك....</value>
+  </data>
+  <data name="SomeThingWrong" xml:space="preserve">
+    <value>حدث خطأ تأكد من ادخال بيانات صحيحة</value>
   </data>
 </root>

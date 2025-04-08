@@ -7,8 +7,13 @@ namespace BLL.Mapper
     {
         public DomainProfile() 
         {
+            //User
+            CreateMap<SignUpvM, User>();
+            CreateMap<SignInVM, User>();
+
+
             //Order
-            CreateMap<Order, CreateOrderVM>();
+            CreateMap<CreateOrderVM, Order>();
             CreateMap<Order, DisplayOrderVM>();
             //coupon
             CreateMap<dynamic, Coupon>();

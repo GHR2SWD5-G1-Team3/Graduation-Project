@@ -117,7 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name=" clickhere" xml:space="preserve">
+    <value> click here</value>
+  </data>
+  <data name="createone" xml:space="preserve">
+    <value>create one</value>
+  </data>
+  <data name="don'thaveanaccount?" xml:space="preserve">
+    <value>don't have an account ?</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="fnameplace" xml:space="preserve">
+    <value>enter your first name....</value>
+  </data>
+  <data name="ForgetthePassword?" xml:space="preserve">
+    <value>Forget the Password ?</value>
+  </data>
+  <data name="userimage" xml:space="preserve">
+    <value>Your Image</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="lnameplace" xml:space="preserve">
+    <value>enter your last name....</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordPlace" xml:space="preserve">
+    <value>enter your password ...</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
+  </data>
+  <data name="UserNamePlace" xml:space="preserve">
+    <value>enter your username...</value>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User Not Found</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailPlace" xml:space="preserve">
+    <value>enter your email....</value>
+  </data>
+  <data name="SomeThingWrong" xml:space="preserve">
+    <value>Somthing Went Wrong Make Sure To Enter Valid Data</value>
   </data>
 </root>

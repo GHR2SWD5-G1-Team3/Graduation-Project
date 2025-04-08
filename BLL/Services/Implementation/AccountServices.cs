@@ -27,7 +27,7 @@
         {
             try
             {
-                var user = GetUser(userName);
+                var user = await GetUser(userName);
                 if (user == null)
                     return false ;
 

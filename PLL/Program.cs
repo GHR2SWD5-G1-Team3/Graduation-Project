@@ -33,18 +33,23 @@ namespace PLL
 			//Mapping
 			builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             //Identity
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                options =>
-                {
-                    options.LoginPath = new PathString("/Account/Login");
-                    options.AccessDeniedPath = new PathString("/Account/Login");
-                });
-
             builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
                             .AddSignInManager<SignInManager<User>>()
                             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
+           /* builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                            .AddCookie(
+                                options =>
+                                {
+                                    options.LoginPath = new PathString("/Account/Login");
+                                    options.AccessDeniedPath = new PathString("/Account/Login");
+                                });*/
+            builder.Services.AddAuthentication("Identity.Application")
+                            .AddCookie("Identity.Application", options =>
+                            {
+                                options.LoginPath = "/Account/Login";
+                                options.AccessDeniedPath = "/Account/AccessDenied";
+                            });
             var app = builder.Build();
 
 

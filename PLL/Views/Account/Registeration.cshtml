@@ -1,0 +1,52 @@
+﻿@model SignUpvM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fruitables - Vegetable Website Template</title>
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="~/css/StyleSheet.css" rel="stylesheet">
+</head>
+    <body>
+    <!--form Registeration-->
+    <div class="logincontainer">
+        <div id="closelogin" class="fas fa-times" onclick="actn()"></div>
+        <form asp-controller="Account"  asp-action="Registeration" enctype="multipart/form-data" method="post">
+            <h3>@SharedLocalizer["Register"]:</h3>
+            @if (ViewBag.Massege != null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        @ViewBag.Massege
+                    </div>
+                </div>
+            }
+            <label>@SharedLocalizer["FirstName"]:</label>
+            <input type="text" class="box" placeholder="@SharedLocalizer["fnameplace"]" asp-for="FirstName">
+           
+            <label>@SharedLocalizer["LastName"]:</label>
+            <input type="text" class="box" placeholder="@SharedLocalizer["lnameplace"]" asp-for="LastName">
+            
+            <label>@SharedLocalizer["UserName"]:</label>
+            <input type="text" class="box" placeholder="@SharedLocalizer["UserNamePlace"]"asp-for="UserName">
+            
+            <label>@SharedLocalizer["Email"]:</label>
+            <input type="text" class="box" placeholder="@SharedLocalizer["EmailPlace"]" asp-for="Email">
+            
+            <label>@SharedLocalizer["Password"]:</label>
+            <input type="text" class="box" placeholder="@SharedLocalizer["PasswordPlace"]" asp-for="Password">
+            
+            <label>@SharedLocalizer["userimage"]:</label>
+            <input type="file" asp-for="UploadImage">
+
+            <input type="submit" value="@SharedLocalizer["Register"]" class="btn">
+        </form>
+        </div>
+    </body>
+</html>
