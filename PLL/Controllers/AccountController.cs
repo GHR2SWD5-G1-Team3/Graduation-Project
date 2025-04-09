@@ -4,6 +4,14 @@
     {
         private readonly IAccountServices _accountServices=accountServices;
         private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+
+        // GET: AccountController/Profile
+        [HttpGet]
+        public async Task<ActionResult> Index()
+        {
+            return View();
+        }
+
         // GET: AccountController/Register
         [HttpGet]
         public async Task<ActionResult> Registeration()
