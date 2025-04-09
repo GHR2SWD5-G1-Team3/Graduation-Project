@@ -28,7 +28,7 @@ namespace PLL
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
-
+            builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
 
             //Scopped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
@@ -38,8 +38,7 @@ namespace PLL
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICouponService,CouponService>();
             builder.Services.AddScoped<IUsedCouponService, UsedCouponService>();
-
-
+            builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
 
             //Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));

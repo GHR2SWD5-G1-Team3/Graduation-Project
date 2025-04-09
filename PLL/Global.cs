@@ -17,3 +17,6 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using BLL.Helpers;
 global using Microsoft.Extensions.Localization;
+global using AutoMapper;
+global using BLL.ModelVM.Product;
+global using Microsoft.AspNetCore.Authorization;
