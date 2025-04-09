@@ -9,3 +9,4 @@ global using DAL.Repo.Abstract;
 global using System.Collections.Generic;
 global using BLL.ModelVM.Account;
 global using Microsoft.AspNetCore.Identity;
+global using System.ComponentModel.DataAnnotations;

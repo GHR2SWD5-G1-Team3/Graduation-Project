@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using BLL.ModelVM.Product;
-using Microsoft.AspNetCore.Mvc;
-
-namespace PLL.Controllers
+﻿namespace PLL.Controllers
 {
     public class ShopController : Controller
     {
