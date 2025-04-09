@@ -31,7 +31,7 @@
                     signUpvM.Image = UploadFiles.UploadFile("UserPersonnalImages",signUpvM.UploadImage);
                     var result = await _accountServices.SignUp(signUpvM);
                     if (result)
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Index),"Home");
                 }
                 ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
                 return View(signUpvM);

@@ -23,11 +23,11 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public async Task<bool> DeleteCouponAsync(long productId, string userName)
+        public async Task<bool> DeleteCouponAsync(long couponId, string userName)
         {
             try
             {
-                var result = await couponRepo.DeleteById(userName, productId);
+                var result = await couponRepo.DeleteById(userName, couponId);
                 if (result)
                     return true;
                 return false;

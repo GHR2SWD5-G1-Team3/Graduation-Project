@@ -3,12 +3,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DAL.Enities
 {
-    public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount, string userName)
+    public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount, string createdBy)
     {
         public long Id { get; private set; }
         public string Code { get; private set; } = code;
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
-        public string CreatedBy { get; private set; } = userName;
+        public string CreatedBy { get; private set; } = createdBy;
         public DateTime? ExpiredAt { get; private set; } = expiredAt;
         public int? UsageLimit { get; private set; } = usageLimit;
         public int Discount { get;private set; } = discount;
