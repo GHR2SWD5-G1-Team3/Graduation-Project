@@ -9,7 +9,7 @@
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            return View();
+             return  View();
         }
 
         // GET: AccountController/Register

@@ -26,9 +26,9 @@
                         <div class="row g-0">
                             <div class="col-md-4 gradient-custom text-center text-white"
                                  style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                <img src="@Model.Image" alt="Avatar" class="rounded-circle mt-5" width="150px" />
-                                <input type="hidden" name="UserName" value="@Model.UserName">
-                                <h5>@Model.UserName</h5>
+                                <img src="" alt="Avatar" class="rounded-circle mt-5" width="150px" />
+                                <input type="hidden" name="UserName" value="">
+                                <h5>UserName</h5>
 
                                 <a asp-action="Edit" asp-controller="Profile" class="fas fa-user-edit btn btn-dark"></a>
 
@@ -42,11 +42,11 @@
                                     <div class="row pt-1">
                                         <div class="col-6 mb-3">
                                             <h6>First Name</h6>
-                                            <p class="text-muted">@Model.FirstName</p>
+                                            <p class="text-muted"></p>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <h6>Last Name</h6>
-                                            <p class="text-muted">@Model.LastName</p>
+                                            <p class="text-muted"></p>
                                         </div>
                                     </div>
                                     <h6>Connection Information</h6>
@@ -54,49 +54,15 @@
                                     <div class="row pt-1">
                                         <div class="col-6 mb-3">
                                             <h6>Email</h6>
-                                            <p class="text-muted">@Model.Email</p>
+                                            <p class="text-muted"></p>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <h6>Phone</h6>
-                                            <p class="text-muted">@Model.PhoneNumber</p>
+                                            <p class="text-muted"></p>
                                         </div>
                                     </div>
 
-                                    @if (Model.Customer != null && Model.Customer.CustomerId == Model.UserId)
-                                    {
-                                        <h6>Customer Information</h6>
-                                        <hr class="mt-0 mb-4">
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Address</h6>
-                                                <p class="text-muted">@Model.Customer.Address</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.Seller != null && Model.Seller.SellerId == Model.UserId)
-                                    {
-                                        <h6>Seller Information</h6>
-                                        <hr class="mt-0 mb-4">
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Commercial Name</h6>
-                                                <p class="text-muted">@Model.Seller.CommercialName</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.Admin != null && Model.Admin.AdminId == Model.UserId)
-                                    {
-                                        <h6>Admin Information</h6>
-                                        <hr class="mt-0 mb-4">
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Authority Level ID</h6>
-                                                <p class="text-muted">@Model.Admin.AuthorityLevelId</p>
-                                            </div>
-                                        </div>
-                                    }
-
-
+                                 
                                 </div>
                             </div>
                         </div>
