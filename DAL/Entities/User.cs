@@ -1,4 +1,6 @@
-﻿namespace DAL.Enities
+﻿using DAL.Entities;
+
+namespace DAL.Enities
 {
     public class User(string firstName, string lastName, string image)  : IdentityUser
     {

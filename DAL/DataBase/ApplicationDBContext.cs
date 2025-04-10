@@ -1,3 +1,5 @@
+using DAL.Entities;
+
 namespace DAL.DataBase
 {
     public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext<User>(options)

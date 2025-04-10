@@ -1,9 +1,16 @@
-﻿namespace DAL.Repo.Abstract
+﻿using DAL.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+
+namespace DAL.Repositories
 {
-    public interface IReviewRepo : IGenericRepo<Review>
+    public interface IReviewRepo
     {
-        (bool, string?) Edit(string user, Review review, long Id);
-        bool DeleteById(string user, long id);
-    
+        (bool, string?) Create(Review review);
+        List<Review> GetAll(Expression<Func<Review, bool>>? filter = null);
+        Review Get(Expression<Func<Review, bool>>? filter = null);
+        bool Update(Review review);
+        bool Delete(Review review);
     }
 }

@@ -1,4 +1,6 @@
-using DAL.Shared.Generic;
+using DAL.Repositories;
+using Services;
+using Services.Interfaces;
 
 namespace PLL
 {
@@ -9,6 +11,7 @@ namespace PLL
             var builder = WebApplication.CreateBuilder(args);
             // Get the connection string from appsettings.json
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
             // Add services to the container.
             builder.Services.AddControllersWithViews()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -19,62 +22,62 @@ namespace PLL
                 });
 
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
-             options.UseSqlServer(connectionString));
-            //Scopped Repos
-            builder.Services.AddScoped<IOrderRepo,OrderRepo>();
-			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
-			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
+                options.UseSqlServer(connectionString));
+
+            // Scoped Repos
+            builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+            builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
+            builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
 
-            //Scopped Services
+            // **Add Review Repo** here
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); // Register ReviewRepo
+
+            // Scoped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
-			builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
-			builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
+            builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
+            builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
             builder.Services.AddScoped<IAccountServices, AccountServices>();
             builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<ICouponService,CouponService>();
+            builder.Services.AddScoped<ICouponService, CouponService>();
             builder.Services.AddScoped<IUsedCouponService, UsedCouponService>();
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
 
-            //Mapping
+            // **Add Review Service** here
+            builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
+
+            // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
-            //Identity
+
+            // Identity
             builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
                             .AddSignInManager<SignInManager<User>>()
                             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
-           /* builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                            .AddCookie(
-                                options =>
-                                {
-                                    options.LoginPath = new PathString("/Account/Login");
-                                    options.AccessDeniedPath = new PathString("/Account/Login");
-                                });*/
+
             builder.Services.AddAuthentication("Identity.Application")
                             .AddCookie("Identity.Application", options =>
                             {
                                 options.LoginPath = "/Account/Login";
                                 options.AccessDeniedPath = "/Account/AccessDenied";
                             });
+
             var app = builder.Build();
 
-
             var supportedCultures = new[] {
-                      new CultureInfo("ar-EG"),
-                      new CultureInfo("en-US"),
-                     new CultureInfo(""),
-                };
-
+                new CultureInfo("ar-EG"),
+                new CultureInfo("en-US"),
+                new CultureInfo(""),
+            };
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -90,11 +93,12 @@ namespace PLL
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures,
                 RequestCultureProviders =
-                [
-                new QueryStringRequestCultureProvider(),
-                new CookieRequestCultureProvider()
-                ]
+                {
+                    new QueryStringRequestCultureProvider(),
+                    new CookieRequestCultureProvider()
+                }
             });
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
