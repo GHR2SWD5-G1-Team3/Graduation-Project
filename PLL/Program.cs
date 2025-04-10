@@ -31,6 +31,7 @@ namespace PLL
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
+            builder.Services.AddScoped<ICartRepo ,CartRepo>();
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
 
@@ -46,6 +47,7 @@ namespace PLL
             builder.Services.AddScoped<ICouponService, CouponService>();
             builder.Services.AddScoped<IUsedCouponService, UsedCouponService>();
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
+            builder.Services.AddScoped<ICartService,CartService>();
 
             // **Add Review Service** here
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService

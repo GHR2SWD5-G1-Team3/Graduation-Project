@@ -1,4 +1,5 @@
-﻿using BLL.ModelVM.Category;
+﻿using BLL.ModelVM.CartDetails;
+using BLL.ModelVM.Category;
 using BLL.ModelVM.Product;
 using BLL.ModelVM.SubCategory;
 
@@ -49,6 +50,7 @@ namespace BLL.Mapper
                 .ForMember(dest => dest.CategoryName,
                            opt => opt.MapFrom(src => src.SubCategory.Category.Name)).ReverseMap();
             CreateMap<CreateProductVM, Product>().ReverseMap();
+            CreateMap<DisplayCartDetailsVM ,DAL.Enities.Cart>().ReverseMap();
         }
     }
 }

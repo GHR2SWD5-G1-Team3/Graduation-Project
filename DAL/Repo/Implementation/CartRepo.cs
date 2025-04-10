@@ -26,17 +26,17 @@
                 return (false, ex.Message);
             }
         }
-        public bool DeleteById(string user, long Id)
+        public async Task<bool> DeleteById(string user, long Id)
         {
             try
             {
-                var cart = Db.Carts.FirstOrDefault(c => c.Id == Id);
+                var cart = await Db.Carts.FirstOrDefaultAsync(c => c.Id == Id);
                 if (cart == null)
                     return false;
                 var result = cart.Delete(user);
                 if (result)
                 {
-                    Db.SaveChanges();
+                   await Db.SaveChangesAsync();
                     return (true);
                 }
                 return (false);

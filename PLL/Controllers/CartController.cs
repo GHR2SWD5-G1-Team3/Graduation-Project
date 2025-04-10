@@ -1,21 +1,17 @@
-﻿using BLL.Services.Abstract;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-
-namespace PLL.Controllers
+﻿namespace PLL.Controllers
 {
     public class CartController : Controller
     {
-		private readonly ICartDetailsService _cartDetailsService;
+		private readonly ICartService _cartService;
 
-		public CartController(ICartDetailsService cartDetailsService)
+		public CartController(ICartService cartService)
 		{
-			_cartDetailsService = cartDetailsService;
+			_cartService = cartService;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
         {
-            var details = _cartDetailsService.GetAllCartDetails();
+            var details =await _cartService.GetAllCarts();
             return View(details);
         }
 
