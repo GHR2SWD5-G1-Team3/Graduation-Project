@@ -5,10 +5,12 @@ namespace BLL.Services.Abstract
 {
     public interface ISubCategoryServices
     {
-        (bool, string?) Create(CreateSubCategoryVM subCategoryVM);
-        List<GetAllSubCategoryVM> GetAllActivateCategories();
-        (bool, string) Edit(int Id, string user, SubCategoryVM subCategory);
-        (SubCategoryVM?, bool, string?) GetById(int id);
-        (bool, string?) DeleteByID(int id, string user);
+        Task<(bool, string?)> CreateAsync(CreateSubCategoryVM subCategoryVM);
+        Task<List<GetAllSubCategoryVM>> GetAllSubCategories(Expression<Func<SubCategory, bool>>? filter = null, params Expression<Func<SubCategory, object>>[] includeProperty);
+        Task<(bool, string)> Edit(int Id, string user, SubCategoryVM subCategory);
+        Task<(SubCategoryVM?, bool, string?)> GetById(int id);
+        Task<(bool, string?)> DeleteByID(int id, string user);
+
+
     }
 }

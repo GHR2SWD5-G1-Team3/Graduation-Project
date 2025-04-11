@@ -1,5 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
+﻿
 namespace DAL.Enities
 {
     public class SubCategory(string name, string description, string imagePath, int categoryId)
@@ -7,7 +6,7 @@ namespace DAL.Enities
         public int Id { get; private set; }
         public string Name { get; private set; } = name;
         public string Description { get; private set; } = description;
-        public string ImagePath { get; private set; } = imagePath;
+        public string? ImagePath { get; private set; } = imagePath;
         public bool IsDeleted { get; set; } = false;
         public string? DeletedBy { get; private set; }
         public DateTime DeletedOn { get; set; }

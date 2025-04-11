@@ -14,10 +14,7 @@ namespace DAL.Enities
         public string? ModifiedBy { get; private set; }
         public DateTime ModifiedOn { get; private set; }
         public List<SubCategory>? SubCategories { get; set; }
-        public void UpdateImagePath(string imagePath)
-        {
-            Image = imagePath;
-        }
+        
 
         public bool Delete(string? User)
         {

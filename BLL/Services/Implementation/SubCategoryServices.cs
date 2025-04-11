@@ -12,17 +12,18 @@ namespace BLL.Services.Implementation
             this.subCategoryRepo = subCategoryRepo;
             this.mapper = mapper;
         }
-        public (bool, string?) Create(CreateSubCategoryVM subCategoryVM)
+        //create
+        public async Task<(bool, string?)> CreateAsync(CreateSubCategoryVM subCategoryVM)
         {
             try
             {
-                string Path = null;
-                if(subCategoryVM.Image is not null)
+                string path = null;
+                if (subCategoryVM.Image is not null)
                 {
-                    Path = UploadFiles.UploadFile("images", subCategoryVM.Image);
+                    path = UploadFiles.UploadFile("images", subCategoryVM.Image);
                 }
-                var subcategory = new SubCategory(subCategoryVM.Name, subCategoryVM.Description, Path, subCategoryVM.CategoryId);
-                var result = subCategoryRepo.Create(subcategory);
+                var subcategory = new SubCategory(subCategoryVM.Name, subCategoryVM.Description, path, subCategoryVM.CategoryId);
+                var result = await subCategoryRepo.CreateAsync(subcategory);
                 return result;
             }
             catch (Exception ex)
@@ -30,18 +31,18 @@ namespace BLL.Services.Implementation
                 return (false, ex.Message);
             }
         }
-
-        public (bool, string?) DeleteByID(int id, string user)
+        //delete
+        public async Task<(bool, string?)> DeleteByID(int id, string user)
         {
             try
             {
-                var subcategory = subCategoryRepo.Get(e => e.Id == id);
+                var subcategory = await subCategoryRepo.GetAsync(e => e.Id == id);
                 if (subcategory == null)
                     return (false, "subcategory not found");
                 if (subcategory.IsDeleted)
                     return (false, "Error: subcategory is already deleted.");
 
-                var isDeleted = subCategoryRepo.Delete(id, user);
+                var isDeleted = await subCategoryRepo.Delete(id, user);
                 if (!isDeleted)
                     return (false, "Failed to delete subcategory.");
 
@@ -53,16 +54,15 @@ namespace BLL.Services.Implementation
             }
 
         }
-
-        public (bool, string) Edit(int Id, string user, SubCategoryVM subCategoryVM)
+        //edit
+        public async Task<(bool, string)> Edit(int Id, string user, SubCategoryVM subCategoryVM)
         {
             try
             {
-                //Check if Employee Is Found In Db
-                var subcategory = subCategoryRepo.Get(a => a.Id == Id);
+                var subcategory = await subCategoryRepo.GetAsync(a => a.Id == Id);
                 if (subcategory == null)
                     return (false, "subcategory not found in db!");
-                if(subCategoryVM.Image != null)
+                if (subCategoryVM.Image != null)
                 {   // Delete Old Image
                     if (!string.IsNullOrEmpty(subcategory.ImagePath))
                     {
@@ -80,7 +80,7 @@ namespace BLL.Services.Implementation
                 Console.WriteLine("New Image Path: " + subcategory.ImagePath);
                 mapper.Map(subCategoryVM, subcategory);
                 //make update  
-                var result = subCategoryRepo.Edit(user,Id, subcategory);
+                var result = await subCategoryRepo.Edit(user, Id, subcategory);
                 return result;
             }
             catch (Exception ex)
@@ -89,24 +89,27 @@ namespace BLL.Services.Implementation
             }
 
         }
-
-        public List<GetAllSubCategoryVM> GetAllActivateCategories()
+        //get all active subcategories
+        public async Task<List<GetAllSubCategoryVM>> GetAllSubCategories(Expression<Func<SubCategory, bool>>? filter = null, params Expression<Func<SubCategory, object>>[] includeProperty)
         {
-            var subCategories = subCategoryRepo.GetAll(e => !e.IsDeleted);
+            var subCategories = await subCategoryRepo.GetAllAsync(
+                e => !e.IsDeleted,
+                s => s.Category
+            );
             var result = mapper.Map<List<GetAllSubCategoryVM>>(subCategories);
             return result;
         }
-
-        public (SubCategoryVM?, bool, string?) GetById(int id)
+        //getbyid
+        public async Task<(SubCategoryVM?, bool, string?)> GetById(int id)
         {
             try
             {
-                var subCategory = subCategoryRepo.Get(e => e.Id == id);
+                var subCategory = await subCategoryRepo.GetAsync(e => e.Id == id);
                 if (subCategory == null)
                     return (null, false, "subCategory not found");
                 var result = mapper.Map<SubCategoryVM>(subCategory);
 
-                if (!string.IsNullOrEmpty(subCategory.ImagePath))
+                if (subCategory.ImagePath is not null)
                 {
                     result.ExistingImagePath = "/images/" + subCategory.ImagePath;
                 }
@@ -122,5 +125,7 @@ namespace BLL.Services.Implementation
             }
 
         }
+
+
     }
 }

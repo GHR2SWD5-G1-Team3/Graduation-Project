@@ -23,7 +23,7 @@
         [Authorize]
         public IActionResult Create()
         {
-            ViewBag.SubCategories = subCategoryService.GetAllActivateCategories();
+            ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
             return View();
         }
         [HttpPost]
@@ -43,13 +43,13 @@
                 var result = await productService.CreateProductAsync(product);
                 if (!result)
                 {
-                    ViewBag.SubCategories = subCategoryService.GetAllActivateCategories();
+                    ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
                     return View(model);
                 }
                 return RedirectToAction("Index");
 
             }
-            ViewBag.SubCategories = subCategoryService.GetAllActivateCategories();
+            ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
             return View(model);
         }
         public async Task<IActionResult> Details(long id)
