@@ -25,10 +25,11 @@ namespace BLL.Mapper
              .ForMember(dest => dest.ExistingImagePath,
              opt => opt.MapFrom(src => "/images/" + src.Image))
              .ReverseMap()
-             .ForMember(dest => dest.Image, opt => opt.Condition(src => src.Image != null));
+             .ForMember(dest => dest.Image, opt => opt.Ignore());
 
+            // GetAllCategoryVM
             CreateMap<Category, GetAllCategoryVM>()
-            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image))
+            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.Image))
             .ReverseMap();
             #endregion
 

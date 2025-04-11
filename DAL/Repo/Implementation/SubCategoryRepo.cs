@@ -6,22 +6,20 @@ namespace DAL.Repo.Implementation
 {
     public class SubCategoryRepo : GenericRepo<SubCategory>, ISubCategoryRepo
     {
-        public SubCategoryRepo(ApplicationDBContext context) : base(context)
-        {
-        }
+        public SubCategoryRepo(ApplicationDBContext context) : base(context){}
         //Edit
-        public (bool, string) Edit(string user, int id,SubCategory subCategory)
+        public async Task<(bool, string)> Edit(string user, int id, SubCategory subCategory)
         {
             try
             {
-                var subCat = Db.SubCategories.Where(c => c.Id == id).FirstOrDefault();
+                var subCat = await Db.SubCategories.Where(c => c.Id == id).FirstOrDefaultAsync();
                 if (subCat == null)
                     return (false, "SubCategory Not Found in Database");
                 var imagePath = subCategory.ImagePath is not null ? subCategory.ImagePath : subCat.ImagePath;
                 var result = subCat.Edit(user, subCategory.Name, subCategory.Description, imagePath, subCategory.CategoryId);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true, null);
                 }
                 return (false, "Error updating SubCategory:Please Enter User Modifier");
@@ -33,17 +31,17 @@ namespace DAL.Repo.Implementation
             }
         }
         //delete
-        public bool Delete(int Id,string user)
+        public async Task<bool> Delete(int Id, string user)
         {
             try
             {
-                var subCategory = Db.SubCategories.FirstOrDefault(s => s.Id == Id);
+                var subCategory = await Db.SubCategories.FirstOrDefaultAsync(s => s.Id == Id);
                 if (subCategory == null)
                     return false;
                 var result = subCategory.Delete(user);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true);
                 }
                 return (false);
@@ -55,23 +53,5 @@ namespace DAL.Repo.Implementation
             }
         }
 
-        public List<SubCategory> All(Expression<Func<SubCategory, bool>>? filter = null)
-        {
-            //using Explicit Loading
-            List<SubCategory> subCategories;
-            if (filter == null)
-            {
-                subCategories = Db.SubCategories.ToList();
-            }
-            else
-            {
-                subCategories = Db.SubCategories.Where(filter).ToList();
-            }
-            foreach (var item in subCategories)
-            {
-                Db.Entry(item).Reference(e => e.Category).Load();
-            }
-            return subCategories;
-        }
     }
 }
