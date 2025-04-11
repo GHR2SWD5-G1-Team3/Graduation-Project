@@ -1,0 +1,41 @@
+﻿@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var area = ViewContext.RouteData.Values["area"]?.ToString();
+}
+
+
+<div class="page-header mt-5 pt-5">
+    <h3 class="fw-bold mb-3">@currentAction</h3>
+    <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+            <a href="/">
+                <i class="icon-home"></i>
+            </a>
+        </li>
+
+        @if (!string.IsNullOrEmpty(area))
+        {
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Home", new { area = area })">@area</a>
+            </li>
+        }
+
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", currentController, new { area = area })">@currentController</a>
+        </li>
+
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item active">
+            <a href="#">@currentAction</a>
+        </li>
+    </ul>
+</div>

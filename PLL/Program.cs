@@ -100,6 +100,10 @@ namespace PLL
                     new CookieRequestCultureProvider()
                 }
             });
+            // Define the route for areas
+            app.MapControllerRoute(
+                name: "areas", // A name for the route (you can customize it)
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
