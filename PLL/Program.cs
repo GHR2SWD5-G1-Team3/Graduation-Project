@@ -1,4 +1,5 @@
 using DAL.Repositories;
+using PLL.Data.Seed;
 using Services;
 using Services.Interfaces;
 
@@ -6,7 +7,7 @@ namespace PLL
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             // Get the connection string from appsettings.json
@@ -109,7 +110,11 @@ namespace PLL
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await IdentitySeeder.SeedRolesAndAdminAsync(services);
+            }
             app.Run();
         }
     }
