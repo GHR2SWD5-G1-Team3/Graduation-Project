@@ -1,18 +1,21 @@
-﻿@model CreateProductVM
+﻿@model EditProductVM
 
 @{
 
-    ViewData["Title"] = "Create Product";
+    ViewData["Title"] = "Edit Product";
 }
 <div class="container">
     <div class="card card-primary card-outline mb-4 mt-4">
         <!--begin::Header-->
-        <div class="card-header"><div class="card-title">Create A New Product</div></div>
+        <div class="card-header"><div class="card-title">Edit A Product</div></div>
         <!--end::Header-->
         <!--begin::Form-->
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="Edit" enctype="multipart/form-data">
+
             @Html.AntiForgeryToken()
             <!--begin::Body-->
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
             <div class="card-body">
                 <div class="form-group">
                     <label asp-for="Name"></label>
@@ -49,9 +52,6 @@
                     <select asp-for="SubCategoryId" class="form-control">
                         <option value="">-- Select SubCategory --</option>
                         @foreach (var item in ViewBag.SubCategories)
-
-
-
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -68,7 +68,7 @@
             <!--end::Body-->
             <!--begin::Footer-->
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                <button type="submit" class="btn btn-primary btn-lg">Edit</button>
             </div>
             <!--end::Footer-->
         </form>

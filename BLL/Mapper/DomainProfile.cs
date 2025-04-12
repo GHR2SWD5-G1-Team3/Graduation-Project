@@ -51,7 +51,11 @@ namespace BLL.Mapper
                 .ForMember(dest => dest.CategoryName,
                            opt => opt.MapFrom(src => src.SubCategory.Category.Name)).ReverseMap();
             CreateMap<CreateProductVM, Product>().ReverseMap();
-            CreateMap<DisplayCartDetailsVM ,DAL.Enities.Cart>().ReverseMap();
+            CreateMap<DisplayCartDetailsVM ,Cart>().ReverseMap();
+            CreateMap<ProductDetailsVM, Product>().ReverseMap();
+            CreateMap<EditProductVM, Product>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId ?? string.Empty)) // Default to empty string if null
+                .ReverseMap();
         }
     }
 }

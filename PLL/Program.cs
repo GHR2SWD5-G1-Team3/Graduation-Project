@@ -57,13 +57,13 @@ namespace PLL
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
 
             // Identity
-            builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
                             .AddSignInManager<SignInManager<User>>()
                             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
 
-            builder.Services.AddAuthentication("Identity.Application")
-                            .AddCookie("Identity.Application", options =>
+            builder.Services.AddAuthentication()
+                            .AddCookie(options =>
                             {
                                 options.LoginPath = "/Account/Login";
                                 options.AccessDeniedPath = "/Account/AccessDenied";

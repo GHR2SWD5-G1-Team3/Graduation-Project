@@ -2,7 +2,7 @@ using DAL.Entities;
 
 namespace DAL.DataBase
 {
-    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext<User>(options)
+    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext<User, IdentityRole, string>(options)
     {
         public override DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }

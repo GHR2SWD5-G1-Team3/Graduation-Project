@@ -31,9 +31,9 @@
 
 <body>
   
-    <partial name="_Header" />
+    <partial name="~/Views/Shared/_Header.cshtml" />
         @RenderBody()
-    <partial name="_Footer"/>
+    <partial name="~/Views/Shared/_Footer.cshtml" />
 
     <!-- JavaScript Libraries -->
     <!-- Make sure you have these scripts loaded -->
@@ -45,6 +45,7 @@
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/js/script.js"></script>
+
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
