@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Pll.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Admin, Vendor")]
     [Area("Admin")]
     public class HomeController : Controller
     {

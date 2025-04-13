@@ -2,7 +2,7 @@
 
 namespace PLL.Areas.Admin.Controllers
 {
-    [Authorize]   
+    [Authorize(Roles ="Admin, Vendor")]   
     [Area("Admin")]
     public class ProductController : Controller
     {

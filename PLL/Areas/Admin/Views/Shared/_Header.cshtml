@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
         <div class="main-header">
             <div class="main-header-logo">
                 <!-- Logo Header -->
@@ -282,13 +284,16 @@
                        href="#"
                        aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="~/Dashboard/assets/img/profile.jpg"
+                            @{
+                               var user = await UserManager.GetUserAsync(User);
+                            }
+                            <img src="~/UserPersonnalImages/@user.Image"
                                  alt="..."
                                  class="avatar-img rounded-circle" />
                         </div>
                         <span class="profile-username">
                             <span class="op-7">Hi,</span>
-                            <span class="fw-bold">Hizrian</span>
+                            <span class="fw-bold">@user.UserName</span>
                         </span>
                     </a>
 
@@ -297,13 +302,13 @@
                             <div class="dropdown-user-scroll scrollbar-outer">
                                 <div class="user-box">
                                     <div class="avatar-lg">
-                                        <img src="~/Dashboard/assets/img/profile.jpg"
+                                        <img src="~/UserPersonnalImages/@user.Image"
                                              alt="image profile"
                                              class="avatar-img rounded" />
                                     </div>
                                     <div class="u-text">
-                                        <h4>Hizrian</h4>
-                                        <p class="text-muted">hello@example.com</p>
+                                        <h4>@user.UserName</h4>
+                                        <p class="text-muted">@user.Email</p>
                                         <a href="profile.html"
                                            class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                     </div>
