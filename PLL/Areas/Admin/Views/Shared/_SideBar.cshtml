@@ -3,7 +3,7 @@
     <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
+            <a asp-action="index" asp-controller="Home" class="logo">
                 <img src="~/Dashboard/assets/img/kaiadmin/logo_light.svg"
                      alt="navbar brand"
                      class="navbar-brand"
@@ -120,6 +120,20 @@
                         <p>Coupons</p>
                         <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="charts">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a asp-action="Index" asp-controller="Coupon">
+                                    <span class="sub-item">All Coupons</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Create" asp-controller="Coupon">
+                                    <span class="sub-item">Create a Coupon</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
         
             </ul>
