@@ -1,52 +1,86 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Services.Interfaces;
-using System.Threading.Tasks;
+﻿using Services.Interfaces;
+using PLL.Models;
 
 namespace WebApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ReviewController : ControllerBase
+    public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, UserManager<IdentityUser> userManager)
         {
             _reviewService = reviewService;
+            _userManager = userManager;
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddReview(string comment, int rate, string userId, long productId)
-        {
-            var result = await _reviewService.AddReviewAsync(comment, rate, userId, productId);
-            if (result)
-                return Ok("Review added successfully.");
-            return BadRequest("Failed to add review.");
-        }
-
-        [HttpPut("edit/{reviewId}")]
-        public async Task<IActionResult> EditReview(long reviewId, string comment, int rate, string userId, long productId)
-        {
-            var result = await _reviewService.EditReviewAsync(reviewId, comment, rate, userId, productId);
-            if (result)
-                return Ok("Review updated successfully.");
-            return BadRequest("Failed to update review.");
-        }
-
-        [HttpDelete("delete/{reviewId}")]
-        public async Task<IActionResult> DeleteReview(long reviewId, string userId)
-        {
-            var result = await _reviewService.DeleteReviewAsync(reviewId, userId);
-            if (result)
-                return Ok("Review deleted successfully.");
-            return BadRequest("Failed to delete review.");
-        }
-
-        [HttpGet("product/{productId}")]
-        public async Task<IActionResult> GetReviewsByProduct(long productId)
+        public async Task<IActionResult> ProductReviews(long productId)
         {
             var reviews = await _reviewService.GetReviewsByProductAsync(productId);
-            return Ok(reviews);
+            ViewBag.ProductId = productId;
+            return View(reviews);
+        }
+
+        public IActionResult AddReview(long productId)
+        {
+            return View(new ReviewViewModel { ProductId = productId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReview(ReviewViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userId = _userManager.GetUserId(User);
+            var result = await _reviewService.AddReviewAsync(model.Comment, model.Rate, userId, model.ProductId);
+
+            if (result)
+                return RedirectToAction("ProductReviews", new { productId = model.ProductId });
+
+            ModelState.AddModelError("", "Failed to add review.");
+            return View(model);
+        }
+
+        public async Task<IActionResult> EditReview(long id)
+        {
+            var review = await _reviewService.GetReviewByIdAsync(id);
+            if (review == null) return NotFound();
+
+            var model = new ReviewViewModel
+            {
+                Id = review.Id,
+                Comment = review.Comment,
+                Rate = review.Rate,
+                ProductId = review.ProductId,
+                UserId = review.UserId,
+                CreatedAt = review.CreatedAt
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditReview(ReviewViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userId = _userManager.GetUserId(User);
+            var result = await _reviewService.EditReviewAsync(model.Id, model.Comment, model.Rate, userId, model.ProductId);
+
+            if (result)
+                return RedirectToAction("ProductReviews", new { productId = model.ProductId });
+
+            ModelState.AddModelError("", "Failed to update review.");
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteReview(long id, long productId)
+        {
+            var userId = _userManager.GetUserId(User);
+            await _reviewService.DeleteReviewAsync(id, userId);
+
+            return RedirectToAction("ProductReviews", new { productId });
         }
     }
 }

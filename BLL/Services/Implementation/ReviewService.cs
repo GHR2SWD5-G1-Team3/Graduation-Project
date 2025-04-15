@@ -48,5 +48,10 @@ namespace Services
         {
             return _reviewRepo.GetAll(r => r.ProductId == productId && !r.IsDeleted);
         }
+
+        public Task<Review> GetReviewByIdAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

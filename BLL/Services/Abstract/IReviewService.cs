@@ -10,5 +10,6 @@ namespace Services.Interfaces
         Task<bool> EditReviewAsync(long reviewId, string comment, int rate, string userId, long productId);
         Task<bool> DeleteReviewAsync(long reviewId, string userId);
         Task<List<Review>> GetReviewsByProductAsync(long productId);
+        Task<Review> GetReviewByIdAsync(long id); // Return single review, instead of Task
     }
 }
