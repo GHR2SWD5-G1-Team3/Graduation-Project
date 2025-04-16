@@ -60,17 +60,24 @@
                     <div class="collapse" id="base">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="~/components/avatars.html">
+                                <a asp-action="Index" asp-controller="Customer">
                                     <span class="sub-item">Customers</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="~/components/typography.html">
+                                <a asp-action="Index" asp-controller="Seller">
                                     <span class="sub-item">Sellers</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <i class="fas fa-th-list"></i>
+                        <p>Roles</p>
+                        <span class="caret"></span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">

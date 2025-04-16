@@ -20,7 +20,7 @@
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
@@ -32,7 +32,7 @@
             {
                 return await usedCouponRepo.GetAllAsync(filter, includeProperty);
             }
-            catch (Exception ex)
+            catch 
             {
                 return [];
             }
@@ -44,7 +44,7 @@
             {
                 return await usedCouponRepo.GetAsync(filter);
             }
-            catch (Exception ex)
+            catch 
             {
                 return null;
             }

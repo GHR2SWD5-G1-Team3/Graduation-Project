@@ -1,8 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
     public class AppliedCouponRepo(ApplicationDBContext context) : GenericRepo<AppliedCoupon>(context), IAppliedCouponRepo
     {
@@ -20,7 +16,7 @@ namespace DAL.Repo.Implementation
                     return false;
                 }
                 return false;
-            } catch(Exception ex)
+            } catch
             {
                 return false;
             }

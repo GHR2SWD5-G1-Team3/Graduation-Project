@@ -1,7 +1,4 @@
-﻿
-using DAL.Repo.Implementation;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class FavoriteProductServices (ApplicationDBContext dbContext, IFavoriteProductRepo favoriteProductRepo) : IFavoriteProductServices
     {

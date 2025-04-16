@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using DAL.Entities;
-
-namespace Services.Interfaces
+﻿namespace BLL.Services.Abstract
 {
     public interface IReviewService
     {

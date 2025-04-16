@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class CartDetails(double price, decimal quantity, long productId, long cartId)
     {

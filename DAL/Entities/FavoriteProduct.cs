@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class FavoriteProduct(string userId,long productId)
     {

@@ -1,9 +1,4 @@
-﻿using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace DAL.Repositories
+﻿namespace DAL.Repo.Abstract
 {
     public interface IReviewRepo
     {

@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class AppliedCoupon(string userId, long productId, long couponId)
     {

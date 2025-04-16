@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class OrderDetails(long productId, long orderId, double price, decimal quantity)
     {

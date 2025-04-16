@@ -1,6 +1,4 @@
-﻿using DAL.Repo.Implementation;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class CouponService(ICouponRepo couponRepo) : ICouponService
     {
@@ -17,7 +15,7 @@ namespace BLL.Services.Implementation
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
@@ -32,7 +30,7 @@ namespace BLL.Services.Implementation
                     return true;
                 return false;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -47,7 +45,7 @@ namespace BLL.Services.Implementation
                     return true;
                 return false;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
@@ -59,7 +57,7 @@ namespace BLL.Services.Implementation
             {
                 return await couponRepo.GetAllAsync(filter, includeProperty);
             }
-            catch (Exception ex)
+            catch 
             {
                 return [];
             }
@@ -71,7 +69,7 @@ namespace BLL.Services.Implementation
             {
                 return await couponRepo.GetAsync(filter);
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

@@ -7,14 +7,14 @@
 
         // GET: AccountController/Profile
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
              return  View();
         }
 
         // GET: AccountController/Register
         [HttpGet]
-        public async Task<ActionResult> Registeration()
+        public ActionResult Registeration()
         {
             return View();
         }
@@ -44,7 +44,7 @@
         }
         // GET: AccountController/LogIn
         [HttpGet]
-        public async Task<ActionResult> LogIn()
+        public ActionResult LogIn()
         {
             return View();
         }

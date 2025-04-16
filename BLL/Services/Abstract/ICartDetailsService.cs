@@ -1,6 +1,4 @@
-﻿using BLL.ModelVM.CartDetails;
-
-namespace BLL.Services.Abstract
+﻿namespace BLL.Services.Abstract
 {
     public interface ICartDetailsService
     {

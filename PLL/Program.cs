@@ -1,7 +1,3 @@
-using DAL.Repositories;
-using PLL.Data.Seed;
-using Services;
-using Services.Interfaces;
 
 namespace PLL
 {
@@ -21,14 +17,13 @@ namespace PLL
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 });
-
+            
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(connectionString));
-
-            // Scoped Repos
-            builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-            builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
-            builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
+            //Scopped Repos
+            builder.Services.AddScoped<IOrderRepo,OrderRepo>();
+			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
+			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
@@ -36,8 +31,8 @@ namespace PLL
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
-            // **Add Review Repo** here
-            builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); // Register ReviewRepo
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); 
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
 
             // Scoped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
@@ -50,13 +45,11 @@ namespace PLL
             builder.Services.AddScoped<ICategoryServices, CategoryServices>();
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
             builder.Services.AddScoped<ICartService,CartService>();
-
-            // **Add Review Service** here
+            builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
 
             // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
-
             // Identity
             builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()

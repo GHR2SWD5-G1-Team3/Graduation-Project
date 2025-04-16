@@ -1,7 +1,4 @@
-﻿
-using BLL.ModelVM.CartDetails;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class CartService : ICartService
     {
@@ -12,7 +9,7 @@ namespace BLL.Services.Implementation
             cartRepo = repo;
             mapper = map;
         }
-        public async Task<(bool, string?)> AddCart(DAL.Enities.Cart cart)
+        public async Task<(bool, string?)> AddCart(Cart cart)
         {
           return await cartRepo.CreateAsync(cart);
         }
@@ -21,7 +18,7 @@ namespace BLL.Services.Implementation
             var result = await cartRepo.GetAllAsync();
             return mapper.Map<List<DisplayCartDetailsVM>>(result);
         }
-        public async Task<DisplayCartDetailsVM> GetCarts(Expression<Func<DAL.Enities.Cart, bool>>? filter = null)
+        public async Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null)
         {
             var result = await cartRepo.GetAsync(filter);
             return  mapper.Map<DisplayCartDetailsVM>(result);

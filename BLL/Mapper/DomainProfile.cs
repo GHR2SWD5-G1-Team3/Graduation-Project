@@ -13,6 +13,8 @@ namespace BLL.Mapper
             //User
             CreateMap<SignUpvM, User>();
             CreateMap<SignInVM, User>();
+            CreateMap<AddNewUser,User>();
+            CreateMap<User,DisplayUser>();
 
 
             //Order

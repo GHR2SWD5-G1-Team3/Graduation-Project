@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class UsedCoupons (string userId, long couponId)
     {

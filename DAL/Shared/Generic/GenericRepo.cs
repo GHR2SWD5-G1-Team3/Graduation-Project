@@ -1,12 +1,8 @@
 ﻿namespace DAL.Shared.Generic
 {
-    public class GenericRepo<T> : IGenericRepo<T> where T : class
+    public class GenericRepo<T>(ApplicationDBContext context) : IGenericRepo<T> where T : class
     {
-        protected readonly ApplicationDBContext Db;
-        public GenericRepo(ApplicationDBContext context)
-        {
-            Db = context;
-        }
+        protected readonly ApplicationDBContext Db = context;
 
         public async Task<(bool,string?)> CreateAsync(T t)
         {

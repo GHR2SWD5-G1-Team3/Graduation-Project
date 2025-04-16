@@ -1,6 +1,4 @@
-﻿using BLL.Helpers;
-using BLL.ModelVM.Category;
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class CategoryServices : ICategoryServices
     {

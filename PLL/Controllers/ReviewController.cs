@@ -1,7 +1,6 @@
-﻿using Services.Interfaces;
-using PLL.Models;
+﻿using PLL.Models;
 
-namespace WebApp.Controllers
+namespace PLL.Controllers
 {
     public class ReviewController : Controller
     {

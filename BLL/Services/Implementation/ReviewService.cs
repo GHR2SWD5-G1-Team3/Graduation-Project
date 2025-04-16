@@ -1,11 +1,5 @@
-﻿using DAL.Entities;
-using DAL.Repositories;
-using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Services
+﻿
+namespace BLL.Services.Implementation
 {
     public class ReviewService : IReviewService
     {

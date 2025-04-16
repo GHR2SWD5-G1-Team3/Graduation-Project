@@ -1,8 +1,4 @@
-﻿using BLL.ModelVM.CartDetails;
-using BLL.Services.Abstract;
-using DAL.Enities;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace PLL.Controllers
 {
 	public class CartDetailsController : Controller
