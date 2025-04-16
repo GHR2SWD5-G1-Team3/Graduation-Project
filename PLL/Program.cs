@@ -1,7 +1,3 @@
-using DAL.Repositories;
-using PLL.Data.Seed;
-using Services;
-using Services.Interfaces;
 
 namespace PLL
 {
@@ -24,12 +20,6 @@ namespace PLL
             
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(connectionString));
-
-            // Scoped Repos
-            builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-            builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
-            builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
-             options.UseLazyLoadingProxies().UseSqlServer(connectionString));
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
@@ -41,8 +31,7 @@ namespace PLL
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
-            // **Add Review Repo** here
-            builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); // Register ReviewRepo
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); 
             builder.Services.AddScoped<IUserRepo, UserRepo>();
 
             // Scoped Services
@@ -57,8 +46,6 @@ namespace PLL
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
-
-            // **Add Review Service** here
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
 
             // Mapping

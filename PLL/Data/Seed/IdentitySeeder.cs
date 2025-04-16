@@ -25,7 +25,7 @@
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                var newAdmin = new User("", "", "avater.jpg")
+                var newAdmin = new User("", "", "avater.jpg","123", "123")
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
