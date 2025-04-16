@@ -7,7 +7,7 @@
 
         [Required]
         public long CouponId { get; set; }
-        public IEnumerable<DAL.Enities.Product>? Products { get; set; } = new List<DAL.Enities.Product>();
-        public List<DAL.Enities.Coupon>? Coupons { get; set; } = new();
+        public IEnumerable<DAL.Entities.Product>? Products { get; set; } = new List<DAL.Entities.Product>();
+        public List<DAL.Entities.Coupon>? Coupons { get; set; } = new();
     }
 }

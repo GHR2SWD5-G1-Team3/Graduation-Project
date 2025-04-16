@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="~/Dashboard/assets/css/kaiadmin.min.css" />
 </head>
 <body>
-    <div class="wrapper">
+@*     <div class="wrapper">
     <partial name="_SideBar" />
     <div class="main-panel">
     <partial name="_Header" />
@@ -48,9 +48,17 @@
                     </div>
                 </div>
             </div>
-    <partial name="_Footer" />
+    <partial name="_Footer" /> *@
+    <div class="wrapper">
+        <partial name="_SideBar" />
+        <div class="main-panel">
+            <partial name="_Header" />
+            @RenderBody()
+            <partial name="_Footer" />
+        </div>
     </div>
-    </div>
+@*     </div>
+    </div> *@
 
 
     <!--   Core JS Files   -->
