@@ -3,22 +3,20 @@ namespace DAL.Repo.Implementation
 {
     public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
     {
-        public CategoryRepo(ApplicationDBContext context) : base(context)
-        {
-        }
-        public (bool, string?) Edit(string user,Category category ,int Id)
+        public CategoryRepo(ApplicationDBContext context) : base(context) { }
+        public async Task<(bool, string?)> Edit(string user, Category category, int Id)
         {
             try
             {
-                var cat = Db.Categories.Where(c => c.Id == Id).FirstOrDefault();
+                var cat = await Db.Categories.Where(c => c.Id == Id).FirstOrDefaultAsync();
                 if (cat == null)
                     return (false, "category Not Found Database");
                 var imagePath = category.Image is not null ? category.Image : cat.Image;
 
-                var result = cat.Edit(user, category.Name, category.Description,imagePath);
+                var result = cat.Edit(user, category.Name, category.Description, imagePath);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true, null);
                 }
                 return (false, "Error updating Category");
@@ -29,17 +27,17 @@ namespace DAL.Repo.Implementation
                 return (false, ex.Message);
             }
         }
-        public bool Delete(string user,int Id)
+        public async Task<bool> Delete(string user, int Id)
         {
             try
             {
-                var category = Db.Categories.FirstOrDefault(cat => cat.Id == Id);
+                var category = await Db.Categories.FirstOrDefaultAsync(cat => cat.Id == Id);
                 if (category == null)
                     return false;
                 var result = category.Delete(user);
                 if (result)
                 {
-                    Db.SaveChanges();
+                    await Db.SaveChangesAsync();
                     return (true);
                 }
                 return (false);
@@ -51,7 +49,5 @@ namespace DAL.Repo.Implementation
             }
         }
 
-        
-        
     }
 }

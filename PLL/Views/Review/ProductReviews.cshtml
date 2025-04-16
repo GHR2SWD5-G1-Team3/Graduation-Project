@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PLL.Models.ReviewViewModel>
+@{
+    ViewData["Title"] = "Product Reviews";
+}
+
+<h2>Reviews for Product @ViewData["ProductName"]</h2>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var review in Model)
+        {
+            <li>
+                <strong>@review.Comment</strong> - @review.Rate/5
+                <br />
+                <small>Reviewed by: @review.UserId on @review.CreatedAt</small>
+                <br />
+                <a href="@Url.Action("EditReview", new { id = review.Id })">Edit</a> |
+                <a href="@Url.Action("DeleteReview", new { id = review.Id })">Delete</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No reviews yet. Be the first to add a review!</p>
+}
+
+<a href="@Url.Action("AddReview", new { productId = ViewData["ProductId"] })" class="btn btn-primary">Add Review</a>

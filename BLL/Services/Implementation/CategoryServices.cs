@@ -10,35 +10,47 @@
             this.mapper = mapper;
         }
 
-        public (bool, string?) Create(CreateCategoryVM categoryVM)
+        //create
+        public async Task<(bool, string?)> CreateAsync(CreateCategoryVM categoryVM)
         {
             try
             {
-                string Path = null;
+                string imagePath = null;
                 if (categoryVM.Image is not null)
                 {
-                    Path = UploadFiles.UploadFile("images", categoryVM.Image);
+                    imagePath = UploadFiles.UploadFile("images", categoryVM.Image);
+                    //imagePath = $"/images/{fileName}";
                 }
-                var category = new Category(categoryVM.Name, categoryVM.Description, Path);
-                var result = categoryRepo.Create(category);
-                return result;
+
+                var category = new Category(categoryVM.Name, categoryVM.Description, imagePath);
+                var (result, error) = await categoryRepo.CreateAsync(category);
+                return (result, error);
             }
             catch (Exception ex)
             {
                 return (false, ex.Message);
             }
         }
-        public (bool, string?) DeleteByID(int id, string user)
+        //getall
+        public async Task<List<GetAllCategoryVM>> GetAllActivateCategories(Expression<Func<Category, bool>>? filter = null, params Expression<Func<Category, object>>[] includeProperty)
+        {
+            var categories = await categoryRepo.GetAllAsync(filter: c => c.IsDeleted == false, includeProperty);
+            var result = mapper.Map<List<GetAllCategoryVM>>(categories);
+            return result;
+        }
+
+        //delete
+        public async Task<(bool, string?)> DeleteByID(int id, string user)
         {
             try
             {
-                var category = categoryRepo.Get(e => e.Id == id);
+                var category = await categoryRepo.GetAsync(e => e.Id == id);
                 if (category == null)
                     return (false, "category not found");
                 if (category.IsDeleted)
                     return (false, "Error: category is already deleted.");
 
-                var isDeleted = categoryRepo.Delete(user,id);
+                var isDeleted = await categoryRepo.Delete(user, id);
                 if (!isDeleted)
                     return (false, "Failed to delete category.");
 
@@ -50,36 +62,36 @@
             }
 
         }
-
-        public (bool, string) Edit(int Id, string user, CategoryVM categoryVM)
+        //edit
+        public async Task<(bool, string)> Edit(int Id, string user, CategoryVM categoryVM)
         {
             try
             {
-                //Check if Employee Is Found In Db
-                var category = categoryRepo.Get(c => c.Id == Id);
+                //Check if Category Is Found In Db
+                var category = await categoryRepo.GetAsync(c => c.Id == Id);
                 if (category == null)
-                    return (false, "Employee not found in local db!");
-                if (categoryVM.Image != null)
+                    return (false, "category not found in local db!");
+                if (categoryVM.ImagePath is not null)
                 {   // Delete Old Image
                     if (!string.IsNullOrEmpty(category.Image))
                     {
                         UploadFiles.RemoveFile("images", category.Image);
                     }
                     //upload new image
-                    var newImageName = UploadFiles.UploadFile("images", categoryVM.Image);
+                    var newImageName = UploadFiles.UploadFile("images", categoryVM.ImagePath);
                     if (string.IsNullOrEmpty(newImageName))
                     {
                         return (false, "Image upload failed!");
                     }
-                    category.UpdateImagePath(newImageName);
+                    category.Image = newImageName;
                 }
                 // Log Image Path Before Updating
-                Console.WriteLine("New Image Path: " + category.Image);
+                //Console.WriteLine("New Image Path: " + category.Image);
                 mapper.Map(categoryVM, category);
                 //make update  
-                var result = categoryRepo.Edit( user, category,Id);
+                var (result, error) = await categoryRepo.Edit(user, category, Id);
 
-                return result;
+                return (result, error);
             }
             catch (Exception ex)
             {
@@ -88,19 +100,12 @@
             }
 
         }
-
-        public List<GetAllCategoryVM> GetAllActivateCategories()
-        {
-            var categories = categoryRepo.GetAll(e => !e.IsDeleted);
-            var result = mapper.Map<List<GetAllCategoryVM>>(categories);
-            return result;
-        }
-
-        public (CategoryVM?, bool, string?) GetById(int id)
+        //getbyID
+        public async Task<(CategoryVM?, bool, string?)> GetById(int id)
         {
             try
             {
-                var category = categoryRepo.Get(e => e.Id == id);
+                var category = await categoryRepo.GetAsync(e => e.Id == id);
                 if (category == null)
                     return (null, false, "category not found");
                 var result = mapper.Map<CategoryVM>(category);
@@ -121,5 +126,6 @@
             }
 
         }
+
     }
 }

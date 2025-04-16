@@ -1,49 +1,51 @@
-﻿namespace DAL.Repo.Implementation
+﻿using DAL.Entities;
+using DAL.DataBase;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace DAL.Repositories
 {
-    public class ReviewRepo(ApplicationDBContext context) : GenericRepo<Review>(context), IReviewRepo
+    public class ReviewRepo : IReviewRepo
     {
-        public (bool, string?) Edit(string user, Review review, long Id)
-        {
-            try
-            {
-                var Review = Db.Reviews.Where(r => r.Id == Id).FirstOrDefault();
-                if (Review == null)
-                    return (false, "review Not Found Database");
-                var result = Review.Edit(user,Review.Comment,Review.Rate ,Review.UserId,Review.ProductId);
-                if (result)
-                {
-                    Db.SaveChanges();
-                    return (true, null);
-                }
-                return (false, "Please Enter User Modifier");
+        private readonly ApplicationDBContext _context;
 
-            }
-            catch (Exception ex)
-            {
-                return (false, ex.Message);
-            }
-        }
-        public bool DeleteById(string user, long Id)
+        public ReviewRepo(ApplicationDBContext context)
         {
-            try
-            {
-                var review = Db.Reviews.FirstOrDefault(cat => cat.Id == Id);
-                if (review == null)
-                    return false;
-                var result = review.Delete(user);
-                if (result)
-                {
-                    Db.SaveChanges();
-                    return (true);
-                }
-                return (false);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting entity: {ex.Message}");
-                return false;
-            }
+            _context = context;
         }
 
+        public (bool, string?) Create(Review review)
+        {
+            _context.Reviews.Add(review);
+            var result = _context.SaveChanges() > 0;
+            return (result, result ? null : "Error saving review");
+        }
+
+        public List<Review> GetAll(Expression<Func<Review, bool>>? filter = null)
+        {
+            return filter == null
+                ? _context.Reviews.Where(r => !r.IsDeleted).ToList()
+                : _context.Reviews.Where(filter).ToList();
+        }
+
+        public Review Get(Expression<Func<Review, bool>>? filter = null)
+        {
+            return _context.Reviews.FirstOrDefault(filter);
+        }
+
+        public bool Update(Review review)
+        {
+            _context.Reviews.Update(review);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool Delete(Review review)
+        {
+            _context.Reviews.Remove(review);
+            return _context.SaveChanges() > 0;
+        }
     }
 }

@@ -2,10 +2,11 @@
 {
     public interface ICategoryServices
     {
-        (bool, string?) Create(CreateCategoryVM categoryVM );
-        List<GetAllCategoryVM> GetAllActivateCategories();
-        (bool, string) Edit(int Id, string user, CategoryVM categoryVM);
-        (CategoryVM?, bool, string?) GetById(int id);
-        (bool, string?) DeleteByID(int id, string user);
+        Task<(bool, string?)> CreateAsync(CreateCategoryVM categoryVM);
+        Task<List<GetAllCategoryVM>> GetAllActivateCategories(Expression<Func<Category, bool>>? filter = null, params Expression<Func<Category, object>>[] includeProperty);
+        Task<(bool, string)> Edit(int Id, string user, CategoryVM categoryVM);
+        Task<(CategoryVM?, bool, string?)> GetById(int id);
+        Task<(bool, string?)> DeleteByID(int id, string user);
+
     }
 }

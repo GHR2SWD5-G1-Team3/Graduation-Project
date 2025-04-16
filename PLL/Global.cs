@@ -20,3 +20,5 @@ global using Microsoft.Extensions.Localization;
 global using AutoMapper;
 global using BLL.ModelVM.Product;
 global using Microsoft.AspNetCore.Authorization;
+global using BLL.ModelVM.Coupon;
+

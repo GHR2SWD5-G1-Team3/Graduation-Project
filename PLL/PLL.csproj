@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="wwwroot\img\Products\" />
-    <Folder Include="wwwroot\UserPersonnalImages\" />
   </ItemGroup>
 
 </Project>

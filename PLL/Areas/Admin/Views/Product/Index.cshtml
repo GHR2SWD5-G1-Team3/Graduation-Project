@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Product>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Product List</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped shadow">
+            <thead class="bg-success text-white">
+                <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    int index = 1;
+                    foreach (var product in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@index</td>
+                            <td class="align-middle">
+                                <img src="~/img/Products/@product.ImagePath" alt="@product.Name" width="60" height="60" class="rounded" />
+                            </td>
+                            <td class="align-middle">@product.Name</td>
+                            <td class="align-middle">@product.Description</td>
+                            <td class="align-middle">@product.UnitPrice.ToString("C")</td>
+                            <td class="align-middle">@product.SubCategory?.Name</td>
+                            <td class="align-middle">@product.User?.UserName</td>
+                            <td class="align-middle">
+                                <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-info btn-sm">View</a>
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)">Delete</a>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No products found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function deleteProduct(productId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make an AJAX request to delete the product
+                $.ajax({
+                    url: '@Url.Action("Delete", "Product")/' + productId,
+                    type: 'POST',
+                    success: function () {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your product has been deleted.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page after successful deletion
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'There was an issue deleting the product.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>
