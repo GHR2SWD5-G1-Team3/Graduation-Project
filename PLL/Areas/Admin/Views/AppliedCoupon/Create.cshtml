@@ -1,0 +1,53 @@
+﻿@model AssignCouponVM
+@{
+
+    ViewData["Title"] = "Assign Coupon To Product";
+}
+@* @if (TempData["Error"] != null)
+{
+   <div data-notify="container" class="col-10 col-xs-11 col-sm-4 alert alert-danger" role="alert" data-notify-position="bottom-right" style="display: inline-block; margin: 0px auto; padding-left: 65px; position: fixed; transition: 0.5s ease-in-out; z-index: 1031; bottom: 20px; right: 20px;">
+        <button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>
+        <span data-notify="icon" class="fa fa-bell"></span> <span data-notify="title">Status Update</span>
+        <span data-notify="message">@TempData["Error"]</span>
+        <a href="#" target="_blank" data-notify="url"></a>
+    </div>
+} *@
+<div class="container">
+    <div class="card card-primary card-outline mb-4 mt-4">
+        <!--begin::Header-->
+        <div class="card-header"><div class="card-title">Assign Coupon To Product</div></div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <!--begin::Body-->
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Coupon Code</label>
+                    <select asp-for="CouponId"
+                            asp-items="@(new SelectList(Model.Coupons, "Id", "Code"))"
+                            class="form-control">
+                        <option value="">-- Select Coupon --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Product</label>
+                    <select asp-for="ProductId"
+                            asp-items="@(new SelectList(Model.Products, "Id", "Name"))"
+                            class="form-control">
+                        <option value="">-- Select Product --</option>
+                    </select>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+            </div>
+            <!--end::Footer-->
+        </form>
+        <!--end::Form-->
+    </div>
+</div>

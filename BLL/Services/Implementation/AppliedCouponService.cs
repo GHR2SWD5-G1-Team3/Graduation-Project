@@ -79,12 +79,24 @@ namespace BLL.Services.Implementation
 
         }
 
+        public async Task<(bool success, string message)> CreateAppliedCouponAsync(AppliedCoupon appliedCoupon)
+        {
+            try
+            {
+                var result = await appliedCouponRepo.CreateAsync(appliedCoupon);
+                if (!result.Item1)
+                    return (false, result.Item2);
+                return (true, "Cteated Successfully");
+            } catch(Exception ex)
+            {
+                return (false,ex.Message);
+            }
+        }
         public async Task<List<AppliedCoupon>> GetAllAppliedCouponsAsync(Expression<Func<AppliedCoupon, bool>>? filte = null, params Expression<Func<AppliedCoupon, object>>[] includeProperties)
         {
-            return await GetAllAppliedCouponsAsync(filte, includeProperties);
+            return await appliedCouponRepo.GetAllAsync(filte, includeProperties);
 
         }
-
         public async Task<AppliedCoupon> GetAppliedCouponAsync(Expression<Func<AppliedCoupon, bool>>? filte = null)
         {
             return await appliedCouponRepo.GetAsync(filte);

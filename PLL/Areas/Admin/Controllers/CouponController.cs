@@ -1,4 +1,6 @@
-﻿namespace PLL.Areas.Admin.Controllers
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace PLL.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin, Vendor")]
     [Area("Admin")]
@@ -14,7 +16,7 @@
         }
         public async Task<IActionResult> Index()
         {
-            var coupons = await couponService.GetAllCouponsAsync(c=>c.IsDeleted == false);
+            var coupons = await couponService.GetAllCouponsAsync(c => c.IsDeleted == false);
             return View(coupons);
         }
         public IActionResult Create()
@@ -32,7 +34,7 @@
             await couponService.CreateCouponAsync(newCoupon);
             return RedirectToAction("Index");
         }
-        public async Task <IActionResult> Edit(long id)
+        public async Task<IActionResult> Edit(long id)
         {
             var coupon = await couponService.GetCouponAsync(c => c.Id == id && c.IsDeleted == false);
             if (coupon == null)

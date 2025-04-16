@@ -1,0 +1,93 @@
+﻿@model IEnumerable<AppliedCoupon>
+@if (TempData["Success"] != null)
+{
+    <button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>
+
+    <span data-notify="icon" class="fa fa-bell"></span> <span data-notify="title">Status Notify</span> <span data-notify="message">@TempData["Success"]</span>
+
+    <a href="index.html" target="_blank" data-notify="url" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;); height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: 1032;"></a>
+
+}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">AppliedCoupons List</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped shadow">
+            <thead class="bg-success text-white">
+                <tr>
+                    <th>#</th>
+                    <th>Coupon Code</th>
+                    <th>Product Name</th>
+                    <th>User Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    int index = 1;
+                    foreach (var appliedCoupon in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@index</td>
+                            <td class="align-middle">@appliedCoupon.Coupon.Code</td>
+                            <td class="align-middle">@appliedCoupon.Product.Name</td>
+                            <td class="align-middle">@appliedCoupon.User.UserName</td>
+                            <td class="align-middle">
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteAppliedCoupon(@appliedCoupon.ProductId, @appliedCoupon.CouponId)">Delete</a>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">No Coupons found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function deleteAppliedCoupon(productId, couponId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make an AJAX request to delete the product
+                $.ajax({
+                    url: '@Url.Action("DeleteAppliedCoupon", "AppliedCoupon")/' + productId + '/' + couponId,
+                    type: 'POST',
+                    success: function () {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your Applied Coupon has been deleted.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page after successful deletion
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'There was an issue deleting the Applied Coupon.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>
