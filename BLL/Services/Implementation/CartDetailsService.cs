@@ -1,6 +1,4 @@
-﻿using BLL.ModelVM.CartDetails;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class CartDetailsService :ICartDetailsService
     {

@@ -1,6 +1,4 @@
-﻿using BLL.ModelVM.Category;
-
-namespace BLL.Services.Abstract
+﻿namespace BLL.Services.Abstract
 {
     public interface ICategoryServices
     {

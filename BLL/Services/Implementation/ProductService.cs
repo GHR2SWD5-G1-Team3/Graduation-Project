@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
     public class ProductService : IProductService
     {
@@ -26,7 +20,7 @@ namespace BLL.Services.Implementation
                 }
                 return false;
             }
-            catch (Exception ex) 
+            catch  
             { 
                 return false;
             }
@@ -40,7 +34,7 @@ namespace BLL.Services.Implementation
                 if(result)
                     return true;
                 return false;
-            } catch (Exception ex)
+            } catch 
             {
                 return false;
             }
@@ -54,7 +48,7 @@ namespace BLL.Services.Implementation
                 if(result.Item1)
                     return true;
                 return false;
-            } catch (Exception ex)
+            } catch 
             {
                 return false;
             }
@@ -66,7 +60,7 @@ namespace BLL.Services.Implementation
             {
                 return await productRepo.GetAllAsync(filter, includeProperty);
             }
-            catch (Exception ex) 
+            catch  
             {
                 return [];
             }
@@ -77,7 +71,7 @@ namespace BLL.Services.Implementation
             try
             {
                 return await productRepo.GetAsync(filter);
-            } catch (Exception ex)
+            } catch 
             {
                 return null;
             }

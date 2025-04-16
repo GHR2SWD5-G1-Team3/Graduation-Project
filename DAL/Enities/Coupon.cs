@@ -1,7 +1,4 @@
-﻿using Azure.Identity;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace DAL.Enities
+﻿namespace DAL.Enities
 {
     public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount, string createdBy)
     {

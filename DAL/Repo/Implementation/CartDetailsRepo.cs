@@ -1,5 +1,4 @@
-﻿
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
     public class CartDetailsRepo : GenericRepo<CartDetails>, ICartDetailsRepo
     {

@@ -1,8 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using System;
-
-namespace BLL.Services.Implementation
+﻿namespace BLL.Services.Implementation
 {
 	public class AppliedCouponService : IAppliedCouponService
 	{

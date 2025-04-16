@@ -1,5 +1,3 @@
-using DAL.Shared.Generic;
-
 namespace PLL
 {
     public class Program
@@ -17,9 +15,9 @@ namespace PLL
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 });
-
+            
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
-             options.UseSqlServer(connectionString));
+             options.UseLazyLoadingProxies().UseSqlServer(connectionString));
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
@@ -29,6 +27,7 @@ namespace PLL
             builder.Services.AddScoped<ICouponRepo, CouponRepo>();
             builder.Services.AddScoped<IUsedCouponRepo, UsedCouponRepo>();
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
 
             //Scopped Services
             builder.Services.AddScoped<IOrderServices, OrderServices>();
@@ -39,6 +38,7 @@ namespace PLL
             builder.Services.AddScoped<ICouponService,CouponService>();
             builder.Services.AddScoped<IUsedCouponService, UsedCouponService>();
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
 
             //Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));

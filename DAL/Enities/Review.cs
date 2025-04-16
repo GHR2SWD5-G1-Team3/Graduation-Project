@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace DAL.Enities
+﻿namespace DAL.Enities
 {
     public class Review(string comment, int rate, DateTime createdAt, string userId, long productId)
     {

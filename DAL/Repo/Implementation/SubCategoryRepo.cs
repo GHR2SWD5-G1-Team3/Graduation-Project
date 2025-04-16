@@ -1,8 +1,4 @@
-﻿
-using DAL.Enities;
-using Microsoft.EntityFrameworkCore;
-
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
     public class SubCategoryRepo : GenericRepo<SubCategory>, ISubCategoryRepo
     {

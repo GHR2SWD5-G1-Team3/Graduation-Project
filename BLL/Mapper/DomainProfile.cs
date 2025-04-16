@@ -1,8 +1,4 @@
-﻿using BLL.ModelVM.Category;
-using BLL.ModelVM.Product;
-using BLL.ModelVM.SubCategory;
-
-namespace BLL.Mapper
+﻿namespace BLL.Mapper
 {
     public class DomainProfile : Profile
     {
@@ -11,6 +7,8 @@ namespace BLL.Mapper
             //User
             CreateMap<SignUpvM, User>();
             CreateMap<SignInVM, User>();
+            CreateMap<AddNewUser,User>();
+            CreateMap<User,DisplayUser>();
 
 
             //Order
