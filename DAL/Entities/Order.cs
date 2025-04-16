@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class Order(decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod, string userId)
     {

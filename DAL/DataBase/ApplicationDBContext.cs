@@ -1,10 +1,11 @@
-using DAL.Entities;
-
 namespace DAL.DataBase
 {
-    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext<User, IdentityRole, string>(options)
+    public class ApplicationDBContext: IdentityDbContext<User, IdentityRole, string>
     {
-
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
+        {
+            
+        }
         public override DbSet<User> Users { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }

@@ -1,12 +1,4 @@
-﻿using DAL.Entities;
-using DAL.DataBase;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace DAL.Repositories
+﻿namespace DAL.Repo.Implementation
 {
     public class ReviewRepo : IReviewRepo
     {

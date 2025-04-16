@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class Product(string name, string description, string imagePath, decimal unitPrice, long quantity, int? discountPrecentage, string userId, int subCategoryId)
     {

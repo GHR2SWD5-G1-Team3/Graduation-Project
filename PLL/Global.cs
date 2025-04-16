@@ -9,7 +9,6 @@ global using BLL.Services.Abstract;
 global using DAL.Repo.Abstract;
 global using DAL.Repo.Implementation;
 global using BLL.Services.Implementation;
-global using DAL.Enities;
 global using Microsoft.AspNetCore.Identity;
 global using BLL.ModelVM.Account;
 global using Microsoft.AspNetCore.Mvc;
@@ -19,8 +18,6 @@ global using AutoMapper;
 global using BLL.ModelVM.Product;
 global using Microsoft.AspNetCore.Authorization;
 global using BLL.ModelVM.Coupon;
-global using DAL.Repositories;
 global using PLL.Data.Seed;
-global using Services;
-global using Services.Interfaces;
+global using DAL.Entities;
 

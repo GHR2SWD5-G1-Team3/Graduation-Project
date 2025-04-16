@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class Payment(string method, decimal amountPaied, string state, long orderId)
     {

@@ -1,4 +1,4 @@
-﻿namespace DAL.Enities
+﻿namespace DAL.Entities
 {
     public class Coupon(string code, DateTime? expiredAt, int? usageLimit, int discount, string createdBy)
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace DAL.Enities
+namespace DAL.Entities
 {
     public class SubCategory(string name, string description, string imagePath, int categoryId)
     {

@@ -1,6 +1,5 @@
-﻿using DAL.Shared;
-
-namespace DAL.Enities
+﻿
+namespace DAL.Entities
 {
     public class Category(string? name, string? description, string? image) 
     {
