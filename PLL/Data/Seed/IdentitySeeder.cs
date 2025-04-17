@@ -5,7 +5,7 @@
 
         public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
             string[] roleNames = { "Admin", "Vendor", "Customer" };
@@ -14,7 +14,7 @@
                 var roleExists = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExists)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                    await roleManager.CreateAsync(new Role(roleName));
                 }
             }
 
@@ -25,12 +25,15 @@
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                var newAdmin = new User("", "", "avater.jpg","123", "123")
+                var newAdmin = new User("", "", "avater.jpg", "123", "123")
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    RoleName = "Admin"
+                    
                 };
+
 
                 var result = await userManager.CreateAsync(newAdmin, adminPassword);
                 if (result.Succeeded)

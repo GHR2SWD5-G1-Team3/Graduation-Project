@@ -1,6 +1,6 @@
 namespace DAL.DataBase
 {
-    public class ApplicationDBContext: IdentityDbContext<User, IdentityRole, string>
+    public class ApplicationDBContext: IdentityDbContext<User, Role, string>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
         {
