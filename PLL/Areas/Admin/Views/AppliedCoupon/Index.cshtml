@@ -13,7 +13,7 @@
         <h4 class="card-title">AppliedCoupons List</h4>
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped shadow">
+        <table id="add-row" class="table table-bordered table-striped shadow">
             <thead class="bg-success text-white">
                 <tr>
                     <th>#</th>
@@ -35,7 +35,7 @@
                             <td class="align-middle">@appliedCoupon.Product.Name</td>
                             <td class="align-middle">@appliedCoupon.User.UserName</td>
                             <td class="align-middle">
-                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteAppliedCoupon(@appliedCoupon.ProductId, @appliedCoupon.CouponId)">Delete</a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteAppliedCoupon(@appliedCoupon.ProductId, @appliedCoupon.CouponId)"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                         index++;
