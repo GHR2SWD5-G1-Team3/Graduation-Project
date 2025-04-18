@@ -1,5 +1,5 @@
-﻿@using BLL.ModelVM.Product
-@model List<DisplayProductInShopVM>
+﻿@model List<DisplayProductInShopVM>
+
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop</h1>
@@ -10,6 +10,8 @@
     </ol>
 </div>
 <!-- Single Page Header End -->
+
+
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
@@ -25,7 +27,7 @@
                             <a class="nav-link active" data-bs-toggle="pill" href="#tab-1">All Products</a>
                         </li>
 
-                        <!-- Vegetables Dropdown -->
+                        <!-- Fruits Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle bg-light p-2 m-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Fruits
@@ -38,7 +40,7 @@
                             </ul>
                         </li>
 
-                        <!-- Fruits Dropdown -->
+                        <!-- Vegetables Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle bg-light p-2 m-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Vegetables
@@ -54,330 +56,295 @@
                 </div>
             </div>
             <div class="tab-content">
+                <!-- All Products Tab -->
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Grapes</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model)
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer"
+                                             data-url="@Url.Action("Details", "Product", new { id = product.Id })"
+                                             style="cursor: pointer;">
+
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary no-click">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Raspberries</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-3.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Apricots</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Banana</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-3.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Oranges</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Tomatoes</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Tomatoes</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Apples</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- All Fruits Tab -->
                 <div id="tab-2" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Vegetables</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Carrots</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Fruits"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Vegetables</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Broccoli</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- All Vegetables Tab -->
                 <div id="tab-3" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Oranges</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div><div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Apple</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Fresh Vegetables Tab -->
+
+                <!-- Fresh Fruits Tab -->
                 <div id="tab-4" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fresh Vegetables</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Fresh Carrots</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Fresh Fruits"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Organic Vegetables Tab -->
+
+                <!-- Organic Fruits Tab -->
                 <div id="tab-5" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Organic Vegetables</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Organic Broccoli</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Organic Fruits"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Fresh Fruits Tab -->
+
+                <!-- Fresh Vegetables Tab -->
                 <div id="tab-6" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fresh Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Fresh Oranges</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Fresh Vegetables"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                            data-product-id="@product.Id"
+                                                            title="Add to favorites"
+                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="fa-regular fa-heart text-dark"></i>
+                                                    </button>
+                                                </div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Organic Fruits Tab -->
+
+                <!-- Organic Vegetables Tab -->
                 <div id="tab-7" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Organic Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>Organic Apple</h4>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Organic Vegetables"))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                            <div class="fruite-img">
+                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                            </div>
+                                            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                                                            data-product-id="@product.Id"
+                                                            title="Add to favorites"
+                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="fa-regular fa-heart text-dark"></i>
+                                                    </button>
+                                                </div>
+                                                <button class="btn p-0 border-0 bg-transparent favourite-btn"
+                                                        data-product-id="@product.Id"
+                                                        title="Add to favorites">
+                                                    <i class="fa-regular fa-heart fs-5"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@product.Name</h4>
+                                                <p>@product.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+
+
                             </div>
                         </div>
                     </div>
@@ -387,4 +354,44 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
-  
+
+@* <script> *@
+@*     document.addEventListener("DOMContentLoaded", function () { *@
+@*         document.querySelectorAll(".card-clickable").forEach(function (card) { *@
+@*             card.addEventListener("click", function (e) { *@
+@*                 if (!e.target.closest('.no-click')) { *@
+@*                     window.location.href = card.dataset.url; *@
+@*                 } *@
+@*             }); *@
+@*         }); *@
+@*     }); *@
+@* </script> *@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.favourite-btn').forEach(btn => {
+        // Check initial state from server if needed
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            this.classList.toggle('active');
+
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-solid');
+            icon.classList.toggle('fa-regular');
+
+            const productId = this.getAttribute('data-product-id');
+            fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
+        });
+    });
+
+        document.querySelectorAll('.card-clickable').forEach(card => {
+            card.addEventListener('click', function () {
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+</script>

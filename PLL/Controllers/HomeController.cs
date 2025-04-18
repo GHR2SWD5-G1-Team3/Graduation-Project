@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using BLL.ModelVM.Home;
 using Microsoft.AspNetCore.Mvc;
 using PLL.Models;
 
@@ -8,14 +9,20 @@ namespace PLL.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService productService;
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            this.productService = productService;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var viewModel = new HomeVM
+            {
+                TopProducts = await productService.TopProducts(),
+                BestProducts = await productService.BestProducts()
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
