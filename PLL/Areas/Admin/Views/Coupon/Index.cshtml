@@ -5,7 +5,7 @@
         <h4 class="card-title">Coupons List</h4>
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped shadow">
+        <table id="add-row" class="table table-bordered table-striped shadow">
             <thead class="bg-success text-white">
                 <tr>
                     <th>#</th>
@@ -35,8 +35,8 @@
                             <td class="align-middle">@coupon.UsageLimit</td>
                             <td class="align-middle">@coupon.UsedNumber</td>
                             <td class="align-middle">
-                                <a asp-action="Edit" asp-route-id="@coupon.Id" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteCoupon(@coupon.Id)">Delete</a>
+                                <a asp-action="Edit" asp-route-id="@coupon.Id" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteCoupon(@coupon.Id)"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                         index++;
