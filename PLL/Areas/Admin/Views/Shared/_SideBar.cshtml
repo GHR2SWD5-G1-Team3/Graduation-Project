@@ -71,51 +71,19 @@
                 </li>
 
                 <!-- Categories -->
-                <li class="nav-item @Html.IsParentActive("Category")">
-                    <a data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="@(Html.IsExpandedGroup("Category") != "" ? "true" : "false")" aria-controls="forms">
+                <li class="nav-item @Html.IsActive("Category", "Index")">
+                    <a asp-action="Index" asp-controller="Category">
                         <i class="fas fa-pen-square"></i>
                         <p>Categories</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse @Html.IsExpandedGroup("Category")" id="forms">
-                        <ul class="nav nav-collapse">
-                            <li class="@Html.IsActive("Category", "Index")">
-                                <a asp-action="Index" asp-controller="Category">
-                                    <span class="sub-item">All Categories</span>
-                                </a>
-                            </li>
-                            <li class="@Html.IsActive("Category", "Create")">
-                                <a asp-action="Create" asp-controller="Category">
-                                    <span class="sub-item">Create Category</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
-
                 <!-- SubCategories -->
-                <li class="nav-item @Html.IsParentActive("SubCategory")">
-                    <a data-bs-toggle="collapse" href="#tables" role="button" aria-expanded="@(Html.IsExpandedGroup("SubCategory") != "" ? "true" : "false")" aria-controls="tables">
+                <li class="nav-item @Html.IsActive("SubCategory", "Index")">
+                    <a asp-action="Index" asp-controller="SubCategory">
                         <i class="fas fa-table"></i>
                         <p>SubCategories</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse @Html.IsExpandedGroup("SubCategory")" id="tables">
-                        <ul class="nav nav-collapse">
-                            <li class="@Html.IsActive("SubCategory", "Index")">
-                                <a asp-action="Index" asp-controller="SubCategory">
-                                    <span class="sub-item">All SubCategories</span>
-                                </a>
-                            </li>
-                            <li class="@Html.IsActive("SubCategory", "Create")">
-                                <a asp-action="Create" asp-controller="SubCategory">
-                                    <span class="sub-item">Create SubCategory</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
-
                 <!-- Orders -->
                 <li class="nav-item @Html.IsParentActive("Order")">
                     <a data-bs-toggle="collapse" href="#maps" role="button" aria-expanded="@(Html.IsExpandedGroup("Order") != "" ? "true" : "false")" aria-controls="maps">
