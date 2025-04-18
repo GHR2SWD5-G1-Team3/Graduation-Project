@@ -3,6 +3,7 @@ using BLL.ModelVM.Category;
 using BLL.ModelVM.Coupon;
 using BLL.ModelVM.Product;
 using BLL.ModelVM.SubCategory;
+using BLL.ModelVM.User;
 
 namespace BLL.Mapper
 {
@@ -22,6 +23,8 @@ namespace BLL.Mapper
             CreateMap<Order, DisplayOrderVM>();
             //coupon
             CreateMap<dynamic, Coupon>();
+            //CartDetails
+            CreateMap<DisplayCartDetailsVM,CartDetails>();
 
             #region Category
             CreateMap<Category, CategoryVM>()

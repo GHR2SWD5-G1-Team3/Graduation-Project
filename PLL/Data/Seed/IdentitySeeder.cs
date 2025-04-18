@@ -1,4 +1,6 @@
-﻿namespace PLL.Data.Seed
+﻿using DAL.Enities;
+
+namespace PLL.Data.Seed
 {
     public static class IdentitySeeder
     {
@@ -31,7 +33,7 @@
                     Email = adminEmail,
                     EmailConfirmed = true,
                     RoleName = "Admin"
-                    
+
                 };
 
 

@@ -1,4 +1,6 @@
 ﻿
+using BLL.ModelVM.CartDetails;
+
 namespace PLL.Controllers
 {
 	public class CartDetailsController : Controller
@@ -16,26 +18,15 @@ namespace PLL.Controllers
 			return View(cartDetails);
 		}
 
-		public IActionResult Create()
-		{
-			return View();
-		}
-
 		[HttpPost]
-		public IActionResult Create(CartDetails model)
+		public IActionResult Create(DisplayCartDetailsVM model)
 		{
 			if (!ModelState.IsValid)
 			{
-				return View(model);
-			}
-
-			var result = _cartDetailsService.AddToCart(model);
-			if (result.Item1)
-			{
-				return RedirectToAction("Index");
-			}
-			ModelState.AddModelError("", result.Item2);
-			return View(model);
+                var result = _cartDetailsService.AddToCart(model);
+				return Ok("Item added successfuly");
+            }
+			return BadRequest("Missing Data");
 		}
 
 		//public IActionResult Delete(long id)

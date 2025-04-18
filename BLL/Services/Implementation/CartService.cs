@@ -1,32 +1,42 @@
-﻿namespace BLL.Services.Implementation
+﻿using BLL.ModelVM.CartDetails;
+
+namespace BLL.Services.Implementation
 {
     public class CartService : ICartService
     {
         private readonly ICartRepo cartRepo;
         private readonly IMapper mapper;
-        public CartService(ICartRepo repo , IMapper map)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CartService(ICartRepo repo , IMapper map , IHttpContextAccessor httpContextAccessor)
         {
             cartRepo = repo;
             mapper = map;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<(bool, string?)> AddCart(Cart cart)
         {
           return await cartRepo.CreateAsync(cart);
         }
-        public async Task<List<DisplayCartDetailsVM>> GetAllCarts()
-        {  
-            var result = await cartRepo.GetAllAsync();
-            return mapper.Map<List<DisplayCartDetailsVM>>(result);
-        }
-        public async Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null)
+
+        public Task<List<DisplayCartDetailsVM>> GetAllCarts()
         {
-            var result = await cartRepo.GetAsync(filter);
-            return  mapper.Map<DisplayCartDetailsVM>(result);
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> RemoveFromCart(int cartId)
+        public Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null)
         {
-           return await cartRepo.DeleteById("admin",cartId);
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> RemoveCart(int cartId)
+        {
+            string username = _httpContextAccessor.HttpContext.User.Identity.Name;
+            if (username !=null)
+            {
+                await cartRepo.DeleteById(username, cartId);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BLL.Services.Implementation
+﻿using BLL.ModelVM.CartDetails;
+
+namespace BLL.Services.Implementation
 {
     public class CartDetailsService :ICartDetailsService
     {
@@ -12,9 +14,10 @@
             _mapper = mapper;
         }
 
-        public (bool, string) AddToCart(CartDetails cartDetails)
+        public async Task<(bool, string?)> AddToCart(DisplayCartDetailsVM cartDetails)
         {
-            return _cartDetailsRepo.Create(cartDetails);
+            var result =_mapper.Map<CartDetails>(cartDetails);
+            return await _cartDetailsRepo.CreateAsync(result);
 
         }
 
@@ -23,15 +26,15 @@
             _cartDetailsRepo.Delete(cartDetailId);
         }
 
-        public List<DisplayCartDetailsVM> GetAllCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
+        public async Task<List<DisplayCartDetailsVM>> GetAllCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
         {
-            var cartDetails = _cartDetailsRepo.GetAll(filter);
+            var cartDetails =await _cartDetailsRepo.GetAllAsync(filter);
             return _mapper.Map<List<DisplayCartDetailsVM>>(cartDetails);
         }
 
-        public DisplayCartDetailsVM GetCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
+        public async Task<DisplayCartDetailsVM> GetCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
         {
-            var cartDetails = _cartDetailsRepo.Get(filter);
+            var cartDetails =await _cartDetailsRepo.GetAsync(filter);
             return _mapper.Map<DisplayCartDetailsVM>(cartDetails);
         }
     }
