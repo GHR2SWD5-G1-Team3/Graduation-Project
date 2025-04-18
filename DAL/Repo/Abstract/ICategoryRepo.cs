@@ -2,8 +2,8 @@
 {
     public interface ICategoryRepo : IGenericRepo<Category>
     {
-        Task<(bool, string?)> Edit(string user, Category category, int Id);
-        Task<bool> Delete(string user, int id);
+        Task<(bool, string?)> Edit( Category category, int Id);
+        Task<bool> Delete( int id);
     }
 
 }

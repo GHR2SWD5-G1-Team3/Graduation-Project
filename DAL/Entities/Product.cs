@@ -24,6 +24,7 @@
         public SubCategory? SubCategory { get; set; }   
         
         public List<CartDetails>? CartProducts { get; set; }
+        public List<Review>? Reviews { get; set; }
         public List<FavoriteProduct>? FavoriteProducts { get; set; }
         public bool Delete(string? User)
         {

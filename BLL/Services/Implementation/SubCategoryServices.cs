@@ -29,7 +29,7 @@
             }
         }
         //delete
-        public async Task<(bool, string?)> DeleteByID(int id, string user)
+        public async Task<(bool, string?)> DeleteByID(int id)
         {
             try
             {
@@ -39,7 +39,7 @@
                 if (subcategory.IsDeleted)
                     return (false, "Error: subcategory is already deleted.");
 
-                var isDeleted = await subCategoryRepo.Delete(id, user);
+                var isDeleted = await subCategoryRepo.Delete(id);
                 if (!isDeleted)
                     return (false, "Failed to delete subcategory.");
 
@@ -52,7 +52,7 @@
 
         }
         //edit
-        public async Task<(bool, string)> Edit(int Id, string user, SubCategoryVM subCategoryVM)
+        public async Task<(bool, string)> Edit(int Id, SubCategoryVM subCategoryVM)
         {
             try
             {
@@ -73,11 +73,9 @@
                     }
                     subcategory.UpdateImagePath(newImageName);
                 }
-                // Log Image Path Before Updating
-                Console.WriteLine("New Image Path: " + subcategory.ImagePath);
                 mapper.Map(subCategoryVM, subcategory);
                 //make update  
-                var result = await subCategoryRepo.Edit(user, Id, subcategory);
+                var result = await subCategoryRepo.Edit(Id, subcategory);
                 return result;
             }
             catch (Exception ex)

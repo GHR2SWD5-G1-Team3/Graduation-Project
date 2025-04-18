@@ -51,8 +51,14 @@ namespace BLL.Mapper
 
             //Product
             CreateMap<Product, DisplayProductInShopVM>()
-                .ForMember(dest => dest.CategoryName,
-                           opt => opt.MapFrom(src => src.SubCategory.Category.Name)).ReverseMap();
+            .ForMember(
+                dest => dest.CategoryName,
+                opt => opt.MapFrom(src => src.SubCategory.Category.Name)
+            ).ForMember(
+                dest => dest.SubCategoryName,
+                opt => opt.MapFrom(src => src.SubCategory.Name))
+            .ReverseMap();
+
             CreateMap<CreateProductVM, Product>().ReverseMap();
             CreateMap<DisplayCartDetailsVM ,Cart>().ReverseMap();
             CreateMap<ProductDetailsVM, Product>().ReverseMap();

@@ -3,10 +3,12 @@
     public class ProductService : IProductService
     {
         private readonly IProductRepo productRepo;
+        private readonly IMapper mapper;
 
-        public ProductService(IProductRepo productRepo)
+        public ProductService(IProductRepo productRepo, IMapper mapper)
         {
             this.productRepo = productRepo;
+            this.mapper = mapper;
         }
 
         public async Task<bool> CreateProductAsync(Product product)
@@ -76,5 +78,20 @@
                 return null;
             }
         }
+        //top products
+        public async Task<List<DisplayProductInShopVM>> TopProducts()
+        {
+            var products = await productRepo.TopProducts(8);
+            var result = mapper.Map<List<DisplayProductInShopVM>>(products);
+            return result;
+        }
+        //best products
+        public async Task<List<DisplayProductInShopVM>> BestProducts()
+        {
+            var products = await productRepo.BestProducts(9);
+            var result = mapper.Map<List<DisplayProductInShopVM>>(products);
+            return result;
+        }
+
     }
 }

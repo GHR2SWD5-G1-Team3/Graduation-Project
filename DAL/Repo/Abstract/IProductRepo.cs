@@ -5,6 +5,8 @@ namespace DAL.Repo.Abstract
     {
         Task<(bool, string?)> Edit(string user, Product product, long Id);
         Task<bool> DeleteById(string user, long id);
+        Task<List<Product>> TopProducts(int count);
+        Task<List<Product>> BestProducts(int count);
 
     }
 }

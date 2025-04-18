@@ -1,8 +1,9 @@
 ﻿using BLL.ModelVM.SubCategory;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PLL.Controllers
+namespace PLL.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SubCategoryController : Controller
     {
         private readonly ISubCategoryServices subCategoryServices;
@@ -61,12 +62,11 @@ namespace PLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, SubCategoryVM subCategory)
         {
-            var user = "Fatma";
             if (!ModelState.IsValid)
             {
                 return View(subCategory);
             }
-            var result = await subCategoryServices.Edit(id, user, subCategory);
+            var result = await subCategoryServices.Edit(id, subCategory);
             if (!result.Item1)
             {
                 ViewBag.Categories = await categoryServices.GetAllActivateCategories();
@@ -80,8 +80,7 @@ namespace PLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = "Admin";
-            var (isSuccess, message) = await subCategoryServices.DeleteByID(id, user);
+            var (isSuccess, message) = await subCategoryServices.DeleteByID(id);
 
             if (!isSuccess)
             {

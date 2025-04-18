@@ -44,6 +44,28 @@
                 return false;
             }
         }
+        // top products
+        public async Task<List<Product>> TopProducts(int count)
+        {
+            return await Db.Products
+                .Where(p => p.SoldCount > 0) 
+                .Include(p => p.SubCategory)
+                .ThenInclude(s => s.Category)
+                .OrderByDescending(p => p.SoldCount)
+                .Take(count)
+                .ToListAsync();
+        }
+        //best products(high rated)
+        public async Task<List<Product>> BestProducts(int count)
+        {
+            return await Db.Products
+                .Include(p => p.SubCategory)
+                .ThenInclude(s => s.Category)
+                .OrderByDescending(p => p.Reviews.Average(r => r.Rate))
+                .Where(p => p.Reviews.Any())
+                .Take(count)
+                .ToListAsync();
+        }
 
     }
 }

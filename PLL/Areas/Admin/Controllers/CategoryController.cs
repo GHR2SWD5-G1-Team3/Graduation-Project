@@ -1,8 +1,8 @@
 ﻿using BLL.ModelVM.Category;
-using Microsoft.AspNetCore.Mvc;
 
-namespace PLL.Controllers
+namespace PLL.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryServices categoryServices;
@@ -54,12 +54,11 @@ namespace PLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, CategoryVM category)
         {
-            var user = "Fatma";
             if (!ModelState.IsValid)
             {
                 return View(category);
             }
-            var result = await categoryServices.Edit(id, user, category);
+            var result = await categoryServices.Edit(id, category);
             if (!result.Item1)
             {
                 ViewBag.Departments = await categoryServices.GetAllActivateCategories();
@@ -73,8 +72,7 @@ namespace PLL.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = "Admin";
-            var (isSuccess, message) = await categoryServices.DeleteByID(id, user);
+            var (isSuccess, message) = await categoryServices.DeleteByID(id);
 
             if (!isSuccess)
             {

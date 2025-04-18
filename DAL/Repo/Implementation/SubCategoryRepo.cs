@@ -4,7 +4,7 @@
     {
         public SubCategoryRepo(ApplicationDBContext context) : base(context){}
         //Edit
-        public async Task<(bool, string)> Edit(string user, int id, SubCategory subCategory)
+        public async Task<(bool, string)> Edit(int id, SubCategory subCategory)
         {
             try
             {
@@ -12,7 +12,7 @@
                 if (subCat == null)
                     return (false, "SubCategory Not Found in Database");
                 var imagePath = subCategory.ImagePath is not null ? subCategory.ImagePath : subCat.ImagePath;
-                var result = subCat.Edit(user, subCategory.Name, subCategory.Description, imagePath, subCategory.CategoryId);
+                var result = subCat.Edit( subCategory.Name, subCategory.Description, imagePath, subCategory.CategoryId);
                 if (result)
                 {
                     await Db.SaveChangesAsync();
@@ -27,14 +27,14 @@
             }
         }
         //delete
-        public async Task<bool> Delete(int Id, string user)
+        public async Task<bool> Delete(int Id)
         {
             try
             {
                 var subCategory = await Db.SubCategories.FirstOrDefaultAsync(s => s.Id == Id);
                 if (subCategory == null)
                     return false;
-                var result = subCategory.Delete(user);
+                var result = subCategory.Delete();
                 if (result)
                 {
                     await Db.SaveChangesAsync();

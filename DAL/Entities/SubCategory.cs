@@ -20,27 +20,23 @@ namespace DAL.Entities
         {
             ImagePath = imagePath;
         }
-        public bool Delete(string? User)
+        public bool Delete()
         {
-            if (User == null) return false;
             if (IsDeleted)
                 return false;
             IsDeleted = !IsDeleted;
-            DeletedBy = User;
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user,string name, string description, string imagePath, int categoryId)
+        public bool Edit(string name, string description, string imagePath, int categoryId)
         {
-            if (user == null) return false;
             Name = name;
             Description = description;
-            if (imagePath is not null) // Only update if a new image is uploaded
+            if (imagePath is not null) 
             {
                 ImagePath = imagePath;
             }
             CategoryId = categoryId;
-            ModifiedBy = user;
             ModifiedOn = DateTime.Now;
             return true;
         }
