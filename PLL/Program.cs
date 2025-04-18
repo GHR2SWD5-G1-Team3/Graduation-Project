@@ -1,6 +1,3 @@
-
-using DAL.Enities;
-
 namespace PLL
 {
     public class Program
