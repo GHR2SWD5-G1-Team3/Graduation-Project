@@ -12,7 +12,7 @@
         }
         public async Task<IActionResult> Index()
         {
-            var products = await productService.GetAllProductsAsync(null, p=>p.SubCategory,p=>p.SubCategory.Category);
+            var products = await productService.GetAllProductsAsync(filter: p => p.IsDeleted == false, p=>p.SubCategory,p=>p.SubCategory.Category);
             var mappedProduct = mapper.Map<List<DisplayProductInShopVM>>(products);
             return View(mappedProduct);
         }

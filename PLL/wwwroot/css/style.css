@@ -350,6 +350,31 @@
 .favourite-btn.active i {
     color: red;
 }
+/*search start*/
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding-right: 35px;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+    .search-icon:hover {
+        color: #495057;
+    }
+/*search end*/
+
 /*** Fruits End ***/
 
 

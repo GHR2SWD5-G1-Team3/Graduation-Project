@@ -4,8 +4,7 @@
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
         <li class="breadcrumb-item active text-white">Shop</li>
     </ol>
 </div>
@@ -20,7 +19,15 @@
                 <div class="col-lg-4 text-start">
                     <h1>Our Products</h1>
                 </div>
-                <div class="col-lg-8 text-end">
+
+                <div class="col-lg-4">
+                    <div class="search-container">
+                        <input id="searchInput" class="search-input form-control" type="search" placeholder="Search" />
+                        <i class="bx bx-search search-icon" onclick="focusSearchInput()"></i>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 text-end">
                     <ul class="nav nav-pills d-inline-flex text-center mb-5 nav-custom">
                         <!-- All products -->
                         <li class="nav-item">
@@ -54,7 +61,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+           </div>
             <div class="tab-content">
                 <!-- All Products Tab -->
                 <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -354,18 +361,82 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
+   <script>
+    // Focus function (kept from your original code)
+    function focusSearchInput() {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.focus();
+      searchInput.classList.add('focused');
+    }
 
-@* <script> *@
-@*     document.addEventListener("DOMContentLoaded", function () { *@
-@*         document.querySelectorAll(".card-clickable").forEach(function (card) { *@
-@*             card.addEventListener("click", function (e) { *@
-@*                 if (!e.target.closest('.no-click')) { *@
-@*                     window.location.href = card.dataset.url; *@
-@*                 } *@
-@*             }); *@
-@*         }); *@
-@*     }); *@
-@* </script> *@
+    // Main search function
+    function filterProducts() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const productCards = document.querySelectorAll('.fruite-item');
+        let hasResults = false;
+        
+        productCards.forEach(function(card) {
+            const productName = card.querySelector('h4').textContent.toLowerCase();
+            const productDescription = card.querySelector('p').textContent.toLowerCase();
+            const productCategory = card.querySelector('.text-white').textContent.toLowerCase();
+            
+            const parentCol = card.closest('.col-md-6');
+            
+            if (input === '' || 
+                productName.includes(input) || 
+                productDescription.includes(input) || 
+                productCategory.includes(input)) {
+                parentCol.style.display = '';
+                hasResults = true;
+            } else {
+                parentCol.style.display = 'none';
+            }
+        });
+        
+        // Handle no results message
+        const resultsContainer = document.querySelector('#tab-1 .row.g-4');
+        let noResultsMsg = resultsContainer.querySelector('.no-results-message');
+        
+        if (!hasResults && input.length > 0) {
+            if (!noResultsMsg) {
+                noResultsMsg = document.createElement('div');
+                noResultsMsg.className = 'col-12 no-results-message text-center py-5';
+                noResultsMsg.innerHTML = '<h4 class="text-muted">No products found matching "' + input + '"</h4>';
+                resultsContainer.appendChild(noResultsMsg);
+            }
+        } else if (noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+    
+    // Initialize all search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        
+        // Original blur handler (kept from your code)
+        searchInput.addEventListener('blur', () => {
+            searchInput.classList.remove('focused');
+        });
+        
+        // Search as you type
+        searchInput.addEventListener('input', filterProducts);
+        
+        // Search on Enter key
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                filterProducts();
+            }
+        });
+        
+        // Optional: Clear search when switching tabs
+        document.querySelectorAll('.nav-link[data-bs-toggle="pill"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function() {
+                searchInput.value = '';
+                filterProducts();
+            });
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.favourite-btn').forEach(btn => {
