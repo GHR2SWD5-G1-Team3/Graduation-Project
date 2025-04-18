@@ -52,6 +52,11 @@ namespace DAL.DataBase
                 .Property(p => p.UnitPrice)
                 .HasColumnType("decimal(18, 2)");
 
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews)
+                .HasForeignKey(r => r.ProductId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

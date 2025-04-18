@@ -4,6 +4,7 @@ using DAL.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250417214412_inititaion")]
+    partial class inititaion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -926,7 +929,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.Review", b =>
                 {
                     b.HasOne("DAL.Entities.Product", "Product")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1045,8 +1048,6 @@ namespace DAL.Migrations
                     b.Navigation("CartProducts");
 
                     b.Navigation("FavoriteProducts");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("DAL.Entities.SubCategory", b =>

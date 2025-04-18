@@ -45,13 +45,13 @@ namespace PLL.Areas.Admin.Controllers
                 var result = await productService.CreateProductAsync(product);
                 if (!result)
                 {
-                    ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
+                    ViewBag.SubCategories = await subCategoryService.GetAllSubCategories();
                     return View(model);
                 }
                 return RedirectToAction("Index");
 
             }
-            ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
+            ViewBag.SubCategories = await subCategoryService.GetAllSubCategories();
             return View(model);
         }
         public async Task<IActionResult> Details(long id)
@@ -95,7 +95,7 @@ namespace PLL.Areas.Admin.Controllers
         {
             if(!ModelState.IsValid)
             {
-                ViewBag.SubCategories = subCategoryService.GetAllSubCategories();
+                ViewBag.SubCategories = await subCategoryService.GetAllSubCategories();
                 return View(model);
             }
             var product = await productService.GetProductAsync(p => p.Id == model.Id);

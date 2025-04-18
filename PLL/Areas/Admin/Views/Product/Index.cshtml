@@ -35,10 +35,13 @@
                             <td class="align-middle">@product.SubCategory?.Name</td>
                             <td class="align-middle">@product.User?.UserName</td>
                             <td class="align-middle">
-                                <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-info btn-sm">View</a>
-                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)">Delete</a>
-                            </td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-info btn-sm">View</a>
+                                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)">Delete</a>
+
+                                </div>
+                             </td>
                         </tr>
                         index++;
                     }

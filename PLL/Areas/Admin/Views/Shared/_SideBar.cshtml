@@ -99,6 +99,15 @@
                         <p>Categories</p>
                         <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="forms">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a asp-action="Index" asp-controller="Category">
+                                    <span class="sub-item">All Categories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#tables">
@@ -106,6 +115,15 @@
                         <p>SubCategories</p>
                         <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="tables">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a asp-action="Index" asp-controller="SubCategory">
+                                    <span class="sub-item">All SubCategories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">

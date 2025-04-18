@@ -20,4 +20,6 @@ global using Microsoft.AspNetCore.Authorization;
 global using BLL.ModelVM.Coupon;
 global using PLL.Data.Seed;
 global using DAL.Entities;
+global using BLL.ModelVM.Category;
+global using BLL.ModelVM.SubCategory;
 

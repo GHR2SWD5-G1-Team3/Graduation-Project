@@ -19,7 +19,6 @@
                 if (categoryVM.Image is not null)
                 {
                     imagePath = UploadFiles.UploadFile("images", categoryVM.Image);
-                    //imagePath = $"/images/{fileName}";
                 }
 
                 var category = new Category(categoryVM.Name, categoryVM.Description, imagePath);
@@ -40,7 +39,7 @@
         }
 
         //delete
-        public async Task<(bool, string?)> DeleteByID(int id, string user)
+        public async Task<(bool, string?)> DeleteByID(int id)
         {
             try
             {
@@ -50,7 +49,7 @@
                 if (category.IsDeleted)
                     return (false, "Error: category is already deleted.");
 
-                var isDeleted = await categoryRepo.Delete(user, id);
+                var isDeleted = await categoryRepo.Delete( id);
                 if (!isDeleted)
                     return (false, "Failed to delete category.");
 
@@ -63,7 +62,7 @@
 
         }
         //edit
-        public async Task<(bool, string)> Edit(int Id, string user, CategoryVM categoryVM)
+        public async Task<(bool, string)> Edit(int Id,  CategoryVM categoryVM)
         {
             try
             {
@@ -85,17 +84,14 @@
                     }
                     category.Image = newImageName;
                 }
-                // Log Image Path Before Updating
-                //Console.WriteLine("New Image Path: " + category.Image);
                 mapper.Map(categoryVM, category);
                 //make update  
-                var (result, error) = await categoryRepo.Edit(user, category, Id);
+                var (result, error) = await categoryRepo.Edit( category, Id);
 
                 return (result, error);
             }
             catch (Exception ex)
             {
-
                 return (false, ex.Message);
             }
 

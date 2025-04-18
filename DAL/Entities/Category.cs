@@ -15,26 +15,22 @@ namespace DAL.Entities
         public List<SubCategory>? SubCategories { get; set; }
         
 
-        public bool Delete(string? User)
+        public bool Delete()
         {
-            if (User == null) return false;
             if (IsDeleted)
                 return false;
             IsDeleted = !IsDeleted;
-            DeletedBy = User;
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? user, string name, string description, string image)
+        public bool Edit(string name, string description, string image)
         {
-            if (user == null) return false;
             Name = name;
             Description = description;
-            if (image is not null) // Only update if a new image is uploaded
+            if (image is not null) 
             {
                 Image = image;
             }
-            ModifiedBy = user;
             ModifiedOn = DateTime.Now;
             return true;
         }
