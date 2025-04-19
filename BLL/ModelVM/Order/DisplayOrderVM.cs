@@ -1,16 +1,23 @@
 ﻿namespace BLL.ModelVM.Order
 {
-    public class DisplayOrderVM
-    {
-        public decimal TotalPrice { get;  set; }
-        public DateTime CreatedAt { get;  set; }
-        public bool IsPaied { get;  set; }
-        public bool IsDelivered { get;  set; }
-        public string PhoneNumber { get;  set; }
-        public string City { get;  set; }
-        public string Street { get;  set; }
-        public string PaymentMethod { get;  set; }
-        public bool IsDeleted { get; set; }
-        public string UserName { get; set; }
-    }
+   
+    
+        public class DisplayOrderVM
+        {
+            public long Id { get; set; }
+            public decimal TotalPrice { get; set; }
+            public bool IsPaied { get; set; }
+            public bool IsDelivered { get; set; }
+            public string PhoneNumber { get; set; }
+            public string City { get; set; }
+            public string Street { get; set; }
+            public string PaymentMethod { get; set; }
+            public string UserId { get; set; }
+            public string UserEmail { get; set; } // The email of the user who made the order
+            public string Status { get; set; } // Order status (Pending, Delivered, Cancelled)
+            public DateTime CreatedDate { get; set; } // Date when the order was created
+            public DateTime? UpdatedDate { get; set; } // Date when the order was last updated (nullable)
+        }
+    
+
 }

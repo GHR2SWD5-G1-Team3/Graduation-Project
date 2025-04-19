@@ -16,6 +16,15 @@
             var mappedProduct = mapper.Map<List<DisplayProductInShopVM>>(products);
             return View(mappedProduct);
         }
-
+        public async Task<IActionResult> ProductDetails(long id)
+        {
+            var product = await productService.GetProductAsync(p => p.Id == id, p => p.SubCategory, product => product.Reviews);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productVM = mapper.Map<ProductDetailsVM>(product);
+            return View(productVM);
+        }
     }
 }

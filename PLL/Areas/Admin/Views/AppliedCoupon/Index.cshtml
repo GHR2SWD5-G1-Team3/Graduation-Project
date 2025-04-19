@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<AppliedCoupon>
-@if (TempData["Success"] != null)
-{
-    <button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>
-
-    <span data-notify="icon" class="fa fa-bell"></span> <span data-notify="title">Status Notify</span> <span data-notify="message">@TempData["Success"]</span>
-
-    <a href="index.html" target="_blank" data-notify="url" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;); height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: 1032;"></a>
-
-}
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">AppliedCoupons List</h4>
+        <div class="d-flex align-items-center">
+            <h4 class="card-title">All Coupons</h4>
+            <a asp-action="Create" asp-controller="AppliedCoupon" class="btn btn-primary btn-round ms-auto">
+                <i class="fa fa-plus"></i>
+                Assign Coupon
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <table id="add-row" class="table table-bordered table-striped shadow">

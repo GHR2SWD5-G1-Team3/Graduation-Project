@@ -1,6 +1,4 @@
-﻿using NuGet.Packaging.Signing;
-
-namespace PLL.Areas.Admin.Controllers
+﻿namespace PLL.Areas.Admin.Controllers
 {
     [Authorize(Roles ="Admin, Vendor")]   
     [Area("Admin")]
@@ -20,7 +18,14 @@ namespace PLL.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await productService.GetAllProductsAsync(p => p.IsDeleted == false, p => p.User, p => p.SubCategory.Category);
+            var user = await userManager.GetUserAsync(User);
+            List<Product> products;
+            if (await userManager.IsInRoleAsync(user, "Admin"))
+            {
+                products = await productService.GetAllProductsAsync(p => p.IsDeleted == false, p => p.User, p => p.SubCategory.Category);
+                return View(products);
+            }
+            products = await productService.GetAllProductsAsync(p => p.IsDeleted == false && p.UserId == user.Id, p => p.User, p => p.SubCategory.Category);
             return View(products);
         }
         public async Task<IActionResult> Create()
@@ -54,21 +59,20 @@ namespace PLL.Areas.Admin.Controllers
             ViewBag.SubCategories = await subCategoryService.GetAllSubCategories();
             return View(model);
         }
-        public async Task<IActionResult> Details(long id)
-        {
-            var product = await productService.GetProductAsync(p => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            var productVM = mapper.Map<ProductDetailsVM>(product);
-            return View(productVM);
-        }
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            var userName = await userManager.GetUserAsync(User);
-            await productService.DeleteAsync(id, userName.Email);
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
+            var product = await productService.GetProductAsync(p=>p.Id == id);
+            if (product == null)
+                return NotFound();
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            var isOwner = product.UserId == user.Id;
+            if (!isAdmin && !isOwner)
+                return Forbid();
+            await productService.DeleteAsync(id, user.Email);
             return RedirectToAction("Index", "Product");
         }
         public async Task<IActionResult> Edit(long id)

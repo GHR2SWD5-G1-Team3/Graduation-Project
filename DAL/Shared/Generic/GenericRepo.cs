@@ -25,6 +25,24 @@
             else 
                 return await Db.Set<T>().FirstOrDefaultAsync(filter);
         }
+        public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = Db.Set<T>();
+
+            // Apply includes
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            // Apply filter if any
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
 
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includeProperties)
         {
