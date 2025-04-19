@@ -12,9 +12,9 @@ namespace PLL.Controllers
 			_cartDetailsService = cartDetailsService;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var cartDetails = _cartDetailsService.GetAllCartDetails();
+			var cartDetails = await _cartDetailsService.GetAllCartDetails();
 			return View(cartDetails);
 		}
 
