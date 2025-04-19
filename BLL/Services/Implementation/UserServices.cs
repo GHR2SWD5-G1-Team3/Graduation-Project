@@ -8,6 +8,19 @@
         private readonly IUserRepo _userRepo = userRepo;
         #endregion
         #region Implementation
+        public async Task<IdentityUser> GetUserByIdAsync(string userId)
+        {
+            try
+            {
+                var user = await _userRepo.GetAsync(a => a.Id == userId);
+                return user;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<bool> CreateAsync(AddNewUser newUser)
         {
             try

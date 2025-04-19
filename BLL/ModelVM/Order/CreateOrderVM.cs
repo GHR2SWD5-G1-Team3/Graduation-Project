@@ -11,5 +11,6 @@ namespace BLL.ModelVM.Order
         public string City { get;  set; } = city;
         public string Street { get;  set; } = street;
         public string PaymentMethod { get;  set; } = paymentMethod;
+        public bool IsPaid { get; internal set; }
     }
 }

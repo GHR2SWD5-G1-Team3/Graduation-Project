@@ -1,4 +1,4 @@
-﻿using DAL.Enities;
+﻿using DAL.Entities;
 
 namespace PLL.Data.Seed
 {

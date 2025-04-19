@@ -43,6 +43,11 @@ namespace DAL.DataBase
             modelBuilder.Entity<OrderDetails>()
                 .Property(od => od.Quantity)
                 .HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Details)
+                   .WithOne(d => d.Order)
+                   .HasForeignKey(d => d.OrderId);
+
 
             modelBuilder.Entity<Payment>()
                 .Property(p => p.AmountPaied)
