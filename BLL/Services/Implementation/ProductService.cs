@@ -68,11 +68,11 @@
             }
         }
 
-        public async Task<Product> GetProductAsync(Expression<Func<Product, bool>>? filter = null)
+        public async Task<Product> GetProductAsync(Expression<Func<Product, bool>>? filter = null, params Expression<Func<Product, object>>[] include)
         {
             try
             {
-                return await productRepo.GetAsync(filter);
+                return await productRepo.GetAsync(filter, include);
             } catch 
             {
                 return null;
