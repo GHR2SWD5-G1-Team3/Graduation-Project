@@ -1,6 +1,4 @@
-﻿using DAL.Enities;
-
-namespace PLL.Data.Seed
+﻿namespace PLL.Data.Seed
 {
     public static class IdentitySeeder
     {
