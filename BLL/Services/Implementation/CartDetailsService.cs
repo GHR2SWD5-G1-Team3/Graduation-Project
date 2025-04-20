@@ -1,17 +1,19 @@
 ﻿using BLL.ModelVM.CartDetails;
+using DAL.Entities;
 
 namespace BLL.Services.Implementation
 {
     public class CartDetailsService :ICartDetailsService
     {
-
+        private readonly ICartRepo cartRepo;
         private readonly ICartDetailsRepo _cartDetailsRepo;
         private readonly IMapper _mapper;
 
-        public CartDetailsService(ICartDetailsRepo cartDetailsRepo, IMapper mapper)
+        public CartDetailsService(ICartDetailsRepo cartDetailsRepo, IMapper mapper ,ICartRepo cartRepo)
         {
             _cartDetailsRepo = cartDetailsRepo;
             _mapper = mapper;
+            this.cartRepo= cartRepo;
         }
 
         public async Task<(bool, string?)> AddToCart(DisplayCartDetailsVM cartDetails)
@@ -21,21 +23,16 @@ namespace BLL.Services.Implementation
 
         }
 
-        public void RemoveFromCart(int cartDetailId)
+        public void RemoveFromCart(long cartDetailId)
         {
             _cartDetailsRepo.Delete(cartDetailId);
         }
 
-        public async Task<List<DisplayCartDetailsVM>> GetAllCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
+        public async Task<List<DisplayCartDetailsVM>> GetAllCartDetails(string UserId)
         {
-            var cartDetails =await _cartDetailsRepo.GetAllAsync(filter);
+            var cart = await cartRepo.GetAsync(a => a.UserId == UserId);
+            var cartDetails = await _cartDetailsRepo.GetAllAsync(a => a.CartId == cart.Id);
             return _mapper.Map<List<DisplayCartDetailsVM>>(cartDetails);
-        }
-
-        public async Task<DisplayCartDetailsVM> GetCartDetails(Expression<Func<CartDetails, bool>>? filter = null)
-        {
-            var cartDetails =await _cartDetailsRepo.GetAsync(filter);
-            return _mapper.Map<DisplayCartDetailsVM>(cartDetails);
         }
 
         public decimal GetCartPrice(List<DisplayCartDetailsVM> cartDetails)
