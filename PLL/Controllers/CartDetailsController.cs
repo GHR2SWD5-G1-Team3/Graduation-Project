@@ -4,7 +4,8 @@ using System.Security.Claims;
 
 namespace PLL.Controllers
 {
-	public class CartDetailsController : Controller
+    [Authorize]
+    public class CartDetailsController : Controller
 	{
 		private readonly ICartDetailsService _cartDetailsService;
 
@@ -12,7 +13,7 @@ namespace PLL.Controllers
 		{
 			_cartDetailsService = cartDetailsService;
 		}
-		[Authorize]
+		
 		public async Task<IActionResult> Index()
 		{
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

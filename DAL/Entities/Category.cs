@@ -9,9 +9,9 @@ namespace DAL.Entities
         public string? Image { get; set; } = image;
         public bool IsDeleted { get; set; } = false;
         public string? DeletedBy { get; private set; }
-        public DateTime DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
-        public DateTime ModifiedOn { get; private set; }
+        public DateTime? ModifiedOn { get; private set; }
         public List<SubCategory>? SubCategories { get; set; }
         
 
