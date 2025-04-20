@@ -15,6 +15,10 @@ namespace PLL.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var cartDetails = await _cartDetailsService.GetAllCartDetails();
+			var price =_cartDetailsService.GetCartPrice(cartDetails);
+			var total = price + 3;
+			ViewData["SupTotal"]=price;
+			ViewData["Total"]=total;
 			return View(cartDetails);
 		}
 

@@ -6,8 +6,9 @@ namespace BLL.Services.Abstract
     {
         Task<(bool, string?)> AddToCart(DisplayCartDetailsVM cartDetails);
         void RemoveFromCart(int cartDetailId);
-       Task< List<DisplayCartDetailsVM>> GetAllCartDetails(Expression<Func<CartDetails, bool>>? filter = null);
-       Task< DisplayCartDetailsVM> GetCartDetails(Expression<Func<CartDetails, bool>>? filter = null);
+        Task< List<DisplayCartDetailsVM>> GetAllCartDetails(Expression<Func<CartDetails, bool>>? filter = null);
+        Task< DisplayCartDetailsVM> GetCartDetails(Expression<Func<CartDetails, bool>>? filter = null);
+        decimal GetCartPrice(List<DisplayCartDetailsVM> cartDetails);
     }
 
 }

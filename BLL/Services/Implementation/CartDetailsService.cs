@@ -37,5 +37,10 @@ namespace BLL.Services.Implementation
             var cartDetails =await _cartDetailsRepo.GetAsync(filter);
             return _mapper.Map<DisplayCartDetailsVM>(cartDetails);
         }
+
+        public decimal GetCartPrice(List<DisplayCartDetailsVM> cartDetails)
+        {
+            return cartDetails.Sum(x => x.TotalPrice);
+        }
     }
 }
