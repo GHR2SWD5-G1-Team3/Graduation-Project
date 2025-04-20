@@ -48,7 +48,7 @@
         {
             try
             {
-                List<DisplayUser> displayUsers = new List<DisplayUser>();
+                List<DisplayUser> displayUsers = [];
                 var users = await _userRepo.GetAllAsync(filter, includeProperty);
                 foreach (var user in users)
                 {

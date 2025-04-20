@@ -4,8 +4,7 @@ namespace PLL.Helper
 {
     public static class HTMLHelpers
     {
-        public static string IsActive(this IHtmlHelper html,
-                                 string ctrl = null, string act = null)
+        public static string IsActive(this IHtmlHelper html, string? ctrl = null, string? act = null)
         {
             var routeData = html.ViewContext.RouteData;
             var routeCtrl = routeData.Values["controller"]?.ToString();
@@ -20,7 +19,7 @@ namespace PLL.Helper
         public static string IsExpandedGroup(this IHtmlHelper html, params string[] controllers)
         {
             var routeData = html.ViewContext.RouteData;
-            string currentController = routeData.Values["controller"]?.ToString();
+            string? currentController = routeData.Values["controller"]?.ToString();
 
             return controllers.Contains(currentController) ? "show" : "";
         }
@@ -28,7 +27,7 @@ namespace PLL.Helper
         public static string IsParentActive(this IHtmlHelper html, params string[] controllers)
         {
             var routeData = html.ViewContext.RouteData;
-            string currentController = routeData.Values["controller"]?.ToString();
+            string? currentController = routeData.Values["controller"]?.ToString();
 
             return controllers.Contains(currentController) ? "active" : "";
         }

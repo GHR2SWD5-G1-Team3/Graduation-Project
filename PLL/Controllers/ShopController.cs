@@ -1,15 +1,10 @@
 ﻿namespace PLL.Controllers
 {
-    public class ShopController : Controller
+    public class ShopController(IProductService productService, IMapper mapper) : Controller
     {
-        private readonly IProductService productService;
-        private readonly IMapper mapper;
+        private readonly IProductService productService = productService;
+        private readonly IMapper mapper = mapper;
 
-        public ShopController(IProductService productService, IMapper mapper)
-        {
-            this.productService = productService;
-            this.mapper = mapper;
-        }
         public async Task<IActionResult> Index()
         {
             var products = await productService.GetAllProductsAsync(filter: p => p.IsDeleted == false, p=>p.SubCategory,p=>p.SubCategory.Category);

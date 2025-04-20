@@ -3,8 +3,8 @@ namespace DAL.Entities
 {
     public class User : IdentityUser
     {
-        public  User() { }
-        public  User(string firstName, string lastName, string image, string? phone, string? address)
+        public User() { }
+        public User(string firstName, string lastName, string image, string? phone, string? address)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -2,20 +2,13 @@
 {
     [Authorize(Roles ="Admin, Vendor")]   
     [Area("Admin")]
-    public class ProductController : Controller
+    public class ProductController(IProductService productService, IMapper mapper, ISubCategoryServices subCategoryService, UserManager<User> userManager) : Controller
     {
-        private readonly IProductService productService;
-        private readonly IMapper mapper;
-        private readonly ISubCategoryServices subCategoryService;
-        private readonly UserManager<User> userManager;
+        private readonly IProductService productService = productService;
+        private readonly IMapper mapper = mapper;
+        private readonly ISubCategoryServices subCategoryService = subCategoryService;
+        private readonly UserManager<User> userManager = userManager;
 
-        public ProductController(IProductService productService, IMapper mapper, ISubCategoryServices subCategoryService, UserManager<User> userManager)
-        {
-            this.productService = productService;
-            this.mapper = mapper;
-            this.subCategoryService = subCategoryService;
-            this.userManager = userManager;
-        }
         public async Task<IActionResult> Index()
         {
             var user = await userManager.GetUserAsync(User);
@@ -124,7 +117,7 @@
                 model.ImagePath = product.ImagePath;
             }
             var updatedProduct = mapper.Map(model, product);
-            var userName = User.Identity.Name;
+            var userName = User.Identity?.Name;
             await productService.EditAsync(updatedProduct.Id,updatedProduct, userName);
             return RedirectToAction("Index","Product");
         }

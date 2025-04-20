@@ -1,5 +1,4 @@
-﻿using BLL.ModelVM.Coupon;
-namespace BLL.Mapper
+﻿namespace BLL.Mapper
 {
     public class DomainProfile : Profile
     {
@@ -11,6 +10,8 @@ namespace BLL.Mapper
             CreateMap<AddNewUserVM,User>();
             CreateMap<User,DisplayUser>();
             CreateMap<AddNewUserVM, User>();
+            //Role
+            CreateMap<Role,DisplayRoleVm>();
             //Order
             CreateMap<CreateOrderVM, Order>();
             CreateMap<Order, DisplayOrderVM>();

@@ -42,7 +42,7 @@
                     <h4 class="text-section">Components</h4>
                 </li>
 
-                @if(currentUser.RoleName == "Admin")
+                @if(currentUser?.RoleName == "Admin")
                 {
                     <!-- Users -->
                     <li class="nav-item @Html.IsParentActive("Customer", "Seller")">
@@ -56,6 +56,28 @@
                                 <li class="@Html.IsActive("Customer", "Index")">
                                     <a asp-action="Index" asp-controller="Customer">
                                         <span class="sub-item">Customers</span>
+                                    </a>
+                                </li>
+                                <li class="@Html.IsActive("Seller", "Index")">
+                                    <a asp-action="Index" asp-controller="Seller">
+                                        <span class="sub-item">Sellers</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    //Roles
+                    <li class="nav-item @Html.IsParentActive("Role")">
+                        <a data-bs-toggle="collapse" href="#bases" role="button" aria-expanded="@(Html.IsExpandedGroup("Role") != "" ? "true" : "false")" aria-controls="bases">
+                            <i class="fas fa-layer-group"></i>
+                            <p>Role</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse @Html.IsExpandedGroup("Role")" id="bases">
+                            <ul class="nav nav-collapse">
+                                <li class="@Html.IsActive("Role","Index")">
+                                    <a asp-action="Index" asp-controller="Role">
+                                        <span class="sub-item">Details</span>
                                     </a>
                                 </li>
                                 <li class="@Html.IsActive("Seller", "Index")">
@@ -134,7 +156,7 @@
                         </ul>
                     </div>
                 </li>
-             @if (currentUser.RoleName == "Admin")
+             @if (currentUser?.RoleName == "Admin")
                   {
                     <li class="nav-item @Html.IsActive("Product", "Index")">
                         <a asp-action="Index" asp-controller="Product">
