@@ -17,7 +17,7 @@ namespace BLL.Mapper
             //coupon
             CreateMap<dynamic, Coupon>();
             //CartDetails
-            CreateMap<DisplayCartDetailsVM,CartDetails>();
+            CreateMap<DisplayCartDetailsVM,CartDetails>().ReverseMap();
 
             #region Category
             CreateMap<Category, CategoryVM>()

@@ -1,3 +1,4 @@
+
 namespace PLL
 {
     public class Program
@@ -16,9 +17,12 @@ namespace PLL
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 });
+
             
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(connectionString));
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
@@ -34,7 +38,7 @@ namespace PLL
             builder.Services.AddScoped<IUserRepo, UserRepo>();
 
             // Scoped Services
-            builder.Services.AddScoped<IOrderServices, OrderServices>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
             builder.Services.AddScoped<IAppliedCouponService, AppliedCouponService>();
             builder.Services.AddScoped<IAccountServices, AccountServices>();

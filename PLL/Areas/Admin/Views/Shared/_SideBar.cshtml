@@ -1,4 +1,5 @@
-﻿@inject UserManager<User> userManager
+﻿@using PLL.Helper
+@inject UserManager<User> userManager
 @{
     var currentUser = await userManager.GetUserAsync(User);
 }
@@ -125,19 +126,9 @@
                                     <span class="sub-item">All Coupons</span>
                                 </a>
                             </li>
-                            <li class="@Html.IsActive("Coupon", "Create")">
-                                <a asp-action="Create" asp-controller="Coupon">
-                                    <span class="sub-item">Create a Coupon</span>
-                                </a>
-                            </li>
                             <li class="@Html.IsActive("AppliedCoupon", "Index")">
                                 <a asp-action="Index" asp-controller="AppliedCoupon">
                                     <span class="sub-item">All Applied Coupons</span>
-                                </a>
-                            </li>
-                            <li class="@Html.IsActive("AppliedCoupon", "Create")">
-                                <a asp-action="Create" asp-controller="AppliedCoupon">
-                                    <span class="sub-item">Assign Coupon</span>
                                 </a>
                             </li>
                         </ul>

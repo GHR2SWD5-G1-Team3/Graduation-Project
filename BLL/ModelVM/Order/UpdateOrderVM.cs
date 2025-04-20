@@ -2,14 +2,14 @@
 
 namespace BLL.ModelVM.Order
 {
-    public class UpdateOrderVM(decimal totalPrice, string phoneNumber, string city, string street, string paymentMethod)
+    public class UpdateOrderVM
     {
-        public decimal TotalPrice { get;  set; } = totalPrice;
-        public string PhoneNumber { get;  set; } = phoneNumber;
-        public string City { get;  set; } = city;
-        public string Street { get;  set; } = street;
-        public string PaymentMethod { get;  set; } = paymentMethod;
-        public string? ModifiedBy { get;  set; }
-        public DateTime ModifiedOn { get;  set; }
+        public decimal TotalPrice { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PaymentMethod { get; set; }
+        public string ModifiedBy { get; set; }
     }
+
 }

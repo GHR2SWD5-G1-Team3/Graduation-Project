@@ -1,8 +1,9 @@
 ﻿namespace DAL.Entities
 {
-    public class CartDetails(double price, decimal quantity, long productId, long cartId)
+    public class CartDetails(double price ,string name ,decimal quantity, long productId, long cartId)
     {
         public long Id { get;private set; }
+        public string Name { get; set; } = name;
         public double Price { get; private set; } = price;
         public decimal Quantity { get; private set; } = quantity;
         [ForeignKey(nameof(Product))]

@@ -7,9 +7,9 @@
         public bool IsChecked { get; private set; }= false;
         public bool IsDeleted { get; private set; } = false;
         public string? DeletedBy { get; private set; }
-        public DateTime DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
-        public DateTime ModifiedOn { get; private set; }
+        public DateTime? ModifiedOn { get; private set; }
         [ForeignKey(nameof(User))]
         public string UserId { get; private set; } = userId;
         public User? User { get;  set; }
