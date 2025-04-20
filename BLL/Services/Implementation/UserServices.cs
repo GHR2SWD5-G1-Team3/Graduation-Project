@@ -102,6 +102,18 @@
                 return false;
             }
         }
+        public async Task<IdentityUser> GetUserByIdAsync(string userId)
+        {
+            try
+            {
+                var user = await _userRepo.GetAsync(a => a.Id == userId);
+                return user;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         #endregion
     }
 }
