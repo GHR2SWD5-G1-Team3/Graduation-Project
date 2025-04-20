@@ -28,14 +28,14 @@ namespace PLL.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AddNewUser newUser)
+        public async Task<ActionResult> Create(AddNewUserVM newUser)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     var result=await _services.CreateAsync(newUser);
-                    if(result)
+                    if(result.Item1)
                         return RedirectToAction(nameof(Index));
                     return View(newUser);
                 }

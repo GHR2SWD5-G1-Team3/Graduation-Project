@@ -1,10 +1,15 @@
-﻿namespace PLL.Controllers
+﻿using System.Threading.Tasks;
+
+namespace PLL.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController(IUserServices userServices) : Controller
     {
-        public IActionResult Index()
+        IUserServices _userServices = userServices;
+        [HttpGet]
+        public async Task<IActionResult> Index(string Id)
         {
-            return View();
+            var user = await _userServices.GetAsync(a => a.Id == Id);
+            return View(user);
         }
     }
 }

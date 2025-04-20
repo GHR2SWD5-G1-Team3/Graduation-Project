@@ -5,7 +5,7 @@
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class inititaion : Migration
+    public partial class Inititaion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

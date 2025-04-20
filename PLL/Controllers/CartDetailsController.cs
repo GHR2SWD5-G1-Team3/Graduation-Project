@@ -1,5 +1,4 @@
-﻿
-using BLL.ModelVM.CartDetails;
+﻿using BLL.ModelVM.CartDetails;
 
 namespace PLL.Controllers
 {

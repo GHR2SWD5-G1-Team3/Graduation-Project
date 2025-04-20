@@ -1,22 +1,25 @@
-﻿body {
-    background-image: url("/img/BackgroudProfile.png");
+﻿.profile-container {
+    margin-top: 100px;
+}
+.nav-pills .nav-link.active {
+    background-color: #28a745;
+    color: #fff;
 }
 
-
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #a6ffcb;
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom,#0f0c29,#81c408,#addf8d);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right bottom,#0f0c29,#81c408,#addf8d);
+.nav-pills .nav-link {
+    color: #28a745;
+}
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
 }
 
-section {
-    width: auto;
-    height: auto;
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
 }
 
-.divParent {
-    margin-top: 10%;
-}
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }

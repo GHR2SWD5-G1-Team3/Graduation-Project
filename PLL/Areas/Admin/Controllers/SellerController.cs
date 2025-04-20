@@ -1,13 +1,22 @@
-﻿namespace PLL.Areas.Admin.Controllers
+﻿using BLL.ModelVM.User;
+using BLL.Services.Implementation;
+using Microsoft.Extensions.Localization;
+using System.Threading.Tasks;
+
+namespace PLL.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin, Vendor")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class SellerController : Controller
+    public class SellerController(IUserServices userServices, IStringLocalizer<SharedResource> stringLocalizer) : Controller
     {
+        private readonly IUserServices _userServices = userServices;
+        private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+
         // GET: SellerController
-        public ActionResult Index()
+        public async Task<ActionResult> IndexAsync()
         {
-            return View();
+            var displayCustomers = await _userServices.GetAllAsync(a => a.RoleName == "Vendor" && a.IsDeleted == false);
+            return View(displayCustomers);
         }
 
         // GET: SellerController/Details/5
@@ -25,15 +34,25 @@
         // POST: SellerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(AddNewUserVM newUserVM)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid) 
+                { 
+                    var result= await _userServices.CreateAsync(newUserVM);
+                    if(result.Item1)
+                        return RedirectToAction(nameof(IndexAsync));
+                    ViewBag.Massege = result.Item2;
+                    return View(newUserVM);
+                }
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(newUserVM);
             }
             catch
             {
-                return View();
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(newUserVM);
             }
         }
 
@@ -50,7 +69,7 @@
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexAsync));
             }
             catch
             {
@@ -71,7 +90,7 @@
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexAsync));
             }
             catch
             {

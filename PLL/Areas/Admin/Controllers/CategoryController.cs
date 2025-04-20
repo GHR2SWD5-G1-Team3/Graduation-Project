@@ -1,6 +1,4 @@
-﻿using BLL.ModelVM.Category;
-
-namespace PLL.Areas.Admin.Controllers
+﻿namespace PLL.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CategoryController : Controller

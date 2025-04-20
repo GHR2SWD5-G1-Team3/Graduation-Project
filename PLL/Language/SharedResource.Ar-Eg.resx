@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name=" clickhere" xml:space="preserve">
+  <data name="clickhere" xml:space="preserve">
     <value>اضغط هنا</value>
   </data>
   <data name="createone" xml:space="preserve">
@@ -176,5 +176,26 @@
   </data>
   <data name="SomeThingWrong" xml:space="preserve">
     <value>حدث خطأ تأكد من ادخال بيانات صحيحة</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="phoneplace" xml:space="preserve">
+    <value>أدخل رقم الهاتف...</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="cityplace" xml:space="preserve">
+    <value>ادخل المدينة...</value>
+  </data>
+  <data name="government" xml:space="preserve">
+    <value>المحافظة</value>
+  </data>
+  <data name="governmentplace" xml:space="preserve">
+    <value>ادخل المحافظة...</value>
+  </data>
+  <data name="Addnewseller" xml:space="preserve">
+    <value>اضافة بائع جديد</value>
   </data>
 </root>

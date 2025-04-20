@@ -274,7 +274,7 @@ html {
                 text-decoration: underline;
             }
 
-    .logincontainer #closelogin {
+   .logincontainer #closelogin {
         position: absolute;
         top: 1.5rem;
         right: 2.5rem;
@@ -282,7 +282,14 @@ html {
         color: var(--black);
         cursor: pointer;
     }
-
+.container #closelogin {
+    position: absolute;
+    top: 1.5rem;
+   margin-right: auto;
+    font-size: 5rem;
+    color: var(--black);
+    cursor: pointer;
+}
 section {
     padding: 5rem 9%;
 }
