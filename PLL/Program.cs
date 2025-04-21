@@ -1,3 +1,5 @@
+using BLL.Services.Concrete;
+
 namespace PLL
 {
     public class Program
@@ -53,6 +55,7 @@ namespace PLL
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
+            builder.Services.AddScoped<IDataSeederService, DataSeederService>();
             builder.Services.AddScoped<IPaymentService, PaymentService>();
 
             // Mapping
@@ -114,6 +117,8 @@ namespace PLL
             {
                 var services = scope.ServiceProvider;
                 await IdentitySeeder.SeedRolesAndAdminAsync(services);
+                var seederService = services.GetRequiredService<IDataSeederService>();
+                await seederService.SeedCategoriesAndSubCategoriesAsync();
             }
             app.Run();
         }

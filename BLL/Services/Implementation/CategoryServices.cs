@@ -121,8 +121,14 @@
             {
                 return (null, false, ex.Message);
             }
-
         }
+
+        public async Task<(bool, string?)> CreateFromSeederAsync(string name, string description, string imagePath, string userId)
+        {
+            var category = new Category(name, description, imagePath, userId);
+            return await categoryRepo.CreateAsync(category);
+        }
+
 
     }
 }

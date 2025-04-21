@@ -6,6 +6,10 @@ namespace BLL.ModelVM.Order
     public class CreateOrderVM
     {
         [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
         public string PhoneNumber { get; set; }
 
         [Required]
@@ -25,6 +29,7 @@ namespace BLL.ModelVM.Order
 
         // Optional: Computed total price from CartItems
         public decimal Subtotal => CartItems?.Sum(ci => ci.TotalPrice) ?? 0;
+       
 
         public string Address { get; set; }
     }
