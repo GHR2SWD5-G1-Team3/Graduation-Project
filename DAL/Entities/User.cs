@@ -1,13 +1,26 @@
 ﻿
 namespace DAL.Entities
 {
-    public class User(string firstName, string lastName, string image, string phone, string address)  : IdentityUser
+    public class User : IdentityUser
     {
-        public string FirstName { get; private set; } = firstName;
-        public string LastName { get; private set; } =lastName;
-        public string? Image { get; private set; } = image;
-        public string Phone { get; private set; } = phone;
-        public string Address { get; private set; } = address;
+        public User() { }
+        public User(string firstName, string lastName, string image, string? phone, string? address)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Image = image;  
+            Phone = phone;
+            Address = address;
+            
+        }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; } 
+        public string? Image { get; private set; } 
+        public string? Phone { get; private set; } 
+        public string? Address { get; private set; } 
+        public string? City { get; private set; }
+        public string? Government { get; private set; }
+
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
         public string RoleName { get; set; }
         public DateTime? LastUpdatedAt { get; private set; }

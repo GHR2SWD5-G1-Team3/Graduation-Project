@@ -10,7 +10,6 @@
 </div>
 <!-- Single Page Header End -->
 
-
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
@@ -61,7 +60,7 @@
                         </li>
                     </ul>
                 </div>
-           </div>
+            </div>
             <div class="tab-content">
                 <!-- All Products Tab -->
                 <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -115,7 +114,7 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
@@ -154,7 +153,7 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
@@ -192,7 +191,7 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Fresh Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
@@ -231,7 +230,7 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Organic Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
@@ -270,20 +269,12 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Fresh Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
-                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
-                                                            data-product-id="@product.Id"
-                                                            title="Add to favorites"
-                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                        <i class="fa-regular fa-heart text-dark"></i>
-                                                    </button>
-                                                </div>
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
                                                 <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
                                                         data-product-id="@product.Id"
                                                         title="Add to favorites"
@@ -317,24 +308,17 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Organic Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
                                                 <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
-                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
-                                                            data-product-id="@product.Id"
-                                                            title="Add to favorites"
-                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                        <i class="fa-regular fa-heart text-dark"></i>
-                                                    </button>
-                                                </div>
-                                                <button class="btn p-0 border-0 bg-transparent favourite-btn"
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
                                                         data-product-id="@product.Id"
-                                                        title="Add to favorites">
-                                                    <i class="fa-regular fa-heart fs-5"></i>
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
                                                 </button>
                                             </div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -351,18 +335,18 @@
                                     </div>
                                 }
 
-
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 <!-- Fruits Shop End-->
-   <script>
-    // Focus function (kept from your original code)
+<script>
+    // Focus function 
     function focusSearchInput() {
       const searchInput = document.getElementById('searchInput');
       searchInput.focus();
@@ -374,17 +358,17 @@
         const input = document.getElementById('searchInput').value.toLowerCase();
         const productCards = document.querySelectorAll('.fruite-item');
         let hasResults = false;
-        
+
         productCards.forEach(function(card) {
             const productName = card.querySelector('h4').textContent.toLowerCase();
             const productDescription = card.querySelector('p').textContent.toLowerCase();
             const productCategory = card.querySelector('.text-white').textContent.toLowerCase();
-            
+
             const parentCol = card.closest('.col-md-6');
-            
-            if (input === '' || 
-                productName.includes(input) || 
-                productDescription.includes(input) || 
+
+            if (input === '' ||
+                productName.includes(input) ||
+                productDescription.includes(input) ||
                 productCategory.includes(input)) {
                 parentCol.style.display = '';
                 hasResults = true;
@@ -392,11 +376,11 @@
                 parentCol.style.display = 'none';
             }
         });
-        
+
         // Handle no results message
         const resultsContainer = document.querySelector('#tab-1 .row.g-4');
         let noResultsMsg = resultsContainer.querySelector('.no-results-message');
-        
+
         if (!hasResults && input.length > 0) {
             if (!noResultsMsg) {
                 noResultsMsg = document.createElement('div');
@@ -408,26 +392,26 @@
             noResultsMsg.remove();
         }
     }
-    
+
     // Initialize all search functionality
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchInput');
-        
-        // Original blur handler (kept from your code)
+
+        // Original blur handler 
         searchInput.addEventListener('blur', () => {
             searchInput.classList.remove('focused');
         });
-        
+
         // Search as you type
         searchInput.addEventListener('input', filterProducts);
-        
+
         // Search on Enter key
         searchInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 filterProducts();
             }
         });
-        
+
         // Optional: Clear search when switching tabs
         document.querySelectorAll('.nav-link[data-bs-toggle="pill"]').forEach(tab => {
             tab.addEventListener('shown.bs.tab', function() {

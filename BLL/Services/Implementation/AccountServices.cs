@@ -8,18 +8,27 @@
         private readonly SignInManager<User> _signInManager=signInManager;
         #endregion
         #region Implementation
-        public async Task<bool> SignUp(SignUpvM signUpvM)
+        public async Task<(bool,string)> SignUp(SignUpvM signUpvM)
         {
             try
             {
+                if (signUpvM.UploadImage is null)
+                    signUpvM.Image = "\\avatar.jpg";
+                else
+                    signUpvM.Image = UploadFiles.UploadFile("UserPersonnalImages", signUpvM.UploadImage);
                 var identityUser = _mapper.Map<User>(signUpvM);
+                identityUser.RoleName = "Customer";
                 var result= await _userManager.CreateAsync(identityUser,signUpvM.Password);
-                return result.Succeeded;
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(identityUser, "Customer");
+                }
+                return (result.Succeeded,result.ToString());
 
             }
             catch 
             { 
-                return false;
+                return (false,"something went Wrong");
             }
         }
 

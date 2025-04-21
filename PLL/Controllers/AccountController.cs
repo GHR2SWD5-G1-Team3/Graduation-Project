@@ -5,13 +5,6 @@
         private readonly IAccountServices _accountServices=accountServices;
         private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
 
-        // GET: AccountController/Profile
-        [HttpGet]
-        public ActionResult Index()
-        {
-             return  View();
-        }
-
         // GET: AccountController/Register
         [HttpGet]
         public ActionResult Registeration()
@@ -28,10 +21,11 @@
             {
                 if (ModelState.IsValid)
                 {
-                    signUpvM.Image = UploadFiles.UploadFile("UserPersonnalImages",signUpvM.UploadImage);
                     var result = await _accountServices.SignUp(signUpvM);
-                    if (result)
+                    if (result.Item1)
                         return RedirectToAction(nameof(Index),"Home");
+                    ViewBag.Massege = result.Item2;
+                    return View(signUpvM);
                 }
                 ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
                 return View(signUpvM);
@@ -70,22 +64,14 @@
                 return View(signInVM);
             }
         }
-      
 
-        // GET: AccountController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AccountController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // POST: AccountController/SignOut
+        public async Task<ActionResult> Logout()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _accountServices.SignOut();
+                return RedirectToAction(actionName:"Index",controllerName:"Home");
             }
             catch
             {
@@ -93,25 +79,6 @@
             }
         }
 
-        // GET: AccountController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: AccountController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

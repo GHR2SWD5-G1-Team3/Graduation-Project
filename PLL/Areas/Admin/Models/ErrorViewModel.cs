@@ -1,4 +1,4 @@
-namespace Dashboard.Models
+namespace PLL.Areas.Admin.Models
 {
     public class ErrorViewModel
     {

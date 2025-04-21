@@ -1,11 +1,4 @@
-﻿using BLL.ModelVM.CartDetails;
-using BLL.ModelVM.Category;
-using BLL.ModelVM.Coupon;
-using BLL.ModelVM.Product;
-using BLL.ModelVM.SubCategory;
-using BLL.ModelVM.User;
-
-namespace BLL.Mapper
+﻿namespace BLL.Mapper
 {
     public class DomainProfile : Profile
     {
@@ -14,17 +7,18 @@ namespace BLL.Mapper
             //User
             CreateMap<SignUpvM, User>();
             CreateMap<SignInVM, User>();
-            CreateMap<AddNewUser,User>();
+            CreateMap<AddNewUserVM,User>();
             CreateMap<User,DisplayUser>();
-
-
+            CreateMap<AddNewUserVM, User>();
+            //Role
+            CreateMap<Role,DisplayRoleVm>();
             //Order
             CreateMap<CreateOrderVM, Order>();
             CreateMap<Order, DisplayOrderVM>();
             //coupon
             CreateMap<dynamic, Coupon>();
             //CartDetails
-            CreateMap<DisplayCartDetailsVM,CartDetails>();
+            CreateMap<DisplayCartDetailsVM,CartDetails>().ReverseMap();
 
             #region Category
             CreateMap<Category, CategoryVM>()

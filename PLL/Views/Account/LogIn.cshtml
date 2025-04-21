@@ -17,8 +17,8 @@
 <body>
 <!--form login-->
 <div class="logincontainer">
-    <div id="closelogin" class="fas fa-times" onclick="actn()"></div>
-    <form asp-controller="Account" asp-action="LogIn">
+        <div id="closelogin"><a asp-action="Index" asp-controller="Home"><i class="fas fa-times"></i></a></div>
+        <form asp-controller="Account" asp-action="LogIn">
         <h3>@SharedLocalizer["Login"]:</h3>
             @if (ViewBag.Massege != null)
             {
@@ -36,13 +36,9 @@
         <label>@SharedLocalizer["Password"]:</label>
 
         <input type="password" class="box" placeholder="@SharedLocalizer["PasswordPlace"]" asp-for="Password">
-        <div class="chechboxcon">
-            <input type="checkbox" name="" id="rememberme">
-            <label for="rememberme">@SharedLocalizer["RememberMe"]</label>
-        </div>
         <input type="submit" value="sign in" class="btn">
-        <p>@SharedLocalizer["ForgetthePassword?"]<a href="#">@SharedLocalizer["clickhere"]</a></p>
-        <p>@SharedLocalizer["don'thaveanaccount ?"]<a href="#">@SharedLocalizer["createone"] </a></p>
+            <p>@SharedLocalizer["ForgetthePassword?"]<a href="#">@SharedLocalizer["clickhere"]</a></p>
+            <p>@SharedLocalizer["don'thaveanaccount?"]<a asp-action="Registeration" asp-controller="Account">@SharedLocalizer["createone"] </a></p>
 
     </form>
     </div>

@@ -1,6 +1,6 @@
 ﻿namespace BLL.Services.Implementation
 {
-    public class UserServices(IMapper mapper, UserManager<User> userManager,IUserRepo userRepo, IAccountServices accountServices) : IUserServices
+    public class UserServices(IMapper mapper, UserManager<User> userManager,IUserRepo userRepo) : IUserServices
     {
         #region Fields
         private readonly IMapper _mapper = mapper;
@@ -8,31 +8,26 @@
         private readonly IUserRepo _userRepo = userRepo;
         #endregion
         #region Implementation
-        public async Task<IdentityUser> GetUserByIdAsync(string userId)
+        public async Task<(bool,string)> CreateAsync(AddNewUserVM newUser)
         {
             try
             {
-                var user = await _userRepo.GetAsync(a => a.Id == userId);
-                return user;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<bool> CreateAsync(AddNewUser newUser)
-        {
-            try
-            {
+                if (newUser.UploadImage is null)
+                    newUser.Image = "\\avatar.jpg";
+                else
+                    newUser.Image = UploadFiles.UploadFile("UserPersonnalImages", newUser.UploadImage);
                 var identityUser = _mapper.Map<User>(newUser);
                 var result = await _userManager.CreateAsync(identityUser, newUser.Password);
-                return result.Succeeded;
+                if (result.Succeeded) 
+                {
+                    await _userManager.AddToRoleAsync(identityUser,newUser.RoleName);
+                }
+                return (result.Succeeded,result.ToString());
 
             }
             catch
             {
-                return false;
+                return (false,"something went wrong");
             }
         }
 
@@ -53,7 +48,7 @@
         {
             try
             {
-                List<DisplayUser> displayUsers = new List<DisplayUser>();
+                List<DisplayUser> displayUsers = [];
                 var users = await _userRepo.GetAllAsync(filter, includeProperty);
                 foreach (var user in users)
                 {
@@ -94,7 +89,7 @@
                         return false;
                     }
                 }
-                string imagePath = null;
+                string imagePath = "\\img\\avatar.jpg";
                 if (editUser.Image is not null)
                 {
                      imagePath = UploadFiles.UploadFile("UserPersonnalImages", editUser.Image);
@@ -105,6 +100,18 @@
             catch
             {
                 return false;
+            }
+        }
+        public async Task<IdentityUser> GetUserByIdAsync(string userId)
+        {
+            try
+            {
+                var user = await _userRepo.GetAsync(a => a.Id == userId);
+                return user;
+            }
+            catch
+            {
+                return null;
             }
         }
         #endregion

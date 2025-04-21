@@ -23,4 +23,3 @@ global using DAL.Entities;
 global using BLL.ModelVM.Category;
 global using BLL.ModelVM.SubCategory;
 global using BLL.ModelVM.Home;
-global using BLL.ModelVM.Shop;

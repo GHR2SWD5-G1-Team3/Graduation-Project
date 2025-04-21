@@ -1,13 +1,16 @@
-﻿namespace PLL.Areas.Admin.Controllers
+﻿using BLL.ModelVM.User;
+namespace PLL.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin, Vendor")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class CustomerController : Controller
+    public class CustomerController(IUserServices userServices,IStringLocalizer<SharedResource> stringLocalizer) : Controller
     {
-      
-        public ActionResult Index()
+      private readonly IUserServices _userServices =userServices;
+        private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var displayCustomers= await _userServices.GetAllAsync(a=>a.RoleName== "Customer" && a.IsDeleted == false);
+            return View(displayCustomers);
         }
 
         // GET: UserController/Details/5
@@ -25,15 +28,26 @@
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(AddNewUserVM newUserVM)
         {
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var result = await _userServices.CreateAsync(newUserVM);
+                    if (result.Item1)
+                        return RedirectToAction(nameof(Index));
+                    ViewBag.Massege = result.Item2;
+                    return View(newUserVM);
+                }
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(newUserVM);
             }
             catch
             {
-                return View();
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(newUserVM);
             }
         }
 

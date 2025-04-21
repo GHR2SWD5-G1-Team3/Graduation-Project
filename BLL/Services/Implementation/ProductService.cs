@@ -1,15 +1,9 @@
 ﻿namespace BLL.Services.Implementation
 {
-    public class ProductService : IProductService
+    public class ProductService(IProductRepo productRepo, IMapper mapper) : IProductService
     {
-        private readonly IProductRepo productRepo;
-        private readonly IMapper mapper;
-
-        public ProductService(IProductRepo productRepo, IMapper mapper)
-        {
-            this.productRepo = productRepo;
-            this.mapper = mapper;
-        }
+        private readonly IProductRepo productRepo = productRepo;
+        private readonly IMapper mapper = mapper;
 
         public async Task<bool> CreateProductAsync(Product product)
         {

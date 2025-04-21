@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name=" clickhere" xml:space="preserve">
+  <data name="clickhere" xml:space="preserve">
     <value> click here</value>
   </data>
   <data name="createone" xml:space="preserve">
     <value>create one</value>
   </data>
   <data name="don'thaveanaccount?" xml:space="preserve">
-    <value>don't have an account ?</value>
+    <value>don't  ave an account ?</value>
   </data>
   <data name="FirstName" xml:space="preserve">
     <value>First Name</value>
@@ -176,5 +176,26 @@
   </data>
   <data name="SomeThingWrong" xml:space="preserve">
     <value>Somthing Went Wrong Make Sure To Enter Valid Data</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="phoneplace" xml:space="preserve">
+    <value>Enter Your Phone Number...</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="cityplace" xml:space="preserve">
+    <value>Enter Your City....</value>
+  </data>
+  <data name="government" xml:space="preserve">
+    <value>Government</value>
+  </data>
+  <data name="governmentplace" xml:space="preserve">
+    <value>Enter Your Government....</value>
+  </data>
+  <data name="Addnewseller" xml:space="preserve">
+    <value>Add new Vendor</value>
   </data>
 </root>

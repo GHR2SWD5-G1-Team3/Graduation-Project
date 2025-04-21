@@ -3,7 +3,6 @@
     public class Role : IdentityRole
     {
         public Role() { }
-        public Role(string roleName) :base(roleName) { }
-       
+        public Role(string name):base(name) { }
     }
 }

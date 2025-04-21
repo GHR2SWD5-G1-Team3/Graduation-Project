@@ -1,4 +1,6 @@
-﻿namespace DAL.Repo.Implementation
+﻿using System.Transactions;
+
+namespace DAL.Repo.Implementation
 {
     public class UserRepo(ApplicationDBContext context) : GenericRepo<User>(context), IUserRepo
     {
@@ -26,6 +28,7 @@
         {
             try
             {
+          
                 var editUser = await Db.Users.FirstOrDefaultAsync(a => a.Id == userId);
                 if (editUser != null)
                 {

@@ -1,20 +1,15 @@
 ﻿
 namespace BLL.Services.Implementation
 {
-    public class ReviewService : IReviewService
+    public class ReviewService(IReviewRepo reviewRepo) : IReviewService
     {
-        private readonly IReviewRepo _reviewRepo;
-
-        public ReviewService(IReviewRepo reviewRepo)
-        {
-            _reviewRepo = reviewRepo;
-        }
+        private readonly IReviewRepo _reviewRepo = reviewRepo;
 
         public async Task<bool> AddReviewAsync(string comment, int rate, string userId, long productId)
         {
             // Perform validation here if necessary (e.g., rate should be between 1 and 5)
             var review = new Review(comment, rate, userId, productId);
-            var result = _reviewRepo.Create(review);
+            var result =  _reviewRepo.Create(review);
             return result.Item1;
         }
 

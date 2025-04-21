@@ -20,8 +20,8 @@
                 {
                     imagePath = UploadFiles.UploadFile("images", categoryVM.Image);
                 }
-
-                var category = new Category(categoryVM.Name, categoryVM.Description, imagePath);
+                if (categoryVM.UserId == null) return (false, "plz enter userid");
+                var category = new Category(categoryVM.Name, categoryVM.Description, imagePath,categoryVM.UserId);
                 var (result, error) = await categoryRepo.CreateAsync(category);
                 return (result, error);
             }
@@ -39,7 +39,7 @@
         }
 
         //delete
-        public async Task<(bool, string?)> DeleteByID(int id)
+        public async Task<(bool, string?)> DeleteByID(string? user, int id)
         {
             try
             {
@@ -48,8 +48,8 @@
                     return (false, "category not found");
                 if (category.IsDeleted)
                     return (false, "Error: category is already deleted.");
-
-                var isDeleted = await categoryRepo.Delete( id);
+                if (user == null) return (false, "Error:Plz enter user modifier");
+                var isDeleted = await categoryRepo.Delete(user, id);
                 if (!isDeleted)
                     return (false, "Failed to delete category.");
 
@@ -62,14 +62,15 @@
 
         }
         //edit
-        public async Task<(bool, string)> Edit(int Id,  CategoryVM categoryVM)
+        public async Task<(bool, string)> Edit(string? user, int Id,  CategoryVM categoryVM)
         {
             try
             {
                 //Check if Category Is Found In Db
                 var category = await categoryRepo.GetAsync(c => c.Id == Id);
                 if (category == null)
-                    return (false, "category not found in local db!");
+                    return (false, "category not found in db!");
+                if (user == null) return (false, "Error:Plz enter user modifier");
                 if (categoryVM.ImagePath is not null)
                 {   // Delete Old Image
                     if (!string.IsNullOrEmpty(category.Image))
@@ -86,7 +87,7 @@
                 }
                 mapper.Map(categoryVM, category);
                 //make update  
-                var (result, error) = await categoryRepo.Edit( category, Id);
+                var (result, error) = await categoryRepo.Edit(user, category, Id);
 
                 return (result, error);
             }

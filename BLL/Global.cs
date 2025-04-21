@@ -15,3 +15,5 @@ global using BLL.ModelVM.SubCategory;
 global using BLL.ModelVM.CartDetails;
 global using BLL.Helpers;
 global using DAL.Entities;
+global using BLL.ModelVM.Coupon;
+global using BLL.ModelVM.Role;

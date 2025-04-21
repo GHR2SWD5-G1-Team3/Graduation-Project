@@ -1,6 +1,3 @@
-
-using BLL.Services.Concrete;
-
 namespace PLL
 {
     public class Program
@@ -40,7 +37,7 @@ namespace PLL
             builder.Services.AddScoped<ISubCategoryRepo, SubCategoryRepo>();
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); 
             builder.Services.AddScoped<IUserRepo, UserRepo>();
-
+            builder.Services.AddScoped<IRoleRepo, RoleRepo>();
             // Scoped Services
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
@@ -53,6 +50,7 @@ namespace PLL
             builder.Services.AddScoped<ISubCategoryServices, SubCategoryServices>();
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IRoleServices, RoleServices>();
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
 
             // Mapping

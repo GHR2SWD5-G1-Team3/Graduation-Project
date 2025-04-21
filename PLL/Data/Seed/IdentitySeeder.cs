@@ -1,5 +1,4 @@
-﻿
-namespace PLL.Data.Seed
+﻿namespace PLL.Data.Seed
 {
     public static class IdentitySeeder
     {
@@ -9,7 +8,7 @@ namespace PLL.Data.Seed
             var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
-            string[] roleNames = { "Admin", "Vendor", "Customer" };
+            string[] roleNames = ["Admin", "Vendor", "Customer"];
             foreach (var roleName in roleNames)
             {
                 var roleExists = await roleManager.RoleExistsAsync(roleName);

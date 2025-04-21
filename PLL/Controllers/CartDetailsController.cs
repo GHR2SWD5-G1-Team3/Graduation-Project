@@ -1,9 +1,10 @@
-﻿
-using BLL.ModelVM.CartDetails;
+﻿using BLL.ModelVM.CartDetails;
+using System.Security.Claims;
 
 namespace PLL.Controllers
 {
-	public class CartDetailsController : Controller
+    [Authorize]
+    public class CartDetailsController : Controller
 	{
 		private readonly ICartDetailsService _cartDetailsService;
 
@@ -11,11 +12,20 @@ namespace PLL.Controllers
 		{
 			_cartDetailsService = cartDetailsService;
 		}
-
-		public IActionResult Index()
+		
+		public async Task<IActionResult> Index()
 		{
-			var cartDetails = _cartDetailsService.GetAllCartDetails();
-			return View(cartDetails);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (userId != null)
+			{
+				var cartDetails = await _cartDetailsService.GetAllCartDetails(userId);
+				var price = _cartDetailsService.GetCartPrice(cartDetails);
+				var total = price + 3;
+				ViewData["SupTotal"] = price;
+				ViewData["Total"] = total;
+				return View(cartDetails);
+			}
+			else return BadRequest();
 		}
 
 		[HttpPost]
@@ -29,10 +39,10 @@ namespace PLL.Controllers
 			return BadRequest("Missing Data");
 		}
 
-		//public IActionResult Delete(long id)
-		//{
-		//	var result = _cartDetailsService.Delete(id);
-		//	return RedirectToAction("Index");
-		//}
+		public IActionResult Delete(long id)
+		{
+		   _cartDetailsService.RemoveFromCart(id);
+			return RedirectToAction("Index");
+		}
 	}
 }
