@@ -17,3 +17,4 @@ global using BLL.Helpers;
 global using DAL.Entities;
 global using BLL.ModelVM.Coupon;
 global using BLL.ModelVM.Role;
+global using BLL.ModelVM.Payment;

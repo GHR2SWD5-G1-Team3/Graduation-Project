@@ -68,6 +68,9 @@
             //Coupon
             CreateMap<Coupon, EditCouponVM>().ReverseMap();
             CreateMap<Coupon, CreateCouponVM>().ReverseMap();
+            //payment
+            CreateMap<Payment, PaymentVM>().ReverseMap();
+            CreateMap<CreatePaymentVM, Payment>().ReverseMap();
         }
     }
 }

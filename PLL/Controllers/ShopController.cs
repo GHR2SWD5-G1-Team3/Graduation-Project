@@ -24,7 +24,7 @@ namespace PLL.Controllers
                 Price = p.UnitPrice,
                 ImageUrl = p.ImagePath,
                 SubCategoryName = p.SubCategory.Name,
-                ReviewRate = (int)Math.Round(p.Reviews.Any() ? p.Reviews.Average(r => r.Rate) : 0)
+                ReviewRate = (int)Math.Round((p.Reviews != null && p.Reviews.Any()) ? p.Reviews.Average(r => r.Rate) : 0)
             });
             if (product == null)
             {
