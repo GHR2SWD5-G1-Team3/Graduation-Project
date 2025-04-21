@@ -158,13 +158,22 @@
                 </li>
              @if (currentUser?.RoleName == "Admin")
                   {
-                    <li class="nav-item @Html.IsActive("Product", "Index")">
-                        <a asp-action="Index" asp-controller="Product">
+                    <li class="nav-item @Html.IsParentActive("TrashBin")">
+                        <a data-bs-toggle="collapse" href="#trash" role="button" aria-expanded="@(Html.IsExpandedGroup("TrashBin") != "" ? "true" : "false")" aria-controls="trash">
                             <i class="fa-solid fa-trash"></i>
-                            <p>Trash Bin</p>
+                            <p>Teash Bin</p>
+                            <span class="caret"></span>
                         </a>
+                        <div class="collapse @Html.IsExpandedGroup("TrashBin")" id="trash">
+                            <ul class="nav nav-collapse">
+                                <li class="@Html.IsActive("TrashBin", "DeletedProducts")">
+                                    <a asp-action="DeletedProducts" asp-controller="TrashBin">
+                                        <span class="sub-item">Deleted Products</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                                
                   }
               
 

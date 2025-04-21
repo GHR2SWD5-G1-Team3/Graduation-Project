@@ -1,0 +1,96 @@
+﻿@model List<DeletedProductsVM>
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex align-items-center">
+            <h4 class="card-title">All Active Products</h4>
+            <a asp-action="Create" asp-controller="Product" class="btn btn-primary btn-round ms-auto">
+                <i class="fa fa-plus"></i>
+                Add New Product
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="add-row" class="display table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Created By</th>
+                        <th>Deleted On</th>
+                        <th>Deleted By</th>
+                        <th style="width: 15%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        int index = 1;
+                        foreach (var product in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">@index</td>
+                                <td class="align-middle">@product.Name</td>
+                                <td class="align-middle">@product.UserName</td>
+                                <td class="align-middle">@product.DeletedOn</td>
+                                <td class="align-middle">@product.DeletedBy</td>
+                                <td class="align-middle">
+                                    <a asp-action="Restore" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-rotate-left"></i></a>
+                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No products found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    function deleteProduct(productId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make an AJAX request to delete the product
+                $.ajax({
+                    url: '@Url.Action("PrementDelete", "Product")/' + productId,
+                    type: 'POST',
+                    success: function () {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your product has been deleted.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page after successful deletion
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'There was an issue deleting the product.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>

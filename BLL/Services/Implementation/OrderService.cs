@@ -2,7 +2,7 @@
 using DAL.DataBase;
 using Microsoft.EntityFrameworkCore;
 
-namespace BLL.Services.Concrete
+namespace BLL.Services.Implementation
 {
     public class OrderService : IOrderService
     {

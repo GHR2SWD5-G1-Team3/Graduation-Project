@@ -1,4 +1,6 @@
-﻿namespace PLL.Controllers
+﻿using BLL.ModelVM.Product;
+
+namespace PLL.Controllers
 {
     public class ShopController(IProductService productService, IMapper mapper) : Controller
     {
@@ -14,10 +16,21 @@
         public async Task<IActionResult> ProductDetails(long id)
         {
             var product = await productService.GetProductAsync(p => p.Id == id, p => p.SubCategory, product => product.Reviews);
+            var relatedProducts = await productService.GetAllProductsAsync(p => p.SubCategory.Name == product.SubCategory.Name && p.Id != id, p => p.SubCategory);
+            var relatedVMs=relatedProducts.Take(10).Select(p=>new RealtedProductsVM
+            {
+                Id= p.Id,
+                Name = p.Name,
+                Price = p.UnitPrice,
+                ImageUrl = p.ImagePath,
+                SubCategoryName = p.SubCategory.Name,
+                ReviewRate = (int)Math.Round(p.Reviews.Any() ? p.Reviews.Average(r => r.Rate) : 0)
+            });
             if (product == null)
             {
                 return NotFound();
             }
+            ViewBag.RelatedProducts = relatedVMs.ToList(); 
             var productVM = mapper.Map<ProductDetailsVM>(product);
             return View(productVM);
         }
