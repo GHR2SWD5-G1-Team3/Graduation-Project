@@ -19,7 +19,7 @@
                 {
                     path = UploadFiles.UploadFile("images", subCategoryVM.Image);
                 }
-                var subcategory = new SubCategory(subCategoryVM.Name, subCategoryVM.Description, path, subCategoryVM.CategoryId);
+                var subcategory = new SubCategory(subCategoryVM.Name, subCategoryVM.Description, path, subCategoryVM.CategoryId, subCategoryVM.UserId);
                 var result = await subCategoryRepo.CreateAsync(subcategory);
                 return result;
             }
@@ -29,7 +29,7 @@
             }
         }
         //delete
-        public async Task<(bool, string?)> DeleteByID(int id)
+        public async Task<(bool, string?)> DeleteByID(string? user, int id)
         {
             try
             {
@@ -38,8 +38,8 @@
                     return (false, "subcategory not found");
                 if (subcategory.IsDeleted)
                     return (false, "Error: subcategory is already deleted.");
-
-                var isDeleted = await subCategoryRepo.Delete(id);
+                if (user == null) return (false, "Error:Plz enter user modifier");
+                var isDeleted = await subCategoryRepo.Delete(user,id);
                 if (!isDeleted)
                     return (false, "Failed to delete subcategory.");
 
@@ -52,13 +52,14 @@
 
         }
         //edit
-        public async Task<(bool, string)> Edit(int Id, SubCategoryVM subCategoryVM)
+        public async Task<(bool, string)> Edit(string? user, int Id, SubCategoryVM subCategoryVM)
         {
             try
             {
                 var subcategory = await subCategoryRepo.GetAsync(a => a.Id == Id);
                 if (subcategory == null)
                     return (false, "subcategory not found in db!");
+                if (user == null) return (false, "Error:Plz enter user modifier");
                 if (subCategoryVM.Image != null)
                 {   // Delete Old Image
                     if (!string.IsNullOrEmpty(subcategory.ImagePath))
@@ -75,7 +76,7 @@
                 }
                 mapper.Map(subCategoryVM, subcategory);
                 //make update  
-                var result = await subCategoryRepo.Edit(Id, subcategory);
+                var result = await subCategoryRepo.Edit(user, Id, subcategory);
                 return result;
             }
             catch (Exception ex)

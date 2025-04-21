@@ -91,7 +91,8 @@
 	</div>
 </div>
 <!-- Featurs Section End -->
-<!-- Our Top Sellers-->
+
+<!-- Our Top Sellers Start-->
 <div class="container-fluid vesitable py-5">
 	<div class="container py-5">
 		<h1 class="mb-0">Our Top Sellers</h1>
@@ -99,7 +100,7 @@
 			@foreach (var product in Model.TopProducts)
 			{
 				<div class="border border-primary rounded position-relative vesitable-item overflow-hidden">
-					<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+					<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@product.Id"
 					   class="text-decoration-none text-dark d-block h-100 w-100 p-0 m-0"
 					   style="position: relative; z-index: 1;">
 
@@ -116,7 +117,6 @@
 							<h4>@product.Name</h4>
 							<p>@product.Description</p>
 
-							<!-- Vertical layout: price + button -->
 							<div class="d-flex flex-column align-items-start gap-2">
 								<p class="text-dark fs-5 fw-bold mb-0">
 									$@product.UnitPrice.ToString("0.00") / kg
@@ -135,7 +135,7 @@
 		</div>
 	</div>
 </div>
-<!-- Our Top Sellers -->
+<!-- Our Top Sellers End -->
 <!-- Banner Section Start-->
 <div class="container-fluid banner bg-secondary my-5">
 	<div class="container py-5">
@@ -178,10 +178,10 @@
 					<div class="p-4 rounded bg-light">
 						<div class="row align-items-center">
 							<div class="col-6">
-								<img src="img/best-product-1.jpg" class="img-fluid rounded-circle w-100" alt="@item.Name">
+								<img src="~/img/Products/@item.ImagePath" class="img-fluid rounded-circle w-100" alt="@item.Name">
 							</div>
 							<div class="col-6">
-								<a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="h5">Organic @item.Name </a>
+								<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@item.Id" class="h5">Organic @item.Name </a>
 								<div class="d-flex my-3">
 									<i class="fas fa-star text-primary"></i>
 									<i class="fas fa-star text-primary"></i>
@@ -202,6 +202,8 @@
 	</div>
 </div>
 <!-- Bestsaler Product End -->
+
+
 <!-- Fact Start -->
 <div class="container-fluid py-5">
 	<div class="container">
