@@ -52,6 +52,7 @@ namespace PLL
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
+            builder.Services.AddScoped<IDataSeederService, DataSeederService>();
 
             // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
@@ -112,6 +113,8 @@ namespace PLL
             {
                 var services = scope.ServiceProvider;
                 await IdentitySeeder.SeedRolesAndAdminAsync(services);
+                var seederService = services.GetRequiredService<IDataSeederService>();
+                await seederService.SeedCategoriesAndSubCategoriesAsync();
             }
             app.Run();
         }

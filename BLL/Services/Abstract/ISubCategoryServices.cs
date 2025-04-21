@@ -7,7 +7,7 @@
         Task<(bool, string)> Edit(string? user, int Id, SubCategoryVM subCategory);
         Task<(SubCategoryVM?, bool, string?)> GetById(int id);
         Task<(bool, string?)> DeleteByID(string? user,int id);
-
+        Task<(bool, string?)> CreateFromSeederAsync(string name, string description, string imagePath, int categoryId, string userId);
 
     }
 }
