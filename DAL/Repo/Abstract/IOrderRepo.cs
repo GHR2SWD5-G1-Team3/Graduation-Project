@@ -12,7 +12,8 @@
         (bool, string?) Edit(string user, Order order, long orderId);
         Task<bool> SoftDeleteAsync(string user, long orderId);
         Task<bool> UpdateStatusAsync(long orderId, OrderStatus newStatus);
-        Task<bool> SaveAsync();
-
+        Task ClearCartAsync(string userId);
+        Task SaveAsync();
+      
     }
 }

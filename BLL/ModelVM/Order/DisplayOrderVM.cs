@@ -1,11 +1,13 @@
-﻿namespace BLL.ModelVM.Order
+﻿using BLL.ModelVM.Order.BLL.ModelVM.Order;
+
+namespace BLL.ModelVM.Order
 {
    
     
         public class DisplayOrderVM
         {
             public long Id { get; set; }
-            public decimal TotalPrice { get; set; }
+            public decimal Subtotal { get; set; }
             public bool IsPaied { get; set; }
             public bool IsDelivered { get; set; }
             public string PhoneNumber { get; set; }
@@ -17,7 +19,8 @@
             public string Status { get; set; } // Order status (Pending, Delivered, Cancelled)
             public DateTime CreatedDate { get; set; } // Date when the order was created
             public DateTime? UpdatedDate { get; set; } // Date when the order was last updated (nullable)
-        }
+        public List<OrderProductVM> Products { get; set; } 
+    }
     
 
 }

@@ -4,5 +4,6 @@
     {
         Task<List<OrderDetails>> GetByOrderIdAsync(long orderId);
         void Delete(long id);
+        Task AddAsync(OrderDetails orderDetail);
     }
 }

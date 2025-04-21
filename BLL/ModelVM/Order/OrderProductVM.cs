@@ -1,0 +1,18 @@
+﻿
+namespace BLL.ModelVM.Order
+{
+    namespace BLL.ModelVM.Order
+    {
+        public class OrderProductVM
+        {
+            public long ProductId { get; set; }
+            public string Name { get; set; }
+            public decimal UnitPrice { get; set; }
+            public decimal Quantity { get; set; }
+            public float DiscountPercentage { get; set; }
+            public  string Imagepath {  get; set; }
+            public decimal Total => UnitPrice * Quantity;
+        }
+    }
+
+}
