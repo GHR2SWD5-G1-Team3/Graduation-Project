@@ -80,10 +80,19 @@
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">$@ViewData["Total"]</p>
                         </div>
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" onclick="window.location.href='@Url.Action("Index", "Checkout")'">
-                        Proceed Checkout
-                    </button>
+                    <form action="/Checkout" method="post">
+                        @foreach (var item in Model)
+                        {
+                            <input type="hidden" name="CartItems[@item.Name].name" value="@item.ProductId" />
+                            <input type="hidden" name="CartItems[@item.Quantity].Quantity" value="@item.Quantity" />
+                            <input type="hidden" name="CartItems[@item.Price].Price" value="@item.Price" />
+                            <input type="hidden" name="CartItems[@item.TotalPrice].TotalPrice" value="@item.Price" />
+                        }
+                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="submit">
+                            Proceed Checkout
+                        </button>
 
+                    </form>
                     </div>
                 </div>
             </div>
