@@ -7,5 +7,6 @@ namespace BLL.Services.Abstract
         Task<bool> RemoveCart(int cartId);
         Task<List<DisplayCartDetailsVM>> GetAllCarts();
         Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null);
+        Task GetCartAsync(object id);
     }
 }

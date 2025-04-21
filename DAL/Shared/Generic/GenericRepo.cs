@@ -104,5 +104,10 @@
 
             return query.ToList();
         }
+
+        public Task<bool> SaveAsync(T t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

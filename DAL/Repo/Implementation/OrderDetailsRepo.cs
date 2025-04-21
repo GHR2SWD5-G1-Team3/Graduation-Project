@@ -30,6 +30,11 @@ namespace DAL.Repo.Implementation
             _context.OrderDetails.Remove(target);
             _context.SaveChanges();
         }
+
+        public Task AddAsync(OrderDetails orderDetail)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

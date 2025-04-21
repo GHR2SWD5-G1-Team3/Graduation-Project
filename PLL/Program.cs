@@ -24,7 +24,9 @@ namespace PLL
 
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
-			builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
+            builder.Services.AddScoped<IOrderDetailsRepo, OrderDetailsRepo>();
+
+            builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
 			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();

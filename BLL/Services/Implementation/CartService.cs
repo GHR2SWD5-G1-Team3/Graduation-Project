@@ -23,6 +23,11 @@ namespace BLL.Services.Implementation
             throw new NotImplementedException();
         }
 
+        public Task GetCartAsync(object id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null)
         {
             throw new NotImplementedException();
