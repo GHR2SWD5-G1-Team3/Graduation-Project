@@ -62,7 +62,9 @@
             CreateMap<EditProductVM, Product>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId ?? string.Empty)) // Default to empty string if null
                 .ReverseMap();
-
+            CreateMap<Product, DeletedProductsVM>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName)) // or src.User.UserName
+                .ReverseMap();
             //Coupon
             CreateMap<Coupon, EditCouponVM>().ReverseMap();
             CreateMap<Coupon, CreateCouponVM>().ReverseMap();
