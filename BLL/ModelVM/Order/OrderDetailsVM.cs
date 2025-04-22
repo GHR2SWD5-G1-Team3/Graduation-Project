@@ -11,6 +11,7 @@ namespace BLL.ModelVM.Order
         public class OrderDetailsVM
         {
             public int OrderId { get; set; }
+     
             public string PhoneNumber { get; set; }
             public string City { get; set; }
             public string Street { get; set; }

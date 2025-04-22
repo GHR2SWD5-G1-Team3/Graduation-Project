@@ -1,6 +1,5 @@
-﻿
-using DAL.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BLL.Services.Implementation
 {
@@ -14,6 +13,8 @@ namespace BLL.Services.Implementation
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDBContext _context;
+        private readonly ILogger _logger;
+
 
         public OrderService(
             IOrderRepo orderRepo,
@@ -23,7 +24,8 @@ namespace BLL.Services.Implementation
             IEmailSender emailSender,
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
-            ApplicationDBContext context)
+            ApplicationDBContext context
+            , ILogger logger)
         {
             _orderRepo = orderRepo;
             _orderDetailsRepo = orderDetailsRepo;
@@ -33,78 +35,90 @@ namespace BLL.Services.Implementation
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            _logger = logger;
 
         }
 
         public async Task<bool> CreateOrderAsync(CreateOrderVM model, string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null) return false;
-
-            // Calculate total price based on the products in the model
-            decimal totalPrice = model.Products.Sum(p => p.UnitPrice * p.Quantity);
-
-            // Create the order entity
-            var order = new Order(
-                totalPrice,
-                isPaied: false,  // Default: Order is not paid when created
-                isDelivered: false, // Default: Order is not delivered
-                model.PhoneNumber,
-                model.City,
-                model.Street,
-                model.PaymentMethod,
-                userId
-            );
-
-            // Create OrderDetails and associate them with the order
-            var orderDetails = model.Products.Select(p => new OrderDetails(
-                productId: p.ProductId,
-                orderId: order.Id, // Link the details to the order
-                price: p.UnitPrice,
-                quantity: p.Quantity
-            )).ToList();
-
-            // Add OrderDetails to the Order
-            foreach (var detail in orderDetails)
+            try
             {
-                order.AddOrderDetail(detail);
-            }
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null) return false;
 
-            // Reduce product quantity based on the order
-            foreach (var detail in orderDetails)
+                decimal totalPrice = model.Products.Sum(p => p.UnitPrice * p.Quantity);
+
+                var order = new Order(
+                    totalPrice,
+                    isPaied: false,
+                    isDelivered: false,
+                    model.PhoneNumber,
+                    model.City,
+                    model.Street,
+                    model.PaymentMethod,
+                    userId
+                );
+
+                var orderDetails = model.Products.Select(p => new OrderDetails(
+                    productId: p.ProductId,
+                    orderId: order.Id,
+                    price: p.UnitPrice,
+                    quantity: p.Quantity
+                )).ToList();
+
+                foreach (var detail in orderDetails)
+                {
+                    order.AddOrderDetail(detail);
+                }
+
+                foreach (var detail in orderDetails)
+                {
+                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == detail.ProductId);
+                    if (product == null || product.Quantity < detail.Quantity)
+                        return false;
+
+                    product.ReduceQuantity(detail.Quantity);
+                }
+
+                await _context.SaveChangesAsync(); // Ensure inventory updates are saved
+
+                var success = await _orderRepo.BulkCreateAsync(order, orderDetails);
+                if (!success) return false;
+
+                await _orderRepo.ClearCartAsync(userId);
+
+                await SendOrderConfirmationEmailAsync(user.Email, order.Id);
+
+                return true;
+            }
+            catch (Exception ex)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == detail.ProductId);
-                if (product == null || product.Quantity < detail.Quantity)
-                    return false;  // Insufficient stock or product not found
-
-                product.ReduceQuantity(detail.Quantity); 
+                // TODO: Log the exception (e.g., using ILogger)
+                Console.WriteLine($"[OrderService] Error while creating order: {ex.Message}");
+                return false;
             }
-
-            // Save order and order details using BulkCreateAsync
-            var success = await _orderRepo.BulkCreateAsync(order, orderDetails);
-            if (!success) return false;
-
-            // Clear the cart after successful order placement
-            await _orderRepo.ClearCartAsync(userId);
-
-            // Send an order confirmation email to the user
-            await SendOrderConfirmationEmailAsync(user.Email, order.Id);
-
-            return true;
         }
-
 
         public async Task SendOrderConfirmationEmailAsync(string userEmail, long orderId)
         {
-            var order = await _orderRepo.GetOrderWithDetailsAsync(orderId);
-            if (order == null) return;
+            try
+            {
+                var order = await _orderRepo.GetOrderWithDetailsAsync(orderId);
+                if (order == null) return;
 
-            var subject = $"Order #{order.Id} Confirmation";
-            var message = $"Thank you for your order. Your order status is: {order.Status}.<br/>" +
-                          $"Total items: {order.OrderDetails?.Count}<br/>" +
-                          $"Total price: {order.OrderDetails?.Sum(od => od.Quantity * od.Price)}";
+                var subject = $"Order #{order.Id} Confirmation";
+                var message = $"Thank you for your order. Your order status is: {order.Status}.<br/>" +
+                              $"Total items: {order.OrderDetails?.Count}<br/>" +
+                              $"Total price: {order.OrderDetails?.Sum(od => od.Quantity * od.Price)}";
 
-            await _emailSender.SendEmailAsync(userEmail, subject, message);
+                await _emailSender.SendEmailAsync(userEmail, subject, message);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception (e.g., using ILogger)
+                _logger.LogError(ex, "An error occurred while creating an order.");
+
+            }
         }
 
         public async Task<Order?> GetOrderWithDetailsAsync(long id)
