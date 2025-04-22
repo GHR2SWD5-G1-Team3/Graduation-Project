@@ -54,6 +54,8 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
+
+            builder.Services.AddScoped<IDataSeederService, DataSeederService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
@@ -117,6 +119,8 @@ namespace PLL
             {
                 var services = scope.ServiceProvider;
                 await IdentitySeeder.SeedRolesAndAdminAsync(services);
+                var seederService = services.GetRequiredService<IDataSeederService>();
+                await seederService.SeedCategoriesAndSubCategoriesAsync();
             }
             app.Run();
         }

@@ -122,6 +122,11 @@
 
         }
 
+        public async Task<(bool, string?)> CreateFromSeederAsync(string name, string description, string imagePath, int categoryId, string userId)
+        {
+            var subCategory = new SubCategory(name, description, imagePath, categoryId, userId);
+            return await subCategoryRepo.CreateAsync(subCategory);
+        }
 
     }
 }
