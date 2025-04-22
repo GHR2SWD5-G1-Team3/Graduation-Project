@@ -1,4 +1,4 @@
-using BLL.Services.Concrete;
+using BLL.Configuration;
 
 namespace PLL
 {
@@ -22,8 +22,9 @@ namespace PLL
             
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(connectionString));
-            builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+            builder.Services.Configure<EmailSettings>(
+                 builder.Configuration.GetSection("EmailSettings"));
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
             builder.Services.AddScoped<IOrderDetailsRepo, OrderDetailsRepo>();
@@ -53,7 +54,9 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
-            builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 
             // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));

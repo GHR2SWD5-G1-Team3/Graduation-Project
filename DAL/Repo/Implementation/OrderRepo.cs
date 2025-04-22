@@ -50,7 +50,7 @@
 
             var result = existingOrder.Edit(
                 user,
-                updatedOrder.TotalPrice,
+                updatedOrder.Subtotal,
                 updatedOrder.PhoneNumber,
                 updatedOrder.City,
                 updatedOrder.Street,

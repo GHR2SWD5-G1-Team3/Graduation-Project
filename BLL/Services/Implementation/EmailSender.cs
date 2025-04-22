@@ -1,26 +1,29 @@
-﻿
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Net;
+using BLL.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace BLL.Services.Implementation
 {
     public class EmailSender : IEmailSender
     {
-        private readonly string _smtpHost = "smtp.gmail.com"; // Your SMTP host
-        private readonly int _smtpPort = 587; // Your SMTP port
-        private readonly string _smtpUser = "your-email@gmail.com"; // Your email address
-        private readonly string _smtpPass = "your-email-password"; // Your email password
+        private readonly EmailSettings _emailSettings;
+
+        public EmailSender(IOptions<EmailSettings> emailSettings)
+        {
+            _emailSettings = emailSettings.Value;
+        }
 
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
-            using (var client = new SmtpClient(_smtpHost, _smtpPort))
+            using (var client = new SmtpClient(_emailSettings.SmtpHost, _emailSettings.SmtpPort))
             {
                 client.EnableSsl = true;
-                client.Credentials = new NetworkCredential(_smtpUser, _smtpPass);
+                client.Credentials = new NetworkCredential(_emailSettings.SmtpUser, _emailSettings.SmtpPass);
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(_smtpUser),
+                    From = new MailAddress(_emailSettings.SmtpUser),
                     Subject = subject,
                     Body = body,
                     IsBodyHtml = true,
@@ -31,4 +34,5 @@ namespace BLL.Services.Implementation
             }
         }
     }
-}    
+
+}

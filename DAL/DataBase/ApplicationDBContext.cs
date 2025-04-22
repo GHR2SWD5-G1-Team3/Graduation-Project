@@ -35,7 +35,7 @@ namespace DAL.DataBase
                  .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Order>()
-                .Property(o => o.TotalPrice)
+                .Property(o => o.Subtotal)
                 .HasColumnType("decimal(18, 2)");
             modelBuilder.Entity<OrderDetails>()
                 .Property(o => o.Price)
