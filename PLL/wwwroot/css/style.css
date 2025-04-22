@@ -440,7 +440,25 @@
     }
 /*** vesitable End ***/
 
+/*sweet alert  start*/
+.swal2-container.swal2-top-end {
+    top: 20px;
+    right: 20px;
+}
 
+.swal2-popup.swal2-toast {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 0.375rem;
+}
+
+.swal2-title {
+    font-size: 1.1rem;
+}
+/*sweet alert  end */
+
+/*pagination start*/
+
+/*pagination end*/
 /*** Banner Section Start ***/
 .banner .banner-btn:hover {
     background: var(--bs-primary);

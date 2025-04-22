@@ -1,7 +1,7 @@
 ﻿public class Order
 {
     public long Id { get; private set; }
-    public decimal TotalPrice { get; private set; }
+    public decimal Subtotal { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public bool IsPaied { get; private set; }
     public bool IsDelivered { get; private set; }
@@ -25,9 +25,9 @@
 
     public OrderStatus Status { get; private set; }
 
-    public Order(decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod, string userId)
+    public Order(decimal subtotal, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod, string userId)
     {
-        TotalPrice = totalPrice;
+        Subtotal = subtotal;
         IsPaied = isPaied;
         IsDelivered = isDelivered;
         PhoneNumber = phoneNumber;
@@ -60,11 +60,11 @@
         return true;
     }
 
-    public bool Edit(string? user, decimal totalPrice, string phoneNumber, string city, string street, string paymentMethod)
+    public bool Edit(string? user, decimal subtotal, string phoneNumber, string city, string street, string paymentMethod)
     {
         if (user == null) return false;
 
-        TotalPrice = totalPrice;
+        Subtotal = Subtotal;
         PhoneNumber = phoneNumber;
         City = city;
         Street = street;
