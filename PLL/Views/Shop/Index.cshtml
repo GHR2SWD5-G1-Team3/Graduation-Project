@@ -75,7 +75,7 @@
                                              style="cursor: pointer;">
 
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
 
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
@@ -93,9 +93,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary no-click">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +117,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -132,9 +133,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,7 +157,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -170,9 +172,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,7 +196,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -209,9 +212,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -232,7 +236,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -248,9 +252,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -271,7 +276,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -287,9 +292,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -310,7 +316,7 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -326,9 +332,10 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -345,6 +352,7 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
+<!-- Search start -->
 <script>
     // Focus function 
     function focusSearchInput() {
@@ -421,32 +429,114 @@
         });
     });
 </script>
+<!-- Search End-->
+<!-- Card and favourite start -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.favourite-btn').forEach(btn => {
-        // Check initial state from server if needed
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
+        document.querySelectorAll('.favourite-btn').forEach(btn => {
+            // Check initial state from server if needed
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
 
-            this.classList.toggle('active');
+                this.classList.toggle('active');
 
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-solid');
-            icon.classList.toggle('fa-regular');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-solid');
+                icon.classList.toggle('fa-regular');
 
-            const productId = this.getAttribute('data-product-id');
-            fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
+                const productId = this.getAttribute('data-product-id');
+                fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
+            });
         });
-    });
 
         document.querySelectorAll('.card-clickable').forEach(card => {
-            card.addEventListener('click', function () {
+           card.addEventListener('click', function () {
                 const url = this.getAttribute('data-url');
                 if (url) {
                     window.location.href = url;
                 }
-            });
+           });
+        });
+        // add to cart
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            const productId = this.getAttribute('data-product-id');
+            const productName = this.closest('.fruite-item').querySelector('h4').textContent;
+
+            // Show loading state
+            const originalHtml = this.innerHTML;
+            this.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Adding...';
+            this.disabled = true;
+
+            // Get user's cart ID and add product
+            fetch('/Cart/GetUserCartId')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cartId) {
+                        return fetch('/CartDetails/Create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                CartId: data.cartId,
+                                ProductId: productId,
+                                Quantity: 1
+                            })
+                        });
+                    } else {
+                        throw new Error('No cart ID found');
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to add to cart');
+                    return response.json();
+                })
+                .then(data => {
+                    // Success - revert button to original state
+                    this.innerHTML = originalHtml;
+                    this.disabled = false;
+
+                    // Show SweetAlert notification at top of page
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${productName} added to cart!`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        toast: true,
+                        background: '#f8f9fa',
+                        backdrop: false,
+                        width: '400px'
+                    });
+
+                    // Update cart counter
+                    updateCartCounter();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    this.innerHTML = originalHtml;
+                    this.disabled = false;
+
+                    // Show error notification
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Failed to add to cart',
+                        text: 'Please try again',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        toast: true
+                    });
+                });
         });
     });
+});
 </script>
+<!-- Card and favourit end -->
+<!-- Pagination Start-->
+<!-- Pagination End -->

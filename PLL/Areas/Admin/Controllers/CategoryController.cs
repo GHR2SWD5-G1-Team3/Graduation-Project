@@ -22,7 +22,7 @@
                 );
                 return View(result);
             }
-            return View("AccessDenied");
+            return View("Home","Error");
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@
             var user = await userManager.GetUserAsync(User);
             if (user == null || !await userManager.IsInRoleAsync(user, "Admin"))
             {
-                return View("AccessDenied"); 
+                return View("Home", "Error"); 
             }
             var category = await categoryServices.GetById(id);
             if (category.Item2 == false)

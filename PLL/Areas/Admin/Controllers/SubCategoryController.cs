@@ -28,7 +28,7 @@ namespace PLL.Areas.Admin.Controllers
                 );
                 return View(result);
             }
-            return View("AccessDenied");
+            return View("Home", "Error");
         }
         //create
         [HttpGet]
@@ -66,7 +66,7 @@ namespace PLL.Areas.Admin.Controllers
             var user = await userManager.GetUserAsync(User);
             if (user == null || !await userManager.IsInRoleAsync(user, "Admin"))
             {
-                return View("AccessDenied");
+                return View("Home", "Error");
             }
             var subcategory = await subCategoryServices.GetById(id);
             if (subcategory.Item2 == false)

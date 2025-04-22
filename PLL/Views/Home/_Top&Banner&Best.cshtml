@@ -11,7 +11,7 @@
 					   style="position: relative; z-index: 1;">
 
 						<div class="vesitable-img">
-							<img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+							<img src="~/img/Products/@product.ImagePath" style="width:258px;height:207px" class="img-fluid w-100 rounded-top" alt="@product.Name">
 						</div>
 
 						<div class="text-white bg-primary px-3 py-1 rounded position-absolute"
@@ -86,7 +86,7 @@
 					<div class="p-4 rounded bg-light">
 						<div class="row align-items-center">
 							<div class="col-6">
-								<img src="~/img/Products/@item.ImagePath" class="img-fluid rounded-circle w-100" alt="@item.Name">
+								<img src="~/img/Products/@item.ImagePath" style="width:142px;height:142px" class="img-fluid rounded-circle w-100" alt="@item.Name">
 							</div>
 							<div class="col-6">
 								<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@item.Id" class="h5">Organic @item.Name </a>
