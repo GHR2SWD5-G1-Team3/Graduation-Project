@@ -1,33 +1,32 @@
-﻿@model DisplayUser
-@inject UserManager<User> userManager
+﻿@model ProfileVm
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var currentUser = await userManager.GetUserAsync(User);
 }
 
-@section Styles {
-<link href="~/css/profilestyle.css" rel="stylesheet" />
+@section Styles
+{
+    <link href="~/css/profilestyle.css" rel="stylesheet" />
 }
 
 <div class="container profile-container py-5">
     <div class="text-center mb-4">
         <div class="mb-3">
             <img src="~/UserPersonnalImages/@Model.Image"
-            class="rounded-circle img-thumbnail shadow"
-            width="130" height="130" alt="Profile Photo" />
+                 class="rounded-circle img-thumbnail shadow"
+                 width="130" height="130" alt="Profile Photo" />
         </div>
         <h2 class="mb-1">@Model.FirstName  @Model.LastName</h2>
-        @if(Model.City is not null && Model.Governement is not null)
+        @if (Model.City != null && Model.Government != null)
         {
-            <p class="text-muted"><i class="fa-solid fa-location-dot me-2"></i>@Model.City, @Model.Governement</p>
+            <p class="text-muted"><i class="fa-solid fa-location-dot me-2"></i>@Model.City, @Model.Government</p>
 
         }
-        @if (Model.Id == currentUser?.Id)
+        @if (Model.IsCurrentUser)
         {
-            <button class="btn btn-success me-2">Edit Profile</button>
+            <button class="btn btn-success me-2"><a asp-action="Edit" asp-controller="User" asp-area="" asp-route-id="@Model.Id">Edit Profile</a></button>
         }
-        <button class="btn btn-outline-success">Share Profile</button>
+        <button class="btn btn-outline-success" onclick="copyCurrentUrl()">Share Profile</button>
     </div>
 
     <div class="card mb-4 shadow-sm">
@@ -37,29 +36,150 @@
             <p><i class="fa-solid fa-calendar me-2 text-success"></i><strong>Joined:</strong> @Model.CreatedAt</p>
         </div>
     </div>
+    @* Products Section *@
+    <section class="mb-5">
+        <h4 class="mb-4"><i class="fa-solid fa-box-open me-2 text-success"></i>Products</h4>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @if (Model.MyProducts != null && Model.MyProducts.Any())
+            {
+                foreach (var product in Model.MyProducts)
+                {
+                    <div class="col position-relative">
+                        <div class="card h-100 shadow-sm card-hover">
+                            @* Heart icon only visible if current user is viewing their own profile *@
+                            @if (Model.IsCurrentUser)
+                            {
+                                <div class="position-absolute top-0 end-0 p-2">
+                                    @if (Model.WishList.Any(f => f.Id == product.Id))
+                                    {
+                                        <i class="fa-solid fa-heart text-danger favorite-icon"
+                                           onclick="toggleFavorite(@product.Id, this)"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-heart text-danger favorite-icon"
+                                           onclick="toggleFavorite(@product.Id, this)"></i>
+                                    }
+                                </div>
+                            }
 
-    <ul class="nav nav-pills justify-content-center mb-4">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Products</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">WishList</a>
-        </li>
-    </ul>
+                            <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" style="height:200px; object-fit:cover;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">@product.Description</p>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="@Url.Action("Delete", "Product", new { id = product.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">No products available.</p>
+            }
+        </div>
+    </section>
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm p-3">
-                <h5>Redesigning the User Experience</h5>
+    @* Favorites Section (only for profile owner) *@
+    @if (Model.IsCurrentUser)
+    {
+        <section>
+            <h4 class="mb-4"><i class="fa-solid fa-heart me-2 text-danger"></i>Your Favorites</h4>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                @if (Model.WishList != null && Model.WishList.Any())
+                {
+                    foreach (var favorite in Model.WishList)
+                    {
+                        <div class="col position-relative">
+                            <div class="card h-100 shadow-sm card-hover">
+                                <div class="position-absolute top-0 end-0 p-2">
+                                    <i class="fa-solid fa-heart text-danger favorite-icon"
+                                       onclick="toggleFavorite(@favorite.Id, this)"></i>
+                                </div>
+
+                                <img src="@favorite.ImagePath" class="card-img-top" alt="@favorite.Name" style="height:200px; object-fit:cover;" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@favorite.Name</h5>
+                                    <p class="card-text">@favorite.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">You have no favorites.</p>
+                }
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm p-3">
-                <h5>Color Theory in Digital Products</h5>
-            </div>
-        </div>
-    </div>
+        </section>
+    }
+
 </div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function copyCurrentUrl() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Link Copied!',
+                    text: 'The profile link has been copied to your clipboard.',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            }, function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Failed to copy the link!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            });
+            }
+            function toggleFavorite(productId, iconElement) {
+            const isFavorite = iconElement.classList.contains("fa-solid");
+
+            fetch(/Favorite/Toggle/${productId}, {
+                method: "POST"
+            }).then(response => {
+                if (response.ok) {
+                    iconElement.classList.toggle("fa-solid");
+                    iconElement.classList.toggle("fa-regular");
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: isFavorite ? 'Removed from Favorites' : 'Added to Favorites',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    throw new Error("Request failed");
+                }
+            }).catch(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Something went wrong!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        }
+
+    </script>
 }

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Add New Role:</div>
+                    </div>
+                    <form asp-controller="Role" asp-action="Create" method="post" asp-area="Admin">
+                        <div class="card-body">
+                            @if (ViewBag.Massege != null)
+                            {
+                                <div class="card">
+                                    <div class="card-body">
+                                        @ViewBag.Massege
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                    <div class="form-group">
+                                        <label>Role Name:</label>
+                                    <input type="text" placeholder="Eter The Role Name..." class="form-control" name="roleName"/>
+                                    </div>
+                                </div>
+                                  
+                                    <div class="card-action">
+                                        <input type="submit" value="Add New Role" class="btn btn-success">
+                                    </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

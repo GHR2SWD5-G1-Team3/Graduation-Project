@@ -47,13 +47,13 @@
                     </a>
                     @{
                         var currentUser = await userManager.GetUserAsync(User);
-                        var profileImage = currentUser?.Image ?? "~/img/avater.jpg"; // fallback image
+                        var profileImage = currentUser?.Image; // fallback image
                     }
                     @if (signInManager.IsSignedIn(User))
                     {
                         <div class="nav-item dropdown">
                             <a href="#" class="d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown" style="gap: 10px;">
-                                <img src="~/UserPersonnalImages/@profileImage" alt="Profile"
+                                <img src="~/UserPersonnalImages/@currentUser.Image" alt="Profile"
                                 class="rounded-circle shadow-sm"
                                 style="width: 40px; height: 40px; object-fit: cover;" />
                                 <span class="fw-semibold text-dark">@currentUser?.UserName</span>
@@ -62,7 +62,7 @@
                             style="min-width: 180px; background-color: #f8f9fa;">
 
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Profile" asp-action="Index" asp-area="" asp-route-id="@currentUser?.Id">
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Profile" asp-action="Index" asp-area="" asp-route-userId="@currentUser?.Id">
                                         <i class="bi bi-person-circle"></i> Profile
                                     </a>
                                 </li>

@@ -24,7 +24,7 @@ namespace DAL.Repo.Implementation
             }
         }
 
-        public async Task<bool> UpdateAsync(string? editBy, string fName, string lName, string imagepath , string phone, string address, string userId)
+        public async Task<bool> UpdateAsync(string? editBy, string fName, string lName, string imagepath , string phone, string city, string government, string userId)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace DAL.Repo.Implementation
                 var editUser = await Db.Users.FirstOrDefaultAsync(a => a.Id == userId);
                 if (editUser != null)
                 {
-                    editUser.Edit(editBy,fName,lName,imagepath,address,phone);
+                    editUser.Edit(editBy,fName,lName,imagepath,city,government,phone);
                     await Db.SaveChangesAsync();
                     return true;
                 }

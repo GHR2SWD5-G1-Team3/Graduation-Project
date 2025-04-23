@@ -36,6 +36,7 @@ namespace PLL
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); 
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<IRoleRepo, RoleRepo>();
+            builder.Services.AddScoped<IFavoriteProductRepo, FavoriteProductRepo>();
             // Scoped Services
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
@@ -49,6 +50,8 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
+            builder.Services.AddScoped<IFavoriteProductServices, FavoriteProductServices>();
+            builder.Services.AddScoped<IProfileServices, ProfileServices>();
             builder.Services.AddScoped<IReviewService, ReviewService>(); // Register ReviewService
 
             // Mapping

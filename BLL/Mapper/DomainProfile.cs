@@ -10,6 +10,8 @@
             CreateMap<AddNewUserVM,User>();
             CreateMap<User,DisplayUser>();
             CreateMap<AddNewUserVM, User>();
+            CreateMap<DisplayUser, EditUser>();
+
             //Role
             CreateMap<Role,DisplayRoleVm>();
             //Order

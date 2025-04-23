@@ -1,12 +1,13 @@
-﻿using BLL.ModelVM.User;
-namespace PLL.Areas.Admin.Controllers
+﻿namespace PLL.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class CustomerController(IUserServices userServices,IStringLocalizer<SharedResource> stringLocalizer) : Controller
+    public class CustomerController(IUserServices userServices,IStringLocalizer<SharedResource> stringLocalizer, IMapper mapper) : Controller
     {
       private readonly IUserServices _userServices =userServices;
         private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+        private readonly IMapper _mapper = mapper;
+
         public async Task<ActionResult> Index()
         {
             var displayCustomers= await _userServices.GetAllAsync(a=>a.RoleName== "Customer" && a.IsDeleted == false);
@@ -52,23 +53,38 @@ namespace PLL.Areas.Admin.Controllers
         }
 
         // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            if (string.IsNullOrEmpty(id)) return NotFound();
+
+            var user = await _userServices.GetAsync(a => a.Id == id);
+            if (user == null) return NotFound();
+            var edit = _mapper.Map<EditUser>(user);
+            return View(edit);
         }
 
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(EditUser editUser)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var result = await _userServices.UpdateAsync(editUser);
+                    if (result)
+                        return RedirectToAction(nameof(Index));
+                    ViewBag.Massege = ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                    return View(editUser);
+                }
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(editUser);
             }
             catch
             {
-                return View();
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(editUser);
             }
         }
 
@@ -81,16 +97,12 @@ namespace PLL.Areas.Admin.Controllers
         // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteAsync(string userId)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+            var result = await _userServices.DeleteAsync(userId, "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
+

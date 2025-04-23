@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-
-namespace PLL.Controllers
+﻿namespace PLL.Controllers
 {
-    public class ProfileController(IUserServices userServices) : Controller
+    public class ProfileController(IProfileServices profileServices, UserManager<User> userManager) : Controller
     {
-        IUserServices _userServices = userServices;
+        private readonly IProfileServices _profileServices = profileServices;
+        private readonly UserManager<User> _userManager = userManager;
         [HttpGet]
-        public async Task<IActionResult> Index(string Id)
+        public async Task<IActionResult> Index(string userId)
         {
-            var user = await _userServices.GetAsync(a => a.Id == Id);
-            return View(user);
+            var currentUser= await _userManager.GetUserAsync(User);
+            var profileVm = await _profileServices.GetUserProfileAsync(userId,currentUser.Id);
+            return View(profileVm);
         }
     }
 }

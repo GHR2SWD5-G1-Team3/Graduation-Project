@@ -1,6 +1,6 @@
 ﻿@model List<DisplayRoleVm>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DeletedRoles";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
@@ -9,11 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h4 class="card-title">Roles</h4>
-                        <a class="btn btn-primary btn-round ms-auto" asp-action="Create" asp-controller="Role" asp-area="Admin">
-                            <i class="fa fa-plus"></i>
-                            Add Role
-                        </a>
+                        <h4 class="card-title">Deleted Roles</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -35,7 +31,8 @@
                                             <td>@roleVm.Name</td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteRole('@roleVm.Id')"><i class="fa fa-times"></i></a>
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteRole('@roleVm.Id')"><i class="fa-solid fa-trash-arrow-up"></i></a>
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteRole('@roleVm.Id')"><i class="fa-solid fa-trash-alt"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -51,7 +48,7 @@
         </div>
     </div>
 </div>
-@Html.AntiForgeryToken() 
+@Html.AntiForgeryToken()
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

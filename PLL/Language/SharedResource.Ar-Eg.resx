@@ -198,4 +198,10 @@
   <data name="Addnewseller" xml:space="preserve">
     <value>اضافة بائع جديد</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>حدث</value>
+  </data>
+  <data name="updatevendor" xml:space="preserve">
+    <value>تحديث بيانات البائع</value>
+  </data>
 </root>
