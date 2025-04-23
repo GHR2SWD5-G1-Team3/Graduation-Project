@@ -1,4 +1,4 @@
-﻿//Card and favourite start
+﻿//Cart and favourite start
 console.log("site.js loaded successfully!");
 document.addEventListener('DOMContentLoaded', function () {
         updateCartCounter();
@@ -57,11 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         quantity
                     })
                 })
-                    .then(response => response.json())
+                 .then(response => response.json())
                     .then(data => {
-                        this.innerHTML = originalHtml;
-                        this.disabled = false;
-
                         if (data.success) {
                             Swal.fire({
                                 position: 'top-end',
@@ -74,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 backdrop: false,
                                 width: '400px'
                             });
-
+                            
                             updateCartCounter();
                         } else {
                             // Show SweetAlert for login prompt
@@ -86,10 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
                                 background: '#f8f9fa',
                                 width: '400px'
                             });
-
-                            this.innerHTML = originalHtml;
-                            this.disabled = false;
+ 
                         }
+                        this.innerHTML = originalHtml;
+                        this.disabled = false;
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -123,4 +120,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
  });
 
-//Card and favourit end
+//Carr and favourit end
