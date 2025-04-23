@@ -64,6 +64,7 @@ namespace PLL
 
             // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+
             // Identity
             builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
@@ -111,12 +112,15 @@ namespace PLL
             });
             // Define the route for areas
             app.MapControllerRoute(
-                name: "areas", // A name for the route (you can customize it)
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+     name: "areas",
+     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+ );
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
+
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

@@ -69,6 +69,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (Model.CartItems == null || !Model.CartItems.Any())
+                                         {
+                                        <p>Your cart is empty.</p>
+                                           }
+                                         else
+                                            {
                                 @foreach (var item in Model.CartItems)
                                 {
                                     <tr>
@@ -81,9 +87,11 @@
                                         <td class="py-5">@item.TotalPrice.ToString("C")</td>
                                     </tr>
                                 }
+                                }
                                 <tr>
                                     <td colspan="4" class="text-end py-4"><strong>Total:</strong></td>
-                                    <td class="py-4">@Model.Subtotal.ToString("C")</td>
+                                    <td class="py-4">@((Model?.Subtotal ?? 0).ToString("C"))</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -95,6 +103,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </form>
     </div>

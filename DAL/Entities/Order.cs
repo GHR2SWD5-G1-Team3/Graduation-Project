@@ -12,7 +12,7 @@
 
     [ForeignKey(nameof(User))]
     public string UserId { get; private set; }
-
+    public string? CreatedOn { get; private set; }
     public bool IsDeleted { get; set; }
     public string? DeletedBy { get; private set; }
     public DateTime DeletedOn { get; set; }

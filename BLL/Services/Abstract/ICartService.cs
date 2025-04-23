@@ -8,5 +8,9 @@ namespace BLL.Services.Abstract
         Task<List<DisplayCartDetailsVM>> GetAllCarts();
         Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null);
         Task GetCartAsync(object id);
+        
+        Task<List<DisplayCartDetailsVM>> GetCartItemsAsync(Expression<Func<Cart, bool>>? filter = null);
+
+
     }
 }

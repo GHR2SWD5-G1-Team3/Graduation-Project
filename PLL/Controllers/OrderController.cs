@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using BLL.ModelVM.Order;
-using BLL.ModelVM.Order.BLL.ModelVM.Order;
 
 namespace UI.Controllers
 {
@@ -10,12 +9,29 @@ namespace UI.Controllers
         private readonly IOrderService _orderService;
         private readonly UserManager<User> _userManager;
         private readonly ApplicationDBContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger<OrderController> _logger;
 
-        public OrderController(IOrderService orderService, UserManager<User> userManager, ApplicationDBContext context)
+        public OrderController(
+            IOrderService orderService,
+            UserManager<User> userManager,
+            ApplicationDBContext context,
+            IMapper mapper,
+            ILogger<OrderController> logger)
         {
             _orderService = orderService;
             _userManager = userManager;
             _context = context;
+            _mapper = mapper;
+            _logger = logger;
+        }
+
+        private async Task<Cart> GetUserCartAsync(string userId)
+        {
+            return await _context.Carts
+                .Include(c => c.CartProducts)
+                    .ThenInclude(cd => cd.Product)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
         [HttpGet]
@@ -24,11 +40,8 @@ namespace UI.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction("Login", "Account");
 
-            // Load cart items
-            var cart = await _context.Carts
-                .Include(c => c.CartProducts)
-                    .ThenInclude(cd => cd.Product)
-                .FirstOrDefaultAsync(c => c.UserId == user.Id);
+            // Load cart items for the user
+            var cart = await GetUserCartAsync(user.Id);
 
             if (cart == null || !cart.CartProducts.Any())
             {
@@ -36,20 +49,12 @@ namespace UI.Controllers
                 return RedirectToAction("Index", "Cart");
             }
 
-            var createOrderVM = new CreateOrderVM
-            {
-                PhoneNumber = user.PhoneNumber,
-                Address = user.Address,
-                PaymentMethod = "Cash", // default
-                Products = cart.CartProducts.Select(cd => new OrderProductVM
-                {
-                    Id = cd.ProductId,
-                    Name = cd.Product.Name,
-                    Quantity = cd.Quantity,
-                    UnitPrice = cd.Product.UnitPrice,
-                    Imagepath = cd.Product.ImagePath
-                }).ToList()
-            };
+            // Map cart items to CreateOrderVM using AutoMapper
+            var createOrderVM = _mapper.Map<CreateOrderVM>(cart);
+            createOrderVM.PhoneNumber = user.PhoneNumber;
+            createOrderVM.Street = user.City;  // Assign the street address
+            createOrderVM.City = user.Address;
+            createOrderVM.PaymentMethod = "Cash"; // default payment method
 
             return View(createOrderVM);
         }
@@ -71,6 +76,7 @@ namespace UI.Controllers
             if (!success)
             {
                 TempData["Error"] = "Failed to place the order. Please try again.";
+                _logger.LogError($"Order creation failed for User {userId}. Model data: {model}");
                 return View(model);
             }
 
@@ -85,11 +91,12 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MyOrders()
+        public async Task<IActionResult> MyOrders(int page = 1, int pageSize = 20)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var orders = await _orderService.GetAllOrdersAsync(1, 50, userId); // you can paginate this
-            return View(orders);
+            var orders = await _orderService.GetAllOrdersAsync(page, pageSize, userId); // Pagination applied here
+            var orderVMs = _mapper.Map<List<DisplayOrderVM>>(orders); // Map orders to ViewModel for display
+            return View(orderVMs);
         }
 
         [HttpGet]
@@ -99,7 +106,9 @@ namespace UI.Controllers
             if (order == null || order.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                 return NotFound();
 
-            return View(order);
+            // Map Order and OrderDetails to a ViewModel for display
+            var orderDetailsVM = _mapper.Map<OrderDetailsVM>(order);
+            return View(orderDetailsVM);
         }
     }
 }

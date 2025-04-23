@@ -127,10 +127,7 @@ namespace BLL.Services.Implementation
             return await _orderRepo.GetOrderWithDetailsAsync(id);
         }
 
-        public async Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus newStatus)
-        {
-            return await _orderRepo.UpdateStatusAsync(orderId, newStatus);
-        }
+     
 
         public async Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string? userId = null)
         {
@@ -139,6 +136,11 @@ namespace BLL.Services.Implementation
                 : await _orderRepo.GetAllByUserIdAsync(userId);
 
             return PaginatedList<Order>.Create(allOrders.AsQueryable(), pageNumber, pageSize);
+        }
+
+        public Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus status, string updatedBy)
+        {
+            throw new NotImplementedException();
         }
     }
 }

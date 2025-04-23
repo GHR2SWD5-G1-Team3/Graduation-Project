@@ -1,6 +1,6 @@
 ﻿namespace DAL.Entities
 {
-    public class Product(string name, string description, string imagePath, decimal unitPrice, decimal quantity, int? discountPrecentage, string userId, int subCategoryId)
+    public class Product(string name, string description, string imagePath, decimal unitPrice, decimal quantity, float discountPrecentage, string userId, int subCategoryId)
     {
         public long Id { get; private set; }
         public string Name { get; private set; } = name;
@@ -15,7 +15,7 @@
         public DateTime? DeletedOn { get; set; }
         public string? ModifiedBy { get; private set; }
         public DateTime? ModifiedOn { get; private set; }
-        public int? DiscountPrecentage { get; set; } = discountPrecentage;
+        public float DiscountPrecentage { get; set; } = discountPrecentage;
         [ForeignKey(nameof(User))]
         public string UserId { get; private set; } = userId;
         public User? User { get; set; }
@@ -35,7 +35,7 @@
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string user,string name, string description, string imagePath, decimal unitPrice, decimal quantity, int? discountPrecentage, string userId, int subCategoryId)
+        public bool Edit(string user,string name, string description, string imagePath, decimal unitPrice, decimal quantity, float discountPrecentage, string userId, int subCategoryId)
         {
             if (user == null) return false;
             Name = name;

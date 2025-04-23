@@ -9,6 +9,6 @@
         public decimal Quantity { get; set; }
         public decimal TotalPrice => Price * Quantity; 
         public string? ImageUrl { get; set; }
-        public object Product { get; set; }
+       
     }
 }
