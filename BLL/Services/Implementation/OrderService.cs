@@ -13,7 +13,7 @@ namespace BLL.Services.Implementation
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDBContext _context;
-        private readonly ILogger _logger;
+        private readonly ILogger<OrderService> _logger;
 
 
         public OrderService(
@@ -25,7 +25,8 @@ namespace BLL.Services.Implementation
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
             ApplicationDBContext context
-            , ILogger logger)
+            , ILogger<OrderService> logger
+)
         {
             _orderRepo = orderRepo;
             _orderDetailsRepo = orderDetailsRepo;
@@ -60,7 +61,7 @@ namespace BLL.Services.Implementation
                 );
 
                 var orderDetails = model.Products.Select(p => new OrderDetails(
-                    productId: p.ProductId,
+                    productId: p.Id,
                     orderId: order.Id,
                     price: p.UnitPrice,
                     quantity: p.Quantity

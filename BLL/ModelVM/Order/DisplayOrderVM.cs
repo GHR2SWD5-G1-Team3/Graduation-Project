@@ -16,7 +16,7 @@ namespace BLL.ModelVM.Order
             public string PaymentMethod { get; set; }
             public string UserId { get; set; }
             public string UserEmail { get; set; } // The email of the user who made the order
-            public string Status { get; set; } // Order status (Pending, Delivered, Cancelled)
+            public OrderStatus Status { get; set; } // Order status (Pending, Delivered, Cancelled)
             public DateTime CreatedDate { get; set; } // Date when the order was created
             public DateTime? UpdatedDate { get; set; } // Date when the order was last updated (nullable)
         public List<OrderProductVM> Products { get; set; } 

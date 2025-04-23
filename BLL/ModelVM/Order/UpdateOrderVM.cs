@@ -16,7 +16,7 @@ namespace BLL.ModelVM.Order
         public List<OrderProductVM> Products { get; set; } = new();
         public List<DisplayCartDetailsVM> CartItems { get; set; } = new();
         public decimal Subtotal => CartItems?.Sum(ci => ci.TotalPrice) ?? 0;
-        public string Status { get; set; } // Order status (Pending, Delivered, Cancelled)
+        public OrderStatus Status { get; set; } // Order status (Pending, Delivered, Cancelled)
     }
 
 }

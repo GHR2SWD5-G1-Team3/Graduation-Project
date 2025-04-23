@@ -1,0 +1,42 @@
+﻿@using BLL.ModelVM.Order
+@using BLL.ModelVM.Order.BLL.ModelVM.Order
+@model OrderDetailsVM
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-3">Order #@Model.Id - @Model.Status</h2>
+
+<p><strong>Date:</strong> @Model.CreatedDate.ToString("dd MMM yyyy")</p>
+<p><strong>Total Amount:</strong> @Model.TotalPrice.ToString("C")</p>
+<p><strong>Payment Method:</strong> @Model.PaymentMethod</p>
+<p><strong>Paid:</strong> @(Model.IsPaid ? "Yes" : "No")</p>
+<p><strong>Delivered:</strong> @(Model.IsDelivered ? "Yes" : "No")</p>
+
+<hr />
+
+<h4>Products</h4>
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price (each)</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitPrice.ToString("C")</td>
+                <td>@(item.Quantity * item.UnitPrice).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary mt-3" href="@Url.Action("MyOrders", "Order")">Back to My Orders</a>
