@@ -13,7 +13,7 @@ namespace BLL.Services.Implementation
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDBContext _context;
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
 
 
         public OrderService(
@@ -25,7 +25,8 @@ namespace BLL.Services.Implementation
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
             ApplicationDBContext context
-            , ILogger logger)
+            //, ILogger logger
+            )
         {
             _orderRepo = orderRepo;
             _orderDetailsRepo = orderDetailsRepo;
@@ -35,7 +36,7 @@ namespace BLL.Services.Implementation
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
-            _logger = logger;
+            //_logger = logger;
 
         }
 
@@ -116,8 +117,8 @@ namespace BLL.Services.Implementation
             catch (Exception ex)
             {
                 // TODO: Log the exception (e.g., using ILogger)
-                _logger.LogError(ex, "An error occurred while creating an order.");
-
+                //_logger.LogError(ex, "An error occurred while creating an order.");
+                throw new  Exception("An error occurred while creating an order.");
             }
         }
 

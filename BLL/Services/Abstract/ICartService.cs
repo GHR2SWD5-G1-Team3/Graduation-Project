@@ -3,7 +3,9 @@ namespace BLL.Services.Abstract
 {
     public interface ICartService
     {
-       Task<(bool, string?)> AddCart(Cart cart);
+        Task AddProductToCartAsync(string userId, long productId, decimal price, decimal quantity);
+        Task<int> GetCartItemCountAsync(string userId);
+        Task<(bool, string?)> AddCart(Cart cart);
         Task<bool> RemoveCart(int cartId);
         Task<List<DisplayCartDetailsVM>> GetAllCarts();
         Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null);
