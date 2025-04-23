@@ -61,7 +61,7 @@ namespace BLL.Services.Implementation
                 );
 
                 var orderDetails = model.Products.Select(p => new OrderDetails(
-                    productId: p.ProductId,
+                    productId: p.Id,
                     orderId: order.Id,
                     price: p.UnitPrice,
                     quantity: p.Quantity

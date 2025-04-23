@@ -5,7 +5,7 @@ namespace BLL.ModelVM.Order
     {
         public class OrderProductVM
         {
-            public long ProductId { get; set; }
+            public long Id { get; set; }
             public string Name { get; set; }
             public decimal UnitPrice { get; set; }
             public decimal Quantity { get; set; }

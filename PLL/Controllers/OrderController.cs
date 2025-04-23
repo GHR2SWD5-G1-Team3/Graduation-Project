@@ -43,7 +43,7 @@ namespace UI.Controllers
                 PaymentMethod = "Cash", // default
                 Products = cart.CartProducts.Select(cd => new OrderProductVM
                 {
-                    ProductId = cd.ProductId,
+                    Id = cd.ProductId,
                     Name = cd.Product.Name,
                     Quantity = cd.Quantity,
                     UnitPrice = cd.Product.UnitPrice,
