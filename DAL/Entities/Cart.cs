@@ -14,6 +14,15 @@
         public string UserId { get; private set; } = userId;
         public User? User { get;  set; }
         public List<CartDetails>? CartProducts { get; set; }
+        
+        public bool Edit(string? user,string userId)
+        {
+            if (user == null) return false;
+            UserId = userId;
+            ModifiedBy = user;
+            ModifiedOn = DateTime.Now;
+            return true;
+        }
         public bool Delete(string? User)
         {
             if (User == null) return false;
@@ -21,14 +30,6 @@
             IsDeleted = !IsDeleted;
             DeletedBy = User;
             DeletedOn = DateTime.Now;
-            return true;
-        }
-        public bool Edit(string? user,string userId)
-        {
-            if (user == null) return false;
-            UserId = userId;
-            ModifiedBy = user;
-            ModifiedOn = DateTime.Now;
             return true;
         }
 

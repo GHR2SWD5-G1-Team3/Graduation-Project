@@ -61,6 +61,10 @@
                     </ul>
                 </div>
             </div>
+            <form id="anti-forgery-form" style="display:none;">
+                @Html.AntiForgeryToken()
+            </form>
+
             <div class="tab-content">
                 <!-- All Products Tab -->
                 <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -94,7 +98,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -134,7 +140,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -173,7 +181,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -213,7 +223,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -253,7 +265,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -293,7 +307,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -333,7 +349,9 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
                                                     <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-                                                            data-product-id="@product.Id">
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                                                     </button>
                                                 </div>
@@ -430,113 +448,8 @@
     });
 </script>
 <!-- Search End-->
-<!-- Card and favourite start -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.favourite-btn').forEach(btn => {
-            // Check initial state from server if needed
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-
-                this.classList.toggle('active');
-
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-solid');
-                icon.classList.toggle('fa-regular');
-
-                const productId = this.getAttribute('data-product-id');
-                fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
-            });
-        });
-
-        document.querySelectorAll('.card-clickable').forEach(card => {
-           card.addEventListener('click', function () {
-                const url = this.getAttribute('data-url');
-                if (url) {
-                    window.location.href = url;
-                }
-           });
-        });
-        // add to cart
-    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            const productId = this.getAttribute('data-product-id');
-            const productName = this.closest('.fruite-item').querySelector('h4').textContent;
-
-            // Show loading state
-            const originalHtml = this.innerHTML;
-            this.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Adding...';
-            this.disabled = true;
-
-            // Get user's cart ID and add product
-            fetch('/Cart/GetUserCartId')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.cartId) {
-                        return fetch('/CartDetails/Create', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                CartId: data.cartId,
-                                ProductId: productId,
-                                Quantity: 1
-                            })
-                        });
-                    } else {
-                        throw new Error('No cart ID found');
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to add to cart');
-                    return response.json();
-                })
-                .then(data => {
-                    // Success - revert button to original state
-                    this.innerHTML = originalHtml;
-                    this.disabled = false;
-
-                    // Show SweetAlert notification at top of page
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: `${productName} added to cart!`,
-                        showConfirmButton: false,
-                        timer: 2000,
-                        toast: true,
-                        background: '#f8f9fa',
-                        backdrop: false,
-                        width: '400px'
-                    });
-
-                    // Update cart counter
-                    updateCartCounter();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    this.innerHTML = originalHtml;
-                    this.disabled = false;
-
-                    // Show error notification
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Failed to add to cart',
-                        text: 'Please try again',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        toast: true
-                    });
-                });
-        });
-    });
-});
-</script>
-<!-- Card and favourit end -->
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
 <!-- Pagination Start-->
 <!-- Pagination End -->
