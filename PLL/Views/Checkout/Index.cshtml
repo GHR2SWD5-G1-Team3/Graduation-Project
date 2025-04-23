@@ -70,17 +70,19 @@
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.CartItems)
-                                {
-                                    <tr>
-                                        <td>
-                                            <img src="@item.ImageUrl" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" />
-                                        </td>
-                                        <td class="py-5">@item.Name</td>
-                                        <td class="py-5">@item.Price.ToString("C")</td>
-                                        <td class="py-5">@item.Quantity</td>
-                                        <td class="py-5">@item.TotalPrice.ToString("C")</td>
-                                    </tr>
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="@item.ImageUrl" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" />
+                                            </td>
+                                            <td class="py-5">@item.Name</td>
+                                            <td class="py-5">@item.Price.ToString("C")</td>
+                                            <td class="py-5">@item.Quantity</td>
+                                            <td class="py-5">@item.TotalPrice.ToString("C")</td>
+                                        </tr>
+                                    }
                                 }
+                                
                                 <tr>
                                     <td colspan="4" class="text-end py-4"><strong>Total:</strong></td>
                                     <td class="py-4">@Model.Subtotal.ToString("C")</td>

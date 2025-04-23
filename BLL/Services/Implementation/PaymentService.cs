@@ -1,17 +1,19 @@
-﻿
+﻿using Microsoft.Extensions.Configuration;
+using Stripe.Checkout;
+
 namespace BLL.Services.Implementation
 {
     public class PaymentService : IPaymentService
     {
         private readonly IPaymentRepo paymentRepo;
         private readonly IMapper mapper;
-
-        public PaymentService(IPaymentRepo paymentRepo, IMapper mapper)
+        private readonly IConfiguration configuration;
+        public PaymentService(IPaymentRepo paymentRepo, IMapper mapper, IConfiguration configuration)
         {
             this.paymentRepo = paymentRepo;
             this.mapper = mapper;
+            this.configuration = configuration;
         }
-
         public async Task<bool> Create(CreatePaymentVM payment)
         {
             try
@@ -28,7 +30,6 @@ namespace BLL.Services.Implementation
                 return false;
             }
         }
-
         public async Task<List<PaymentVM>> GetAllPaymentsAsync(Expression<Func<Payment, bool>>? filter = null, params Expression<Func<Payment, object>>[] includes)
         {
             try
@@ -45,8 +46,6 @@ namespace BLL.Services.Implementation
                 return [];
             }
         }
-
-
         public async Task<PaymentVM> GetPaymentAsync(Expression<Func<Payment, bool>>? filter = null, params Expression<Func<Payment, object>>[] include)
         {
             try
@@ -63,5 +62,41 @@ namespace BLL.Services.Implementation
                 return null;
             }
         }
+        public async Task<string> CreateStripeSessionAsync(decimal amount, long orderId)
+        {
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    UnitAmount = (long)(amount * 100),
+                    Currency = "usd",
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = "Order Payment"
+                    }
+                },
+                Quantity = 1
+            }
+        },
+                Mode = "payment",
+                SuccessUrl = configuration["Stripe:SuccessUrl"] + "?session_id={CHECKOUT_SESSION_ID}",
+                CancelUrl = configuration["Stripe:CancelUrl"],
+                Metadata = new Dictionary<string, string>
+        {
+            { "order_id", orderId.ToString() }
+        }
+            };
+
+            var service = new SessionService();
+            var session = await service.CreateAsync(options);
+
+            return session.Url;
+        }
+
     }
 }

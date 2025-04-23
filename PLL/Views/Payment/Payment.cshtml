@@ -1,0 +1,13 @@
+﻿@using BLL.ModelVM.Payment
+@model PaymentVM
+
+<h2>Confirm Your Order</h2>
+
+<p>Order Total: <strong>@Model.Amount.ToString("C")</strong></p>
+
+<form asp-action="Start" method="post">
+    <input type="hidden" name="orderId" value="@Model.OrderId" />
+    <input type="hidden" name="amount" value="@Model.Amount" />
+
+    <button type="submit" class="btn btn-success">Pay Now</button>
+</form>

@@ -14,6 +14,6 @@
         Task<bool> UpdateStatusAsync(long orderId, OrderStatus newStatus);
         Task ClearCartAsync(string userId);
         Task SaveAsync();
-      
+        Task UpdateOrderAsync(Order order);
     }
 }

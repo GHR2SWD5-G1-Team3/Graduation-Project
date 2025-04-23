@@ -1,4 +1,8 @@
 using BLL.Configuration;
+using Stripe;
+using CouponService = BLL.Services.Implementation.CouponService;
+using ProductService = BLL.Services.Implementation.ProductService;
+using ReviewService = BLL.Services.Implementation.ReviewService;
 
 namespace PLL
 {
@@ -18,8 +22,9 @@ namespace PLL
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 });
+            // Configure the Stripe API key
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
-            
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -55,11 +60,9 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
-
             builder.Services.AddScoped<IDataSeederService, DataSeederService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
-
             builder.Services.AddScoped<IPaymentService, PaymentService>();
 
             // Mapping

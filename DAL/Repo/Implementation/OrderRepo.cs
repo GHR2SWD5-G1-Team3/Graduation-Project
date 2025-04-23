@@ -144,7 +144,11 @@
             throw new NotImplementedException();
         }
 
-
+        public async Task UpdateOrderAsync(Order order)
+        {
+            Db.Orders.Update(order);
+            await Db.SaveChangesAsync();
+        }
 
 
         //public async Task<bool> UpdateStatusAsync(long orderId, OrderStatus newStatus)

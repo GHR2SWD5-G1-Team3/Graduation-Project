@@ -13,7 +13,7 @@ namespace BLL.Services.Implementation
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDBContext _context;
-        private readonly ILogger _logger;
+        private readonly ILogger<OrderService> _logger;
 
 
         public OrderService(
@@ -25,7 +25,7 @@ namespace BLL.Services.Implementation
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
             ApplicationDBContext context
-            , ILogger logger)
+            , ILogger<OrderService> logger)
         {
             _orderRepo = orderRepo;
             _orderDetailsRepo = orderDetailsRepo;
@@ -139,5 +139,19 @@ namespace BLL.Services.Implementation
 
             return PaginatedList<Order>.Create(allOrders.AsQueryable(), pageNumber, pageSize);
         }
+        public async Task<Order> GetOrderAsync(Expression<Func<Order,bool>>? filter =null)
+        {
+            return await _orderRepo.GetAsync(filter);
+        }
+        public async Task UpdateAsync(long orderId, string user)
+        {
+            var order = await _orderRepo.GetByIdAsync(orderId);
+            if (order != null)
+            {
+                 order.Edit(user, order.Subtotal, order.PhoneNumber, order.City, order.Street, order.PaymentMethod);
+                 await _orderRepo.UpdateOrderAsync(order);
+            }
+        }
+
     }
 }
