@@ -1,4 +1,4 @@
-﻿namespace BLL.Configuration
+﻿namespace BLL.Configration
 {
     public class EmailSettings
     {
