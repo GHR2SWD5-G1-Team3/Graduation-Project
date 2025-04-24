@@ -47,7 +47,7 @@ namespace UI.Controllers
             if (cart == null || !cart.CartProducts.Any())
             {
                 TempData["Error"] = "Your cart is empty.";
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction("Index", "CartDetails");
             }
 
             // Map cart items to CreateOrderVM using AutoMapper

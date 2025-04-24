@@ -1,11 +1,12 @@
 ﻿namespace BLL.Services.Implementation
 {
-    public class UserServices(IMapper mapper, UserManager<User> userManager,IUserRepo userRepo) : IUserServices
+    public class UserServices(IMapper mapper, UserManager<User> userManager,IUserRepo userRepo,ICartService service) : IUserServices
     {
         #region Fields
         private readonly IMapper _mapper = mapper;
         private readonly UserManager<User> _userManager = userManager;
         private readonly IUserRepo _userRepo = userRepo;
+        private readonly ICartService cartService=service;
         #endregion
         #region Implementation
         public async Task<(bool,string)> CreateAsync(AddNewUserVM newUser)
@@ -21,6 +22,7 @@
                 if (result.Succeeded) 
                 {
                     await _userManager.AddToRoleAsync(identityUser,newUser.RoleName);
+                    await cartService.AddCart(identityUser.Id);
                 }
                 return (result.Succeeded,result.ToString());
 

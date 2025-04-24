@@ -74,8 +74,9 @@ namespace BLL.Services.Implementation
         }
 
 
-        public async Task<(bool, string?)> AddCart(Cart cart)
+        public async Task<(bool, string?)> AddCart(string id)
         {
+            Cart cart = new Cart(id);
           return await cartRepo.CreateAsync(cart);
         }
 
