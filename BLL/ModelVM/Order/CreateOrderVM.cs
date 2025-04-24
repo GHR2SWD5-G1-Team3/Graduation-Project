@@ -19,9 +19,8 @@ namespace BLL.ModelVM.Order
         public string PaymentMethod { get; set; }
         public string Street { get; set; }  
 
-        public List<OrderProductVM> Products { get; set; } = new();
-        public List<DisplayCartDetailsVM> CartItems { get; set; } = new List<DisplayCartDetailsVM>();
-        public decimal Subtotal => CartItems?.Sum(item => item.TotalPrice) ?? 0;
+        public List<DisplayCartDetailsVM> CartItems { get; set; } = [];
+        public decimal Subtotal { set; get; }
 
         public string FullAddress => $"{Street}, {City}";
     }

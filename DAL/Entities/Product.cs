@@ -35,6 +35,10 @@
             DeletedOn = DateTime.Now;
             return true;
         }
+        public void soldIncreament()
+        {
+            SoldCount++;
+        }
         public bool Edit(string user,string name, string description, string imagePath, decimal unitPrice, decimal quantity, float discountPrecentage, string userId, int subCategoryId)
         {
             if (user == null) return false;

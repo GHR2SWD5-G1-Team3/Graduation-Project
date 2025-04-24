@@ -19,13 +19,13 @@
             #region Order Mappings
             // Map Cart to CreateOrderVM (for Checkout)
             CreateMap<Cart, CreateOrderVM>()
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.CartProducts.Select(cd => new OrderProductVM
+                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartProducts.Select(cd => new DisplayCartDetailsVM
                 {
                     Id = cd.ProductId,
                     Name = cd.Product.Name,
                     Quantity = cd.Quantity,
-                    UnitPrice = cd.Product.UnitPrice,
-                    Imagepath = cd.Product.ImagePath
+                    Price = cd.Price,
+                    ImagePath = cd.Product.ImagePath
                 }).ToList()))
                 .ForMember(a => a.FirstName, b => b.MapFrom(src => src.User.FirstName))
                 .ForMember(a => a.LastName, b => b.MapFrom(src => src.User.LastName));

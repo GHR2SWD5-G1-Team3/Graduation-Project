@@ -31,10 +31,7 @@ namespace PLL.Controllers
 
         private async Task<Cart> GetUserCartAsync(string userId)
         {
-            return await _context.Carts
-                .Include(c => c.CartProducts)
-                    .ThenInclude(cd => cd.Product)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+            return await _context.Carts.Include(c => c.CartProducts)  .ThenInclude(cd => cd.Product).FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
         [HttpGet]
@@ -55,7 +52,6 @@ namespace PLL.Controllers
             createOrderVM.PhoneNumber = user.PhoneNumber;
             createOrderVM.City = user.City;  // Assign the street address
             createOrderVM.PaymentMethod = "Cash"; // default payment method
-
             return View(createOrderVM);
         }
 
@@ -73,9 +69,9 @@ namespace PLL.Controllers
             }
             //var cart = await GetUserCartAsync(userId);
             var cartDetails = await _cartDetailsService.GetAllCartDetails(userId);
-            model.Products = _mapper.Map<List<OrderProductVM>>(cartDetails);
+            model.CartItems =cartDetails;
             var success = await _orderService.CreateOrderAsync(model, userId);
-            if (!success)
+            if (!success.Item1)
             {
                 TempData["Error"] = "Failed to place the order. Please try again.";
                 _logger.LogError($"Order creation failed for User {userId}. Model data: {model}");
@@ -83,7 +79,12 @@ namespace PLL.Controllers
             }
 
             TempData["Success"] = "Your order has been placed successfully!";
-            return RedirectToAction("OrderSuccess");
+            if(model.PaymentMethod== "CashOnDelivery")
+                return RedirectToAction("OrderSuccess");
+            if(model.PaymentMethod== "BankTransfer")
+                return RedirectToAction("Start", "Payment", new{orderId=success.Item2});
+            return View(model);
+
         }
 
         [HttpGet]

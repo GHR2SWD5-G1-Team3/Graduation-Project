@@ -1,4 +1,5 @@
-﻿using DAL.Repo.Implementation;
+﻿using AutoMapper.Configuration.Annotations;
+using DAL.Repo.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +15,7 @@ namespace BLL.Services.Implementation
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDBContext _context;
+        private IProductRepo _productRepo;
         //private readonly ILogger _logger;
 
 
@@ -25,7 +27,8 @@ namespace BLL.Services.Implementation
             IEmailSender emailSender,
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
-            ApplicationDBContext context
+            ApplicationDBContext context,
+            IProductRepo productRepo
             //, ILogger logger
             )
         {
@@ -37,6 +40,7 @@ namespace BLL.Services.Implementation
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            _productRepo = productRepo;
             //_logger = logger;
 
         }
@@ -100,29 +104,32 @@ namespace BLL.Services.Implementation
         //        return false;
         //    }
         //}
-        public async Task<bool> CreateOrderAsync(CreateOrderVM model, string userId)
+        public async Task<(bool,long)> CreateOrderAsync(CreateOrderVM model, string userId)
         {
             try
             {
                var order =new Order(model.Subtotal,false,false,model.PhoneNumber,model.City,model.Street,model.PaymentMethod,userId);
                var orderResult = await _orderRepo.CreateAsync(order);
                 if (!orderResult.Item1)
-                    return false;
-                foreach (var product in model.Products) 
+                    return (false,0);
+                foreach (var product in model.CartItems) 
                 {
-                    var orderDetails = new OrderDetails(product.Id, order.Id, product.Total, product.Quantity);
+                    var orderDetails = new OrderDetails(product.ProductId, order.Id, product.Price, product.Quantity);
                     var result= await _orderDetailsRepo.CreateAsync(orderDetails);
                     if (!result.Item1)
                     {
-                        return false;
+                        return (false, 0);
                     }
+                    var productdetails = await _productRepo.GetAsync(a => a.Id == product.ProductId);
+                    productdetails.soldIncreament();
+                    await _productRepo.Edit(userId, productdetails,product.ProductId);
                 }
                 await _orderRepo.ClearCartAsync(userId);
-                return true;
+                return (true,order.Id);
             }
             catch 
             {
-                return false;
+                return (false, 0);
             }
         }
         public async Task SendOrderConfirmationEmailAsync(string userEmail, long orderId)

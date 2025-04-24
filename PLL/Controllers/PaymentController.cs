@@ -31,7 +31,7 @@ namespace PLL.Controllers
 
             return View(model);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Start(long orderId)
         {
             var order = await orderService.GetOrderAsync(o=>o.Id==orderId);
