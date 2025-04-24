@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
-using BLL.Configuration;
+using BLL.Configration;
 using Microsoft.Extensions.Options;
 
 namespace BLL.Services.Implementation

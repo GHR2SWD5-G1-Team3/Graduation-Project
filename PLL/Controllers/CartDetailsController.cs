@@ -47,10 +47,10 @@ namespace PLL.Controllers
             }
 			return BadRequest("Missing Data");
 		}
-
-		public IActionResult Delete(long id)
+		[HttpPost]
+		public IActionResult Delete(long Id)
 		{
-		   _cartDetailsService.RemoveFromCart(id);
+		   _cartDetailsService.RemoveFromCart(Id);
 			return RedirectToAction("Index");
 		}
         [HttpPost]

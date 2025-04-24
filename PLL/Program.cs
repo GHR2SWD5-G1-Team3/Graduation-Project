@@ -1,4 +1,4 @@
-using BLL.Configuration;
+using BLL.Configration;
 using Stripe;
 using CouponService = BLL.Services.Implementation.CouponService;
 using ProductService = BLL.Services.Implementation.ProductService;

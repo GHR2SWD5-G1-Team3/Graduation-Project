@@ -123,6 +123,8 @@
             // Coupon Mappings
             CreateMap<Coupon, EditCouponVM>().ReverseMap();
             CreateMap<Coupon, CreateCouponVM>().ReverseMap();
+            CreateMap<Coupon, DeletedCouponVM>().ReverseMap();
+
 
             // Payment Mappings
             CreateMap<Payment, PaymentVM>().ReverseMap();
