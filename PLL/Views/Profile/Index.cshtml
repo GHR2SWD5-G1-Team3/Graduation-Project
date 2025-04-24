@@ -4,29 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles
-{
+@section Styles {
     <link href="~/css/profilestyle.css" rel="stylesheet" />
 }
 
 <div class="container profile-container py-5">
     <div class="text-center mb-4">
         <div class="mb-3">
-            <img src="~/UserPersonnalImages/@Model.Image"
-                 class="rounded-circle img-thumbnail shadow"
-                 width="130" height="130" alt="Profile Photo" />
+            <img src="~/UserPersonnalImages/@Model.Image" class="rounded-circle img-thumbnail shadow" width="130" height="130" alt="Profile Photo" />
         </div>
         <h2 class="mb-1">@Model.FirstName  @Model.LastName</h2>
         @if (Model.City != null && Model.Government != null)
         {
             <p class="text-muted"><i class="fa-solid fa-location-dot me-2"></i>@Model.City, @Model.Government</p>
-
         }
         @if (Model.IsCurrentUser)
         {
-            <button class="btn btn-success me-2"><a asp-action="Edit" asp-controller="User" asp-area="" asp-route-id="@Model.Id">Edit Profile</a></button>
+            <a class="btn btn-success me-2" asp-action="Edit" asp-controller="User" asp-route-id="@Model.Id">
+                <i class="fa fa-edit me-1"></i> Edit Profile
+            </a>
         }
-        <button class="btn btn-outline-success" onclick="copyCurrentUrl()">Share Profile</button>
+        <button class="btn btn-outline-success" onclick="copyCurrentUrl()">
+            <i class="fa fa-share-alt me-1"></i> Share Profile
+        </button>
     </div>
 
     <div class="card mb-4 shadow-sm">
@@ -36,42 +36,42 @@
             <p><i class="fa-solid fa-calendar me-2 text-success"></i><strong>Joined:</strong> @Model.CreatedAt</p>
         </div>
     </div>
-    @* Products Section *@
+
     <section class="mb-5">
-        <h4 class="mb-4"><i class="fa-solid fa-box-open me-2 text-success"></i>Products</h4>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            @if (Model.MyProducts != null && Model.MyProducts.Any())
+        <h4 class="mb-4 d-flex align-items-center">
+            <i class="fa-solid fa-box-open text-success me-2"></i> <span>Products</span>
+        </h4>
+        <div class="row g-3">
+            @if (Model.MyProducts?.Any() == true)
             {
                 foreach (var product in Model.MyProducts)
                 {
-                    <div class="col position-relative">
-                        <div class="card h-100 shadow-sm card-hover">
-                            @* Heart icon only visible if current user is viewing their own profile *@
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm position-relative">
                             @if (Model.IsCurrentUser)
                             {
                                 <div class="position-absolute top-0 end-0 p-2">
-                                    @if (Model.WishList.Any(f => f.Id == product.Id))
-                                    {
-                                        <i class="fa-solid fa-heart text-danger favorite-icon"
-                                           onclick="toggleFavorite(@product.Id, this)"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa-regular fa-heart text-danger favorite-icon"
-                                           onclick="toggleFavorite(@product.Id, this)"></i>
-                                    }
+                                    <i class="@(Model.WishList.Any(f => f.Id == product.Id) ? "fa-solid" : "fa-regular") fa-heart text-danger favorite-icon"
+                                       onclick="toggleFavorite(@product.Id, this)"></i>
                                 </div>
                             }
 
-                            <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" style="height:200px; object-fit:cover;" />
-                            <div class="card-body">
-                                <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text">@product.Description</p>
-                                <div class="d-flex justify-content-between mt-3">
-                                    <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-sm btn-outline-primary">Edit</a>
-                                    <a href="@Url.Action("Delete", "Product", new { id = product.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+                            <a href="@Url.Action("ProductDetails", "Shop", new { id = product.Id })" class="text-decoration-none text-dark">
+                                <img src="~/img/Products/@product.ImagePath" class="card-img-top img-fluid" style="height: 210px; object-fit: cover;" alt="@product.Name" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">@product.Description</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold text-success">$@product.UnitPrice.ToString("0.00") / Kg</span>
+                                        <button class="btn btn-outline-primary btn-sm add-to-cart-btn"
+                                                data-product-id="@product.Id"
+                                                data-product-price="@product.UnitPrice"
+                                                data-product-quantity="1">
+                                            <i class="fa fa-shopping-bag me-1"></i> Add to cart
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 }
@@ -83,24 +83,25 @@
         </div>
     </section>
 
-    @* Favorites Section (only for profile owner) *@
     @if (Model.IsCurrentUser)
     {
         <section>
-            <h4 class="mb-4"><i class="fa-solid fa-heart me-2 text-danger"></i>Your Favorites</h4>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                @if (Model.WishList != null && Model.WishList.Any())
+            <h4 class="mb-4 d-flex align-items-center">
+                <i class="fa-solid fa-heart text-danger me-2"></i> <span>Your Favorites</span>
+            </h4>
+            <div class="row g-3">
+                @if (Model.WishList?.Any() == true)
                 {
                     foreach (var favorite in Model.WishList)
                     {
-                        <div class="col position-relative">
-                            <div class="card h-100 shadow-sm card-hover">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm position-relative">
                                 <div class="position-absolute top-0 end-0 p-2">
                                     <i class="fa-solid fa-heart text-danger favorite-icon"
                                        onclick="toggleFavorite(@favorite.Id, this)"></i>
                                 </div>
 
-                                <img src="@favorite.ImagePath" class="card-img-top" alt="@favorite.Name" style="height:200px; object-fit:cover;" />
+                                <img src="@Url.Content("~/img/Products/" + favorite.ImagePath)" class="card-img-top img-fluid" style="height: 210px; object-fit: cover;" alt="@favorite.Name" />
                                 <div class="card-body">
                                     <h5 class="card-title">@favorite.Name</h5>
                                     <p class="card-text">@favorite.Description</p>
@@ -116,7 +117,6 @@
             </div>
         </section>
     }
-
 </div>
 
 @section Scripts {
@@ -124,7 +124,7 @@
     <script>
         function copyCurrentUrl() {
             const url = window.location.href;
-            navigator.clipboard.writeText(url).then(function () {
+            navigator.clipboard.writeText(url).then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Link Copied!',
@@ -132,10 +132,9 @@
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
+                    timer: 2000
                 });
-            }, function () {
+            }).catch(() => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -143,16 +142,19 @@
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
+                    timer: 2000
                 });
             });
-            }
-            function toggleFavorite(productId, iconElement) {
+        }
+
+        function toggleFavorite(productId, iconElement) {
             const isFavorite = iconElement.classList.contains("fa-solid");
 
-            fetch(/Favorite/Toggle/${productId}, {
-                method: "POST"
+            fetch(`/Favorite/Toggle/${productId}`, {
+                method: "POST",
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
             }).then(response => {
                 if (response.ok) {
                     iconElement.classList.toggle("fa-solid");
@@ -180,6 +182,7 @@
                 });
             });
         }
-
     </script>
+
+    @Html.AntiForgeryToken()
 }

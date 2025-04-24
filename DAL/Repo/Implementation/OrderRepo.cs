@@ -13,7 +13,7 @@
         {
             return await _context.Orders
                 .Include(o => o.OrderDetails)
-                .ThenInclude(d => d.Product)
+                .ThenInclude(d=>d.Product)
                 .FirstOrDefaultAsync(o => o.Id == orderId && !o.IsDeleted);
         }
 

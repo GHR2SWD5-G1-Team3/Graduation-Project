@@ -149,7 +149,9 @@ namespace BLL.Services.Implementation
 
         public async Task<Order?> GetOrderWithDetailsAsync(long id)
         {
-            return await _orderRepo.GetOrderWithDetailsAsync(id);
+            var result = await _orderRepo.GetOrderWithDetailsAsync(id);
+            if (result == null) return null;
+            return result;
         }
 
      

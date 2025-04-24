@@ -2,7 +2,7 @@
 using BLL.ModelVM.Order;
 using DAL.Entities;
 
-namespace UI.Controllers
+namespace PLL.Controllers
 {
     [Authorize]
     public class CheckoutController : Controller

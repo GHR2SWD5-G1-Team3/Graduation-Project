@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "OrderSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/OrderSuccessStyle.css" />
+}
+<div class="order-success-wrapper">
+    <div class="order-success-card">
+        <div class="success-icon">
+            <i class="fa fa-check-circle"></i>
+        </div>
+        <div class="success-title">Thank you for your order!</div>
+        <div class="success-message">
+            Your order has been placed successfully. You will receive a confirmation email shortly.
+        </div>
+        <div class="success-actions">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-home">
+                <i class="fa fa-home me-1"></i> Home
+            </a>
+            <a href="@Url.Action("MyOrders", "Checkout")" class="btn btn-orders">
+                <i class="fa fa-shopping-bag me-1"></i> My Orders
+            </a>
+        </div>
+    </div>
+</div>

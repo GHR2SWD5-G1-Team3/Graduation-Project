@@ -18,8 +18,8 @@
             public string UserId { get; set; }
             public string UserEmail { get; set; } // The email of the user who made the order
             public OrderStatus Status { get; set; } // Order status (Pending, Delivered, Cancelled)
-            public DateTime CreatedDate { get; set; } // Date when the order was created
-            public DateTime? UpdatedDate { get; set; } // Date when the order was last updated (nullable)
+            public DateTime CreatedAt { get; set; } // Date when the order was created
+            public DateTime? UpdatedAt { get; set; } // Date when the order was last updated (nullable)
         public List<OrderProductVM> Products { get; set; }
         public IEnumerable<OrderItemVM> OrderDetails { get; set; }
 

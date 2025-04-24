@@ -1,0 +1,61 @@
+﻿.order-success-wrapper {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    min-height: 80vh;
+    background-color: #e8f5e9; /* أخضر فاتح */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-success-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #43a047; /* أخضر أنيق */
+    margin-bottom: 20px;
+}
+
+.success-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    font-size: 18px;
+    color: #4e4e4e;
+    margin-bottom: 30px;
+}
+
+.success-actions a {
+    margin: 5px;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.btn-home {
+    background-color: #66bb6a;
+    color: white;
+}
+
+.btn-orders {
+    background-color: #388e3c;
+    color: white;
+}
+
+    .btn-home:hover,
+    .btn-orders:hover {
+        opacity: 0.9;
+    }

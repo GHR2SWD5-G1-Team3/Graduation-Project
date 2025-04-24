@@ -67,6 +67,11 @@
                                         <i class="bi bi-person-circle"></i> Profile
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Checkout" asp-action="MyOrders" asp-area="">
+                                        <i class="fas fa-map-marker-alt"></i> My Orders
+                                    </a>
+                                </li>
                                 @if (currentUser?.RoleName != "Customer")
                                 {
                                     <li>

@@ -61,11 +61,9 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
-
             builder.Services.AddScoped<IDataSeederService, DataSeederService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IPaymentService, PaymentService>();
-
             builder.Services.AddScoped<IProfileServices, ProfileServices>();
             builder.Services.AddScoped<IFavoriteProductServices, FavoriteProductServices>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();

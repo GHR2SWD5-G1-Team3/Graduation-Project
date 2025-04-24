@@ -45,17 +45,23 @@
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
                 .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.OrderDetails));
 
+
+
             // Order to OrderDetailsVM (for detailed order view)
             CreateMap<Order, OrderDetailsVM>()
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.OrderDetails.Select(od => new OrderProductVM
-                {
-                    Id = od.ProductId,
-                    Name = od.Product.Name,
-                    Quantity = od.Quantity,
-                    UnitPrice = od.Price,
-                    Imagepath = od.Product.ImagePath
-                }).ToList()));
+            .ForMember(dest => dest.TotalPrice,opt => opt.MapFrom(src => src.OrderDetails.Sum(od => (od.Price) * od.Quantity)))
+           .ForMember(dest => dest.OrderDetails,opt => opt.MapFrom(src => src.OrderDetails.Select(od => new OrderProductVM
+           {
+                     Id = od.ProductId,
+                     Name = od.Product.Name,
+                     Imagepath = od.Product.ImagePath,
+                     Quantity = od.Quantity,
+                     UnitPrice = od.Product.UnitPrice,
+                     DiscountPercentage=od.Product.DiscountPrecentage
+                    
+                     
+                 }).ToList()));
+
             #endregion
 
             // Coupon Mappings
@@ -137,9 +143,9 @@
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Quantity * od.Product.UnitPrice)));
        
 
-            CreateMap<Order, OrderDetailsVM>()
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.OrderDetails))
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Quantity * od.Product.UnitPrice)));
+            //CreateMap<Order, OrderDetailsVM>()
+            //    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails))
+            //    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Quantity * od.Product.UnitPrice)));
 
             // From OrderDetail to minimal admin display
             CreateMap<OrderDetails, OrderItemVM>()

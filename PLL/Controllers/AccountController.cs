@@ -79,6 +79,11 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
 
     }
 }
