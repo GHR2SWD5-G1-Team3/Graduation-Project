@@ -1,4 +1,6 @@
-﻿namespace PLL.Controllers
+﻿using DAL.Entities;
+
+namespace PLL.Controllers
 {
     public class UserController(IUserServices userServices, IStringLocalizer<SharedResource> stringLocalizer, IMapper mapper) : Controller
     {
@@ -68,7 +70,10 @@
                 {
                     var result = await _services.UpdateAsync(editUser);
                     if (result)
-                        return RedirectToAction("Index","Profile",editUser.Id);
+                    {
+                        var userId = editUser.Id;
+                        return RedirectToAction("Index", "Profile", new { userId });
+                    }
                     ViewBag.Massege = ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
                     return View(editUser);
                 }
@@ -88,7 +93,7 @@
             return View();
         }
 
-        // POST: UserController/Delete/5
+        // POST: UserController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id, string deletedBy)
