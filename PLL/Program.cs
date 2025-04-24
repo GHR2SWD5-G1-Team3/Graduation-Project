@@ -68,7 +68,8 @@ namespace PLL
 
             builder.Services.AddScoped<IProfileServices, ProfileServices>();
             builder.Services.AddScoped<IFavoriteProductServices, FavoriteProductServices>();
-            builder.Services.AddScoped<IDataSeederService, DataSeederService>();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 
 
             // Mapping

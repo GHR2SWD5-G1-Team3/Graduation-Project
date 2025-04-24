@@ -1,68 +1,148 @@
-﻿<!-- Our Top Sellers Start-->
+﻿
+<form id="anti-forgery-form" style="display:none;">
+	@Html.AntiForgeryToken()
+</form>
+<!-- Our Top Sellers Start-->
 <div class="container-fluid vesitable py-5">
 	<div class="container py-5">
 		<h1 class="mb-0">Our Top Sellers</h1>
-		<div class="owl-carousel vegetable-carousel justify-content-center">
-			@foreach (var product in Model.TopProducts)
-			{
-				<div class="border border-primary rounded position-relative vesitable-item overflow-hidden">
-					<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@product.Id"
-					   class="text-decoration-none text-dark d-block h-100 w-100 p-0 m-0"
-					   style="position: relative; z-index: 1;">
+		@if (Model.TopProducts != null && Model.TopProducts.Count > 0)
+		{
+			<div class="owl-carousel vegetable-carousel justify-content-center">
+				@foreach (var product in Model.TopProducts)
+				{
+					<div class="border border-primary rounded position-relative vesitable-item overflow-hidden">
+						<!-- Product Image (clickable) -->
+						<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@product.Id"
+						   class="text-decoration-none text-dark d-block">
+							<div class="vesitable-img">
+								<img src="~/img/Products/@product.ImagePath" style="width:258px;height:207px" class="img-fluid w-100 rounded-top" alt="@product.Name">
+							</div>
+						</a>
 
-						<div class="vesitable-img">
-							<img src="~/img/Products/@product.ImagePath" style="width:258px;height:207px" class="img-fluid w-100 rounded-top" alt="@product.Name">
-						</div>
-
+						<!-- Category Badge -->
 						<div class="text-white bg-primary px-3 py-1 rounded position-absolute"
 							 style="top: 10px; right: 10px;">
 							@product.CategoryName
 						</div>
 
-						<div class="p-4 rounded-bottom">
-							<h4>@product.Name</h4>
-							<p>@product.Description</p>
-
-							<div class="d-flex flex-column align-items-start gap-2">
-								<p class="text-dark fs-5 fw-bold mb-0">
+						<!-- Product Info (clickable) -->
+						<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@product.Id"
+						   class="text-decoration-none text-dark d-block">
+							<div class="p-4 rounded-bottom">
+								<h4>@product.Name</h4>
+								<p>@product.Description</p>
+								<p class="text-dark fs-5 fw-bold mb-3">
 									$@product.UnitPrice.ToString("0.00") / kg
 								</p>
-								<button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-										data-product-id="@product.Id"
-										data-product-price="@product.UnitPrice"
-										data-product-quantity="1">
-									<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-								</button>
 							</div>
+						</a>
+
+						<!-- Add to Cart Button (separate clickable element) -->
+						<div class="px-4 pb-4">
+							<button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn w-100"
+									data-product-id="@product.Id"
+									data-product-price="@product.UnitPrice"
+									data-product-quantity="1">
+								<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+							</button>
 						</div>
-					</a>
-				</div>
-			}
-		</div>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="text-center py-5">
+				<p class="text-muted">No products found.</p>
+			</div>
+		}
 	</div>
 </div>
 <!-- Our Top Sellers End -->
-
-<!-- Banner Section Start-->
-<div class="container-fluid banner bg-secondary my-5">
-	<div class="container py-5">
+<!-- Marketplace Banner Section Start -->
+<div class="container-fluid marketplace-banner my-5 py-5" style="background: linear-gradient(135deg, #ffb524, #ffa600);">
+	<div class="container">
 		<div class="row g-4 align-items-center">
 			<div class="col-lg-6">
-				<div class="py-4">
-					<h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
-					<p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
-					<p class="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-					<a href="#" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+				<div class="py-4 text-white">
+					<h1 class="display-4 fw-bold mb-3">Sell Your Fresh Produce With Us</h1>
+					<p class="lead mb-4">Join the fastest growing online marketplace for fruits and vegetables. Reach thousands of customers and grow your business.</p>
+
+					<div class="d-flex flex-wrap gap-3 mb-4">
+						<div class="d-flex align-items-center me-4">
+							<i class="fas fa-check-circle fa-2x me-2"></i>
+							<span>0% Commission for First 3 Months</span>
+						</div>
+						<div class="d-flex align-items-center">
+							<i class="fas fa-check-circle fa-2x me-2"></i>
+							<span>Easy Inventory Management</span>
+						</div>
+					</div>
+
+					<div class="d-flex flex-column flex-sm-row gap-3">
+						<a href="#seller-registration" class="btn btn-light btn-lg rounded-pill px-4 py-2 fw-bold">
+							Register as Seller <i class="fas fa-arrow-right ms-2"></i>
+						</a>
+						<a href="mailto:sales@yourdomain.com?subject=Marketplace%20Inquiry" class="btn btn-outline-light btn-lg rounded-pill px-4 py-2">
+							Contact Our Team
+						</a>
+					</div>
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<div class="position-relative">
-					<img src="img/baner-1.png" class="img-fluid w-100 rounded" alt="">
-					<div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute" style="width: 140px; height: 140px; top: 0; left: 0;">
-						<h1 style="font-size: 100px;">1</h1>
-						<div class="d-flex flex-column">
-							<span class="h2 mb-0">50$</span>
-							<span class="h4 text-muted mb-0">kg</span>
+				<div class="position-relative p-4">
+					<div class="bg-white rounded-4 shadow-lg p-4">
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="p-3 border rounded-3 h-100">
+									<div class="d-flex align-items-center mb-3">
+										<div style="--bs-green: green;background: orange;" class="bg-opacity-10 rounded-circle p-3 me-3">
+											<i class="fas fa-store text-success fs-4"></i>
+										</div>
+										<h3 class="h5 mb-0">500+ Sellers</h3>
+									</div>
+									<p class="text-muted small">Trusted local farmers and distributors</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="p-3 border rounded-3 h-100">
+									<div class="d-flex align-items-center mb-3">
+										<div style="--bs-green: green;background: orange;" class="bg-opacity-10 rounded-circle p-3 me-3">
+											<i class="fas fa-shopping-basket text-success fs-4"></i>
+										</div>
+										<h3 class="h5 mb-0">10,000+ Buyers</h3>
+									</div>
+									<p class="text-muted small">Active customers monthly</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="p-3 border rounded-3 h-100">
+									<div class="d-flex align-items-center mb-3">
+										<div style="--bs-green: green;background: orange;" class="bg-opacity-10 rounded-circle p-3 me-3">
+											<i class="fas fa-truck text-success fs-4"></i>
+										</div>
+										<h3 class="h5 mb-0">Fast Delivery</h3>
+									</div>
+									<p class="text-muted small">Same-day delivery options</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="p-3 border rounded-3 h-100">
+									<div class="d-flex align-items-center mb-3">
+										<div style="--bs-green: green;background: orange;" class="bg-opacity-10 rounded-circle p-3 me-3">
+											<i class="fas fa-headset text-success fs-4"></i>
+										</div>
+										<h3 class="h5 mb-0">24/7 Support</h3>
+									</div>
+									<p class="text-muted small">Dedicated account managers</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="position-absolute top-0 start-0 translate-middle">
+						<div class="text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: #81c408;">
+							<span class="fw-bold">NEW</span>
 						</div>
 					</div>
 				</div>
@@ -70,7 +150,7 @@
 		</div>
 	</div>
 </div>
-<!-- Banner Section End -->
+<!-- Marketplace Banner Section End -->
 
 <!-- Bestsaler Product Start -->
 <div class="container-fluid py-5">
@@ -79,37 +159,50 @@
 			<h1 class="display-4">Bestseller Products</h1>
 			<p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
 		</div>
-		<div class="row g-4">
-			@foreach (var item in Model.BestProducts)
-			{
-				<div class="col-lg-6 col-xl-4">
-					<div class="p-4 rounded bg-light">
-						<div class="row align-items-center">
-							<div class="col-6">
-								<img src="~/img/Products/@item.ImagePath" style="width:142px;height:142px" class="img-fluid rounded-circle w-100" alt="@item.Name">
-							</div>
-							<div class="col-6">
-								<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@item.Id" class="h5">Organic @item.Name </a>
-								<div class="d-flex my-3">
-									<i class="fas fa-star text-primary"></i>
-									<i class="fas fa-star text-primary"></i>
-									<i class="fas fa-star text-primary"></i>
-									<i class="fas fa-star text-primary"></i>
-									<i class="fas fa-star"></i>
+		@if (Model.BestProducts != null && Model.BestProducts.Count > 0)
+		{
+			<div class="row g-4">
+				@foreach (var item in Model.BestProducts)
+				{
+					<div class="col-lg-6 col-xl-4">
+						<div class="p-4 rounded bg-light">
+							<div class="row align-items-center">
+								<div class="col-6">
+									<img src="~/img/Products/@item.ImagePath" style="width:142px;height:142px" class="img-fluid rounded-circle w-100" alt="@item.Name">
 								</div>
-								<h4 class="mb-3">@item.UnitPrice $</h4>
-								<button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
-										data-product-id="@item.Id"
-										data-product-price="@item.UnitPrice"
-										data-product-quantity="1">
-									<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-								</button>
+								<div class="col-6">
+									<a asp-controller="Shop" asp-action="ProductDetails" asp-route-id="@item.Id" class="h5">Organic @item.Name</a>
+									<div class="d-flex my-3">
+										<i class="fas fa-star text-primary"></i>
+										<i class="fas fa-star text-primary"></i>
+										<i class="fas fa-star text-primary"></i>
+										<i class="fas fa-star text-primary"></i>
+										<i class="fas fa-star"></i>
+									</div>
+									<h4 class="mb-3">@item.UnitPrice $</h4>
+									<button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+											data-product-id="@item.Id"
+											data-product-price="@item.UnitPrice"
+											data-product-quantity="1">
+										<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			}
-		</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="text-center py-5">
+				<p class="text-muted">No bestseller products found.</p>
+			</div>
+		}
 	</div>
 </div>
-<!-- Bestsaler Product End -->
+<!--Best seller product end-->
+@section Scripts {
+	<script src="~/js/site.js"></script>
+}
+

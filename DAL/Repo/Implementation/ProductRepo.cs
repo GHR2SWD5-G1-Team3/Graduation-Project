@@ -47,13 +47,20 @@
         // top products
         public async Task<List<Product>> TopProducts(int count)
         {
-            return await Db.Products
-                .Where(p => p.SoldCount > 0) 
+            try
+            {
+                return await Db.Products
+                .Where(p => p.SoldCount != null && p.SoldCount > 0)
                 .Include(p => p.SubCategory)
                 .ThenInclude(s => s.Category)
                 .OrderByDescending(p => p.SoldCount)
                 .Take(count)
                 .ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         //best products(high rated)
         public async Task<List<Product>> BestProducts(int count)

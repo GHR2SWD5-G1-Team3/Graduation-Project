@@ -1,51 +1,50 @@
-﻿//Cart and favourite start
+﻿
+// Cart and favorite functionality
 console.log("site.js loaded successfully!");
+
 document.addEventListener('DOMContentLoaded', function () {
-        updateCartCounter();
-        document.querySelectorAll('.favourite-btn').forEach(btn => {
-            // Check initial state from server if needed
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
+    updateCartCounter();
 
-                this.classList.toggle('active');
+    // Favorite button functionality
+    document.querySelectorAll('.favourite-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
 
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-solid');
-                icon.classList.toggle('fa-regular');
+            this.classList.toggle('active');
 
-                const productId = this.getAttribute('data-product-id');
-                fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
-            });
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-solid');
+            icon.classList.toggle('fa-regular');
+
+            const productId = this.getAttribute('data-product-id');
+            fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
         });
+    });
 
-        document.querySelectorAll('.card-clickable').forEach(card => {
-            card.addEventListener('click', function () {
-                const url = this.getAttribute('data-url');
-                if (url) {
-                    window.location.href = url;
-                }
-            });
-        });
+    // Modified click handler with proper event propagation control
+    document.body.addEventListener('click', async function (e) {
+        // Handle Add to Cart button clicks
+        const cartBtn = e.target.closest('.add-to-cart-btn');
+        if (cartBtn) {
+            e.preventDefault();
+            e.stopImmediatePropagation(); // Crucial for preventing card click
 
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+            const productId = parseInt(cartBtn.getAttribute('data-product-id'));
+            const price = parseFloat(cartBtn.getAttribute('data-product-price'));
+            const quantity = parseInt(cartBtn.getAttribute('data-product-quantity')) || 1;
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
 
-                const productId = parseInt(this.getAttribute('data-product-id'));
-                const price = parseFloat(this.getAttribute('data-product-price'));
-                const quantity = parseFloat(this.getAttribute('data-product-quantity'));
-                const token = document.querySelector('#anti-forgery-form input[name="__RequestVerificationToken"]').value;
-                const productName = this.closest('.fruite-item').querySelector('h4').textContent;
+            // Find product name - works with multiple product card structures
+            const productCard = cartBtn.closest('.fruite-item, .border-primary, .rounded, .p-4');
+            const productName = productCard ? productCard.querySelector('h4')?.textContent : 'Product';
 
-                const originalHtml = this.innerHTML;
-                this.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Adding...';
-                this.disabled = true;
+            const originalHtml = cartBtn.innerHTML;
+            cartBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Adding...';
+            cartBtn.disabled = true;
 
-                console.log({ productId, price, quantity });
-
-                fetch('/Cart/AddToCart', {
+            try {
+                const response = await fetch('/Cart/AddToCart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -56,68 +55,69 @@ document.addEventListener('DOMContentLoaded', function () {
                         price,
                         quantity
                     })
-                })
-                 .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: `${productName} added to cart!`,
-                                showConfirmButton: false,
-                                timer: 2000,
-                                toast: true,
-                                background: '#f8f9fa',
-                                backdrop: false,
-                                width: '400px'
-                            });
-                            
-                            updateCartCounter();
-                        } else {
-                            // Show SweetAlert for login prompt
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: data.message,
-                                showConfirmButton: true,
-                                background: '#f8f9fa',
-                                width: '400px'
-                            });
- 
-                        }
-                        this.innerHTML = originalHtml;
-                        this.disabled = false;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        this.innerHTML = originalHtml;
-                        this.disabled = false;
+                });
 
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'Failed to add to cart',
-                            text: 'Please try again',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            toast: true
-                        });
+                const data = await response.json();
+                if (data.success) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${productName} added to cart!`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        toast: true,
+                        background: '#f8f9fa',
+                        backdrop: false,
+                        width: '400px'
                     });
-            });
-        });
-        function updateCartCounter() {
-            fetch('/Cart/GetCartItemCount')
-                .then(response => response.json())
-                .then(data => {
-                    const cartCounter = document.querySelector('#cart-counter');
-                    if (cartCounter) {
-                        cartCounter.textContent = data.count;
-                    }
-                })
-                .catch(error => console.error('Error updating cart counter:', error));
+                    updateCartCounter();
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: data.message,
+                        showConfirmButton: true,
+                        background: '#f8f9fa',
+                        width: '400px'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Failed to add to cart',
+                    text: 'Please try again',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    toast: true
+                });
+            } finally {
+                cartBtn.innerHTML = originalHtml;
+                cartBtn.disabled = false;
+            }
+            return; // Exit early to prevent card click handling
         }
 
+        // Handle product card clicks (for navigation)
+        const card = e.target.closest('.card-clickable');
+        if (card && !e.target.closest('.add-to-cart-btn, .favourite-btn')) {
+            const url = card.getAttribute('data-url');
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    });
 
- });
-
-//Carr and favourit end
+    // Cart counter update function
+    async function updateCartCounter() {
+        try {
+            const response = await fetch('/Cart/GetCartItemCount');
+            const data = await response.json();
+            const cartCounter = document.querySelector('#cart-counter');
+            if (cartCounter) cartCounter.textContent = data.count;
+        } catch (error) {
+            console.error('Error updating cart counter:', error);
+        }
+    }
+});
