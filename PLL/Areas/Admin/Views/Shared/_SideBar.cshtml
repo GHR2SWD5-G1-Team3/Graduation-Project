@@ -171,6 +171,11 @@
                                         <span class="sub-item">Deleted Products</span>
                                     </a>
                                 </li>
+                                <li class="@Html.IsActive("TrashBin", "DeletedCoupons")">
+                                    <a asp-action="DeletedCoupons" asp-controller="TrashBin">
+                                        <span class="sub-item">Deleted Coupons</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

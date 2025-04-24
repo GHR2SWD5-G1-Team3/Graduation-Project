@@ -1,12 +1,12 @@
-﻿@model List<DeletedProductsVM>
+﻿@model List<DeletedCouponVM>
 
 <div class="card">
     <div class="card-header">
         <div class="d-flex align-items-center">
-            <h4 class="card-title">All Deleted Products</h4>
-            <a asp-action="Create" asp-controller="Product" class="btn btn-primary btn-round ms-auto">
+            <h4 class="card-title">All Deleted Coupons</h4>
+            <a asp-action="Create" asp-controller="Coupon" class="btn btn-primary btn-round ms-auto">
                 <i class="fa fa-plus"></i>
-                Add New Product
+                Add New Coupon
             </a>
         </div>
     </div>
@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Code</th>
                         <th>Created By</th>
                         <th>Deleted On</th>
                         <th>Deleted By</th>
@@ -31,12 +31,12 @@
                         {
                             <tr>
                                 <td class="align-middle">@index</td>
-                                <td class="align-middle">@product.Name</td>
-                                <td class="align-middle">@product.UserName</td>
+                                <td class="align-middle">@product.Code</td>
+                                <td class="align-middle">@product.CreatedBy</td>
                                 <td class="align-middle">@product.DeletedOn</td>
                                 <td class="align-middle">@product.DeletedBy</td>
                                 <td class="align-middle">
-                                    <a asp-action="Restore" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-rotate-left"></i></a>
+                                    <a asp-action="Restore" asp-controller="Coupon" asp-route-id="@product.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-rotate-left"></i></a>
                                     <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)"><i class="fa-solid fa-trash-can"></i></a>
                                 </td>
                             </tr>
@@ -71,7 +71,7 @@
             if (result.isConfirmed) {
                 // Make an AJAX request to delete the product
                 $.ajax({
-                    url: '@Url.Action("PermentDelete", "Product")/' + productId,
+                    url: '@Url.Action("PermentDelete", "Coupon")/' + productId,
                     type: 'POST',
                     success: function () {
                         Swal.fire(

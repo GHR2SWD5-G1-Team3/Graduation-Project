@@ -1,4 +1,6 @@
-﻿namespace BLL.Services.Implementation
+﻿using DAL.Repo.Implementation;
+
+namespace BLL.Services.Implementation
 {
     public class CouponService(ICouponRepo couponRepo) : ICouponService
     {
@@ -72,6 +74,22 @@
             catch
             {
                 return null;
+            }
+        }
+        public async Task<bool> PermentDelete(Coupon target)
+        {
+            try
+            {
+                var product = await couponRepo.GetAsync(p => p.Id == target.Id);
+                if (product == null)
+                    return false;
+                var result = await couponRepo.PermentDelete(product);
+                if (!result) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }
