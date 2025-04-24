@@ -29,26 +29,13 @@
                             <tbody>
                                 @if (Model.Any())
                                 {
-                                    @foreach (var user in Model)
+                                    @foreach (var roleVm in Model)
                                     {
                                         <tr>
-                                            <td>@user.Name</td>
+                                            <td>@roleVm.Name</td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button"
-                                                            data-bs-toggle="tooltip"
-                                                            title=""
-                                                            class="btn btn-link btn-primary btn-lg"
-                                                            data-original-title="Edit Task">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                            data-bs-toggle="tooltip"
-                                                            title=""
-                                                            class="btn btn-link btn-danger"
-                                                            data-original-title="Remove">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
+                                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteRole('@roleVm.Id')"><i class="fa fa-times"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -64,5 +51,45 @@
         </div>
     </div>
 </div>
+@Html.AntiForgeryToken() 
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function deleteRole(roleId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Role")' + '?roleid=' + roleId,
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function () {
+                        Swal.fire(
+                            'Deleted!',
+                            'The role has been deleted successfully.',
+                            'success'
+                        ).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'There was an issue deleting the role.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>

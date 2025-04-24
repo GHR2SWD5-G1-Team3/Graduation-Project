@@ -198,4 +198,10 @@
   <data name="Addnewseller" xml:space="preserve">
     <value>Add new Vendor</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="updatevendor" xml:space="preserve">
+    <value>Update Vendor</value>
+  </data>
 </root>

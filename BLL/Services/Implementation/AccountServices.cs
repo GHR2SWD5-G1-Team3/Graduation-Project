@@ -13,7 +13,7 @@
             try
             {
                 if (signUpvM.UploadImage is null)
-                    signUpvM.Image = "\\avatar.jpg";
+                    signUpvM.Image = "avater.jpg";
                 else
                     signUpvM.Image = UploadFiles.UploadFile("UserPersonnalImages", signUpvM.UploadImage);
                 var identityUser = _mapper.Map<User>(signUpvM);

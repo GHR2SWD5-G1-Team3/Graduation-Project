@@ -13,7 +13,7 @@
             try
             {
                 if (newUser.UploadImage is null)
-                    newUser.Image = "\\avatar.jpg";
+                    newUser.Image = "avater.jpg";
                 else
                     newUser.Image = UploadFiles.UploadFile("UserPersonnalImages", newUser.UploadImage);
                 var identityUser = _mapper.Map<User>(newUser);
@@ -81,20 +81,17 @@
             try
             {
                 var user = await _userRepo.GetAsync(a=>a.Id==editUser.Id);
-                if(user.Image is not null)
+                string imagePath = "avatar.jpg";
+                if (user.Image is not null && editUser.UploadImage is not null && user.Image != "avatar.jpg")
                 {
                     var deleteImage = UploadFiles.RemoveFile("UserPersonnalImages", user.Image);
                     if (deleteImage == "File Not Deleted")
                     {
                         return false;
                     }
+                    imagePath = UploadFiles.UploadFile("UserPersonnalImages", editUser.UploadImage);
                 }
-                string imagePath = "\\img\\avatar.jpg";
-                if (editUser.Image is not null)
-                {
-                     imagePath = UploadFiles.UploadFile("UserPersonnalImages", editUser.Image);
-                }
-                var result =await _userRepo.UpdateAsync(editUser.EditBy,editUser.FirstName,editUser.LastName,imagePath,editUser.Phone,editUser.Address,editUser.Id);
+                var result =await _userRepo.UpdateAsync(editUser.EditBy,editUser.FirstName,editUser.LastName,imagePath,editUser.Phone,editUser.City,editUser.Government,editUser.Id);
                 return result;
             }
             catch

@@ -1,11 +1,10 @@
-﻿using BLL.ModelVM.User;
-using System.Threading.Tasks;
-
-namespace PLL.Controllers
+﻿namespace PLL.Controllers
 {
-    public class UserController(IUserServices userServices) : Controller
+    public class UserController(IUserServices userServices, IStringLocalizer<SharedResource> stringLocalizer, IMapper mapper) : Controller
     {
         private readonly IUserServices _services = userServices;
+        private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+        private readonly IMapper _mapper = mapper;
         // GET: UserController
         public async Task<ActionResult> Index()
         {
@@ -48,9 +47,14 @@ namespace PLL.Controllers
         }
 
         // GET: UserController/Edit/5
-        public ActionResult Edit()
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            if (string.IsNullOrEmpty(id)) return NotFound();
+
+            var user = await _services.GetAsync(a => a.Id == id);
+            if (user == null) return NotFound();
+            var edit = _mapper.Map<EditUser>(user);
+            return View(edit);
         }
 
         // POST: UserController/Edit/5
@@ -63,14 +67,17 @@ namespace PLL.Controllers
                 if (ModelState.IsValid)
                 {
                     var result = await _services.UpdateAsync(editUser);
-                    if(result)
-                       return RedirectToAction(nameof(Index));
+                    if (result)
+                        return RedirectToAction("Index","Profile",editUser.Id);
+                    ViewBag.Massege = ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
                     return View(editUser);
-                }   
-                    return View(editUser);
+                }
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(editUser);
             }
             catch
             {
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
                 return View(editUser);
             }
         }

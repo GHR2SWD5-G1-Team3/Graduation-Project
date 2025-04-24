@@ -31,7 +31,7 @@ namespace BLL.Services.Implementation
         public async Task<List<DisplayCartDetailsVM>> GetAllCartDetails(string UserId)
         {
             var cart = await cartRepo.GetAsync(a => a.UserId == UserId);
-            var cartDetails = await _cartDetailsRepo.GetAllAsync(a => a.CartId == cart.Id);
+            var cartDetails = await _cartDetailsRepo.GetAllAsync(a => a.CartId == cart.Id,a=>a.Product);
             return _mapper.Map<List<DisplayCartDetailsVM>>(cartDetails);
         }
 

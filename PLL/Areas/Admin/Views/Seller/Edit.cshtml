@@ -1,0 +1,63 @@
+﻿@model EditUser
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">@SharedLocalizer["updatevendor"]:</div>
+                    </div>
+                    <form asp-controller="Seller" asp-action="Edit" enctype="multipart/form-data" method="post" asp-area="Admin">
+                        <div class="card-body">
+                            @if (ViewBag.Massege != null)
+                            {
+                                <div class="card">
+                                    <div class="card-body">
+                                        @ViewBag.Massege
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["FirstName"]:</label>
+                                        <input type="text" placeholder="@SharedLocalizer["fnameplace"]" asp-for="FirstName" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["LastName"]:</label>
+                                        <input type="text" placeholder="@SharedLocalizer["fnameplace"]" asp-for="LastName" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["phone"]:</label>
+                                        <input type="tel" placeholder="@SharedLocalizer["phoneplace"]" asp-for="Phone" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["city"]:</label>
+                                        <input type="text" placeholder="@SharedLocalizer["cityplace"]" asp-for="City" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["government"]:</label>
+                                        <input type="text" placeholder="@SharedLocalizer["governmentplace"]" asp-for="Government" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@SharedLocalizer["userimage"]:</label>
+                                        <input type="file" asp-for="UploadImage" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="card-action" style="align-self:center">
+                                    <input type="submit" value="@SharedLocalizer["Update"]" class="btn btn-success">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -131,10 +131,11 @@
         }
         public async Task ClearCartAsync(string userId)
         {
-            var cartItems = await Db.Carts.Where(c => c.UserId == userId).ToListAsync();
+            var user = await Db.Users.FirstOrDefaultAsync(a => a.Id == userId);
+            var cartItems = await Db.CartDetails.Where(c => c.CartId == user.Cart.Id).ToListAsync();
             foreach (var item in cartItems)
             {
-                Db.Carts.Remove(item);
+                Db.CartDetails.Remove(item);
             }
             await Db.SaveChangesAsync();
         }

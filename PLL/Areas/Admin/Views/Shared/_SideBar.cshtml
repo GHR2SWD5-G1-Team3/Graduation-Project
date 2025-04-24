@@ -80,9 +80,9 @@
                                         <span class="sub-item">Details</span>
                                     </a>
                                 </li>
-                                <li class="@Html.IsActive("Seller", "Index")">
-                                    <a asp-action="Index" asp-controller="Seller">
-                                        <span class="sub-item">Sellers</span>
+                                <li class="@Html.IsActive("Role", "UserRoles")">
+                                    <a asp-action="UserRoles" asp-controller="Role">
+                                        <span class="sub-item">User Roles</span>
                                     </a>
                                 </li>
                             </ul>
@@ -112,12 +112,12 @@
                         <div class="collapse @Html.IsExpandedGroup("Order")" id="maps">
                             <ul class="nav nav-collapse">
                                 <li class="@Html.IsActive("Order", "Index")">
-                                    <a asp-action="Index" asp-controller="Order">
+                                    <a asp-area="Admin" asp-action="Index" asp-controller="Order">
                                         <span class="sub-item">All Orders</span>
                                     </a>
                                 </li>
                                 <li class="@Html.IsActive("Order", "Details")">
-                                    <a asp-action="Details" asp-controller="Order">
+                                    <a>
                                         <span class="sub-item">Order Details</span>
                                     </a>
                                 </li>

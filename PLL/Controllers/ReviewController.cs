@@ -2,12 +2,13 @@
 
 namespace PLL.Controllers
 {
+    [Authorize]
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public ReviewController(IReviewService reviewService, UserManager<IdentityUser> userManager)
+        public ReviewController(IReviewService reviewService, UserManager<User> userManager)
         {
             _reviewService = reviewService;
             _userManager = userManager;
@@ -20,25 +21,18 @@ namespace PLL.Controllers
             return View(reviews);
         }
 
-        public IActionResult AddReview(long productId)
-        {
-            return View(new ReviewViewModel { ProductId = productId });
-        }
-
         [HttpPost]
-        public async Task<IActionResult> AddReview(ReviewViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddReview(string comment,int rate,long productId)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var userId = _userManager.GetUserId(User);
-            var result = await _reviewService.AddReviewAsync(model.Comment, model.Rate, userId, model.ProductId);
-
+           
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _reviewService.AddReviewAsync(comment, rate, user.Id, productId);
             if (result)
-                return RedirectToAction("ProductReviews", new { productId = model.ProductId });
+                return RedirectToAction("ProductDetails","Shop", new { id = productId });
 
             ModelState.AddModelError("", "Failed to add review.");
-            return View(model);
+            return View();
         }
 
         public async Task<IActionResult> EditReview(long id)

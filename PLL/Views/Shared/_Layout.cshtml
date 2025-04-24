@@ -41,6 +41,14 @@
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/js/script.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartCounter();
+        });
+
+    </script>
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

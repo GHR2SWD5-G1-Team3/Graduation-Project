@@ -303,8 +303,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiscountPrecentage")
-                        .HasColumnType("int");
+                    b.Property<float>("DiscountPrecentage")
+                        .HasColumnType("real");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
@@ -405,6 +405,12 @@ namespace DAL.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -732,6 +738,9 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedOn")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");

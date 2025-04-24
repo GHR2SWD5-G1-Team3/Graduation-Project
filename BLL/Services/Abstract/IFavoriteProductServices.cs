@@ -3,10 +3,10 @@
     public interface IFavoriteProductServices
     {
         //Command
-        (bool, string?) Create(string userId, long productId);
-        (bool, string?) Delete(long id, string deletedBy);
+        Task<(bool, string?)> Create(string userId, long productId);
+        Task<(bool, string?)> Delete(string userId, long productId);
         //Query
-       // DisplayOrderVM Get(Expression<Func<Order, bool>>? filter = null);
-       // List<DisplayOrderVM> GetAll(Expression<Func<Order, bool>>? filter = null);
+        Task<bool> IsFavouriteAsync(string userId, long productId);
+        Task<List<DisplayProductInShopVM>> GetUserFavourites(string userId);
     }
 }

@@ -1,19 +1,17 @@
-﻿using BLL.ModelVM.User;
-using BLL.Services.Implementation;
-using Microsoft.Extensions.Localization;
-using System.Threading.Tasks;
+﻿using DAL.Entities;
 
 namespace PLL.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class SellerController(IUserServices userServices, IStringLocalizer<SharedResource> stringLocalizer) : Controller
+    public class SellerController(IUserServices userServices, IStringLocalizer<SharedResource> stringLocalizer,IMapper mapper) : Controller
     {
         private readonly IUserServices _userServices = userServices;
         private readonly IStringLocalizer<SharedResource> SharedLocalizer = stringLocalizer;
+        private readonly IMapper _mapper = mapper;
 
         // GET: SellerController
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> Index()
         {
             var displayCustomers = await _userServices.GetAllAsync(a => a.RoleName == "Vendor" && a.IsDeleted == false);
             return View(displayCustomers);
@@ -42,7 +40,7 @@ namespace PLL.Areas.Admin.Controllers
                 { 
                     var result= await _userServices.CreateAsync(newUserVM);
                     if(result.Item1)
-                        return RedirectToAction(nameof(IndexAsync));
+                        return RedirectToAction(nameof(Index));
                     ViewBag.Massege = result.Item2;
                     return View(newUserVM);
                 }
@@ -57,23 +55,39 @@ namespace PLL.Areas.Admin.Controllers
         }
 
         // GET: SellerController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            if (string.IsNullOrEmpty(id)) return NotFound();
+
+            var user = await _userServices.GetAsync(a=>a.Id==id);
+            if (user == null) return NotFound();
+            var edit = _mapper.Map<EditUser>(user);
+            return View(edit);
         }
 
         // POST: SellerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(EditUser editUser)
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                if (ModelState.IsValid)
+                {
+                    var result = await _userServices.UpdateAsync(editUser);
+                    if (result)
+                        return RedirectToAction(nameof(Index));
+                    ViewBag.Massege = ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                    return View(editUser);
+                }
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(editUser);
             }
             catch
             {
-                return View();
+                ViewBag.Massege = SharedLocalizer["SomeThingWrong"];
+                return View(editUser);
             }
         }
 
@@ -86,16 +100,11 @@ namespace PLL.Areas.Admin.Controllers
         // POST: SellerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string userId)
         {
-            try
-            {
-                return RedirectToAction(nameof(IndexAsync));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _userServices.DeleteAsync(userId, "Admin");
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

@@ -169,12 +169,12 @@
                             </div>
                         </div>
                     </div>
-                    <form action="#">
+                    <form asp-action="AddReview" asp-controller="Review" asp-route-productId=@Model.Id method="post">
                         <h4 class="mb-5 fw-bold">Leave a Reply</h4>
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="border-bottom rounded my-4">
-                                    <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
+                                    <textarea name="comment"class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -182,14 +182,16 @@
                                     <div class="d-flex align-items-center">
                                         <p class="mb-0 me-3">Please rate:</p>
                                         <div class="d-flex align-items-center" style="font-size: 12px;">
-                                            <i class="fa fa-star text-muted"></i>
+                                         <input type="range" name="rate" max="5" min="1" />
+                                            @*    <i class="fa fa-star text-muted"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i> *@
                                         </div>
                                     </div>
-                                    <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+
+                                    <input type="submit" value="Post Comment" class="btn border border-secondary text-primary rounded-pill px-4 py-3"/>
                                 </div>
                             </div>
                         </div>

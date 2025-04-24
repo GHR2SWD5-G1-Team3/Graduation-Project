@@ -33,7 +33,6 @@ namespace PLL
             //Scopped Repos
             builder.Services.AddScoped<IOrderRepo,OrderRepo>();
             builder.Services.AddScoped<IOrderDetailsRepo, OrderDetailsRepo>();
-
             builder.Services.AddScoped<ICartDetailsRepo, CartDetailsRepo>();
 			builder.Services.AddScoped<IAppliedCouponRepo, AppliedCouponRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
@@ -46,7 +45,9 @@ namespace PLL
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>(); 
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<IRoleRepo, RoleRepo>();
+            builder.Services.AddScoped<IFavoriteProductRepo, FavoriteProductRepo>();
             builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
+            builder.Services.AddScoped<IFavoriteProductRepo, FavoriteProductRepo>();
             // Scoped Services
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<ICartDetailsService, CartDetailsService>();
@@ -60,13 +61,19 @@ namespace PLL
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IRoleServices, RoleServices>();
+
             builder.Services.AddScoped<IDataSeederService, DataSeederService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
-            builder.Services.AddScoped<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+            builder.Services.AddScoped<IProfileServices, ProfileServices>();
+            builder.Services.AddScoped<IFavoriteProductServices, FavoriteProductServices>();
+            builder.Services.AddScoped<IDataSeederService, DataSeederService>();
+
 
             // Mapping
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+
             // Identity
             builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = false)
                             .AddEntityFrameworkStores<ApplicationDBContext>()
@@ -114,12 +121,15 @@ namespace PLL
             });
             // Define the route for areas
             app.MapControllerRoute(
-                name: "areas", // A name for the route (you can customize it)
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+     name: "areas",
+     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+ );
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
+
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

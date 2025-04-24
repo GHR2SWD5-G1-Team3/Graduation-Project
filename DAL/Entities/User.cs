@@ -43,12 +43,13 @@ namespace DAL.Entities
             DeletedOn = DateTime.Now;
             return true;
         }
-        public bool Edit(string? editBy, string fName, string lName,string? imagepath, string address, string phone)
+        public bool Edit(string? editBy, string fName, string lName,string? imagepath, string city, string government, string phone)
         {
             FirstName = fName;
             LastName = lName;
             Image = imagepath;
-            Address = address;
+            City = city;
+            Government = government;
             Phone = phone;
             ModifiedBy = editBy;
             ModifiedOn = DateTime.Now;
