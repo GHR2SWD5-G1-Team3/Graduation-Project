@@ -89,9 +89,9 @@ namespace BLL.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<DisplayCartDetailsVM> GetCarts(Expression<Func<Cart, bool>>? filter = null)
+        public async Task<Cart> GetCarts(Expression<Func<Cart, bool>>? filter = null)
         {
-            throw new NotImplementedException();
+            return await cartRepo.GetAsync(filter);
         }
 
         public async Task<bool> RemoveCart(int cartId)
