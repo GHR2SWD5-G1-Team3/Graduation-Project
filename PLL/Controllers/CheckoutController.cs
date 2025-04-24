@@ -106,7 +106,7 @@ namespace PLL.Controllers
         public async Task<IActionResult> Details(long id)
         {
             var order = await _orderService.GetOrderWithDetailsAsync(id);
-            if (order == null || order.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (order == null)
                 return NotFound();
 
             // Map Order and OrderDetails to a ViewModel for display

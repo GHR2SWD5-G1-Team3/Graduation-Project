@@ -87,9 +87,9 @@
                                         </tr>
                                     }
                                     <tr class="table-light fw-bold">
-                                        <input type="hidden" asp-for="Subtotal" value="@total" />
+                                        <input type="hidden" asp-for="Subtotal" value="@(total+3)" />
                                         <td colspan="4" class="text-end">Total:</td>
-                                        <td>@total.ToString("C")</td>
+                                        <td>@((total+3).ToString("C"))</td>
                                     </tr>
                                 }
                             </tbody>

@@ -31,12 +31,12 @@
                             <tr>
                                 <td class="align-middle">@index</td>
                                 <td class="align-middle">@order.Id</td>
-                                <td class="align-middle">@order.UserEmail</td>
-                                <td class="align-middle">@order.TotalPrice.ToString("C")</td>
+                                <td class="align-middle">@order.UserId</td>
+                                <td class="align-middle">@order.Subtotal.ToString("C")</td>
                                 <td class="align-middle">@order.Status.ToString()</td>
                                 <td class="align-middle">@order.CreatedAt.ToString("g")</td>
                                 <td class="align-middle">
-                                    <a asp-action="Details" asp-controller="Order" asp-route-id="@order.Id"  class="btn btn-info btn-sm">
+                                    <a asp-action="Details" asp-controller="Checkout" asp-route-id="@order.Id" asp-area="" class="btn btn-info btn-sm">
                                         <i class="fa fa-eye"></i> View Details
                                     </a>
                                 </td>

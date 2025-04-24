@@ -11,12 +11,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Customers</h4>
-                        <button class="btn btn-primary btn-round ms-auto"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addRowModal">
+                        <a class="btn btn-primary btn-round ms-auto" asp-action="Create" asp-controller="Customer" asp-area="Admin">
                             <i class="fa fa-plus"></i>
                             Add Customer
-                        </button>
+                      </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,7 +35,7 @@
                                     @foreach(var user in Model)
                                     {
                                         <tr>
-                                            <td><img src="~/UserPersonnalImages/@user.Image" alt="Alternate Text" /></td>
+                                            <td><img src="~/UserPersonnalImages/@user.Image" style="height:30px; width:30px" alt="Alternate Text" /></td>
                                             <td>@user.FirstName</td>
                                             <td>@user.LastName</td>
                                             <td>

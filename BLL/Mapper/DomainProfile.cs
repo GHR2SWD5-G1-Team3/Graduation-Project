@@ -43,7 +43,9 @@
                 }).ToList()))
                 .ForMember(dest => dest.Subtotal, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
-                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.OrderDetails));
+                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.OrderDetails))
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
+
 
 
 
@@ -111,7 +113,7 @@
             CreateMap<CreateProductVM, Product>().ReverseMap();
             CreateMap<DisplayCartDetailsVM, Cart>().ReverseMap();
             CreateMap<Product, ProductDetailsVM>()
-                .ForMember(dest => dest.ReviewRate, opt => opt.MapFrom(src => src.Reviews.Average(a => a.Rate)));
+                    .ForMember(dest => dest.ReviewRate, opt => opt.MapFrom( src => src.Reviews.Any() ? src.Reviews.Average(a => a.Rate)  : 0.0));
 
             CreateMap<EditProductVM, Product>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId ?? string.Empty)) // Default to empty string if null

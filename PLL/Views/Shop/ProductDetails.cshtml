@@ -9,6 +9,9 @@
         <li class="breadcrumb-item active text-white">Shop Detail</li>
     </ol>
 </div>
+<form id="anti-forgery-form" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
 <!-- Single Page Header End -->
 <!-- Single Product Start -->
 <div class="container-fluid pt-5 mt-5">
@@ -41,21 +44,14 @@
                             }
                         </div>
                         <p class="mb-4">@Model.Description</p>
-                        <div class="input-group quantity mb-5" style="width: 100px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+
+                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                            data-product-id="@Model.Id"
+                            data-product-price="@Model.UnitPrice">
+                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                    </button>
                     </div>
+              
                     <div class="col-lg-12">
                         <nav>
                             <div class="nav nav-tabs mb-3">
@@ -255,4 +251,45 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle Plus Button
+            document.querySelectorAll(".btn-plus").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const input = this.closest(".quantity").querySelector(".quantity-input");
+                    let value = parseInt(input.value) || 1;
+                    input.value = value + 1;
+                });
+            });
+
+            // Handle Minus Button
+            document.querySelectorAll(".btn-minus").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const input = this.closest(".quantity").querySelector(".quantity-input");
+                    let value = parseInt(input.value) || 1;
+                    if (value > 1) input.value = value - 1;
+                });
+            });
+
+            // Handle Add to Cart Click
+            document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const productId = this.dataset.productId;
+                    const productPrice = this.dataset.productPrice;
+                    const quantity = this.closest("div").querySelector(".quantity-input").value;
+
+                    console.log("Adding to cart:", {
+                        productId,
+                        productPrice,
+                        quantity
+                    });
+
+                    // TODO: Send this info to your backend/cart service via AJAX or form
+                });
+            });
+        });
+    </script>
+    <script src="~/js/site.js"></script>
+}
 <!-- Single Product End -->
