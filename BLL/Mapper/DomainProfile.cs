@@ -26,7 +26,10 @@
                     Quantity = cd.Quantity,
                     UnitPrice = cd.Product.UnitPrice,
                     Imagepath = cd.Product.ImagePath
-                }).ToList()));
+                }).ToList()))
+                .ForMember(a => a.FirstName, b => b.MapFrom(src => src.User.FirstName))
+                .ForMember(a => a.LastName, b => b.MapFrom(src => src.User.LastName));
+
 
             // Order to DisplayOrderVM (display order summary)
             CreateMap<Order, DisplayOrderVM>()
@@ -39,7 +42,7 @@
                     Imagepath = od.Product.ImagePath
                 }).ToList()))
                 .ForMember(dest => dest.Subtotal, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Price * od.Quantity)))
                 .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.OrderDetails));
 
             // Order to OrderDetailsVM (for detailed order view)
@@ -59,7 +62,14 @@
             CreateMap<dynamic, Coupon>();
 
             // CartDetails Mappings
-            CreateMap<DisplayCartDetailsVM, CartDetails>().ReverseMap();
+            CreateMap<CartDetails, DisplayCartDetailsVM>()
+                .ForMember(a=>a.ImagePath,b=>b.MapFrom(src=>src.Product.ImagePath));
+            CreateMap<DisplayCartDetailsVM, OrderProductVM>()
+                .ForMember(a => a.Id, b => b.MapFrom(src => src.ProductId))
+                .ForMember(a => a.Quantity, b => b.MapFrom(src => src.Quantity))
+                .ForMember(a => a.Imagepath, b => b.MapFrom(src => src.ImagePath))
+                .ForMember(a => a.Name, b => b.MapFrom(src => src.Name))
+                .ForMember(a => a.UnitPrice, b => b.MapFrom(src => src.Price));
 
             #region Category Mappings
             CreateMap<Category, CategoryVM>()
@@ -94,7 +104,9 @@
 
             CreateMap<CreateProductVM, Product>().ReverseMap();
             CreateMap<DisplayCartDetailsVM, Cart>().ReverseMap();
-            CreateMap<ProductDetailsVM, Product>().ReverseMap();
+            CreateMap<Product, ProductDetailsVM>()
+                .ForMember(dest => dest.ReviewRate, opt => opt.MapFrom(src => src.Reviews.Average(a => a.Rate)));
+
             CreateMap<EditProductVM, Product>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId ?? string.Empty)) // Default to empty string if null
                 .ReverseMap();
@@ -110,22 +122,6 @@
             CreateMap<Payment, PaymentVM>().ReverseMap();
             CreateMap<CreatePaymentVM, Payment>().ReverseMap();
 
-            #region Cart Mappings
-            CreateMap<CartDetails, DisplayCartDetailsVM>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Product.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product.ImagePath))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Quantity * src.Product.UnitPrice));
-
-            CreateMap<DisplayCartDetailsVM, CartDetails>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
-            #endregion
-
             // From OrderDetail to full display product info
             CreateMap<OrderDetails, OrderProductVM>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id))
@@ -138,7 +134,7 @@
             // From Order to VMs that need full product list
             CreateMap<Order, DisplayOrderVM>()
                 .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.OrderDetails))
-                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Quantity * od.Product.UnitPrice))));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OrderDetails.Sum(od => od.Quantity * od.Product.UnitPrice)));
        
 
             CreateMap<Order, OrderDetailsVM>()

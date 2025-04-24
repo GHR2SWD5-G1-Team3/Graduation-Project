@@ -18,10 +18,10 @@
             if (addedQuantity <= 0) return;
             Quantity += addedQuantity;
         }
-        public void Edit(decimal quantity, decimal Price, string productName)
+        public void Edit(decimal quantity, decimal price, string productName)
         {
             Quantity = quantity;
-            Price = Price;
+            Price = price;
             Name = productName;
         }
     }

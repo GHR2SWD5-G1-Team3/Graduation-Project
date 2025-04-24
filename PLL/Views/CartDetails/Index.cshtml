@@ -30,7 +30,7 @@
                         <tr>
                             <th scope="row">
                                 <div class="d-flex align-items-center">
-                                    <img src=@item.ImageUrl class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    <img src="~/img/Products/@item.ImagePath" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                 </div>
                             </th>
                             <td>
@@ -80,7 +80,7 @@
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">$@ViewData["Total"]</p>
                         </div>
-                    <form action="/Checkout" method="post">
+                    <form asp-action="Index" asp-controller="Checkout" method="get">
                         @foreach (var item in Model)
                         {
                             <input type="hidden" name="CartItems[@item.Name].name" value="@item.ProductId" />

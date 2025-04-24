@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace BLL.ModelVM.Product
+﻿namespace BLL.ModelVM.Product
 {
     public class ProductDetailsVM
     {

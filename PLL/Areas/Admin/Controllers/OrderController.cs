@@ -23,10 +23,10 @@ namespace PLL.Areas.Admin.Controllers
 
         // Admin view for all orders
         [HttpGet]
-        public async Task<IActionResult> MyOrders()
+        public async Task<IActionResult> Index()
         {
             var orders = await _orderService.GetAllOrdersAsync(1, 50); // Paginate and fetch orders for admin view
-            var orderVMs = _mapper.Map<IEnumerable<DisplayOrderVM>>(orders);
+            var orderVMs = _mapper.Map<List<DisplayOrderVM>>(orders);
             return View(orderVMs);
         }
 

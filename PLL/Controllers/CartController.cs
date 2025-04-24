@@ -42,7 +42,6 @@ namespace PLL.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var details = await _cartService.GetAllCarts();
             var details = await _cartService.GetAllCarts() ?? new List<DisplayCartDetailsVM>();
             return View(details);
         }

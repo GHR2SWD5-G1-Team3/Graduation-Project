@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 namespace BLL.Services.Implementation
 {
     public class CartService : ICartService
@@ -7,15 +6,14 @@ namespace BLL.Services.Implementation
         private readonly ICartRepo cartRepo;
         private readonly IMapper mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IProductService productService;
-        public CartService(ICartRepo repo , IMapper map , IHttpContextAccessor httpContextAccessor, IProductService productService)
+        private readonly IProductService _productService;
         private readonly ApplicationDBContext _context;
-        public CartService(ICartRepo repo , IMapper map , IHttpContextAccessor httpContextAccessor,ApplicationDBContext context)
+        public CartService(ICartRepo repo , IMapper map ,IProductService productService, IHttpContextAccessor httpContextAccessor,ApplicationDBContext context)
         {
             cartRepo = repo;
             mapper = map;
             _httpContextAccessor = httpContextAccessor;
-            this.productService = productService;
+            _productService = productService;
         }
         public async Task AddProductToCartAsync(string userId, long productId, decimal price, decimal quantity)
         {
@@ -36,7 +34,7 @@ namespace BLL.Services.Implementation
                 }
                 else
                 {
-                    var product = await productService.GetProductAsync(
+                    var product = await _productService.GetProductAsync(
                         p => p.Id == productId );
 
                     if (product == null) throw new Exception("Product not found");
@@ -76,8 +74,6 @@ namespace BLL.Services.Implementation
         }
 
 
-            _context = context;
-        }
         public async Task<(bool, string?)> AddCart(Cart cart)
         {
           return await cartRepo.CreateAsync(cart);
@@ -109,13 +105,10 @@ namespace BLL.Services.Implementation
             return false;
         }
 
-        }
         public async Task<List<DisplayCartDetailsVM>> GetCartItemsAsync(Expression<Func<Cart, bool>>? filter = null)
         {
             // Query the Carts table and include the related CartDetails (eager loading)
-            var carts = _context.Carts.Include(cart => cart.CartProducts)
-             .ThenInclude(cd => cd.Product)
-         .AsQueryable();
+            var carts = _context.Carts.Include(cart => cart.CartProducts).ThenInclude(cd => cd.Product) .AsQueryable();
 
             // Apply the filter if provided
             if (filter != null)
@@ -130,7 +123,7 @@ namespace BLL.Services.Implementation
                 {
                     Name = cd.Product.Name,
                     Price = cd.Product.UnitPrice,
-                    Quantity = cd.Quantity
+                    Quantity = (int)cd.Quantity
                 })
                 .ToListAsync();
 

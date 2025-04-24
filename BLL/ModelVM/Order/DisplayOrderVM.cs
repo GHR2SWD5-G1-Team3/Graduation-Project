@@ -6,8 +6,9 @@
             public long ProductId { get; set; }
             public string? Name { get; set; }
             public decimal Price { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal Subtotal { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal Subtotal { get; set; }
+            public decimal TotalPrice { get; set; }
             public bool IsPaied { get; set; }
             public bool IsDelivered { get; set; }
             public string PhoneNumber { get; set; }
@@ -15,9 +16,7 @@
             public string Street { get; set; }
             public string PaymentMethod { get; set; }
             public string UserId { get; set; }
-        public decimal TotalPrice => Price * Quantity;
-        public string? ImageUrl { get; set; }
-        public string UserEmail { get; set; } // The email of the user who made the order
+            public string UserEmail { get; set; } // The email of the user who made the order
             public OrderStatus Status { get; set; } // Order status (Pending, Delivered, Cancelled)
             public DateTime CreatedDate { get; set; } // Date when the order was created
             public DateTime? UpdatedDate { get; set; } // Date when the order was last updated (nullable)
@@ -32,6 +31,6 @@
         public decimal Quantity { get; set; }
         public decimal UnitPrice { get; set; }
     }
-
+    
 
 }

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BLL.ModelVM.Order.DisplayOrderVM>
+﻿@using BLL.ModelVM.Order
+@model List<DisplayOrderVM>
 
 <div class="card">
     <div class="card-header">
@@ -35,14 +36,8 @@
                                 <td class="align-middle">@order.Status.ToString()</td>
                                 <td class="align-middle">@order.CreatedDate.ToString("g")</td>
                                 <td class="align-middle">
-                                    <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-info btn-sm">
+                                    <a asp-action="Details" asp-controller="Order" asp-route-id="@order.Id"  class="btn btn-info btn-sm">
                                         <i class="fa fa-eye"></i> View Details
-                                    </a>
-                                    <a asp-action="Edit" asp-route-id="@order.Id" class="btn btn-warning btn-sm">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteOrder(@order.Id)">
-                                        <i class="fa fa-times"></i> Delete
                                     </a>
                                 </td>
                             </tr>

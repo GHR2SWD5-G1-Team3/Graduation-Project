@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal total = 0;
 }
 
 <!-- Checkout Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
-        <form asp-action="PlaceOrder" asp-controller="Order" method="post">
+        <form asp-action="Index" asp-controller="Checkout" method="post">
             <div class="row g-5">
                 <div class="col-md-12 col-lg-6 col-xl-7">
                     <div class="row">
@@ -68,29 +69,30 @@
                                     <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if (Model.CartItems == null || !Model.CartItems.Any())
-                                         {
-                                        <p>Your cart is empty.</p>
-                                           }
-                                         else
-                                            {
-                                @foreach (var item in Model.CartItems)
+                            <tbody>                                
+                                @if (Model.Products == null || !Model.Products.Any())
                                 {
-                                    <tr>
+                                    <p>Your cart is empty.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model.Products)
+                                    {
+                                        total += item.Total;
+                                        <tr>
                                         <td>
-                                            <img src="@item.ImageUrl" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" />
+                                            <img src="~/img/Products/@item.Imagepath" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" />
                                         </td>
                                         <td class="py-5">@item.Name</td>
-                                        <td class="py-5">@item.Price.ToString("C")</td>
+                                        <td class="py-5">@item.UnitPrice.ToString("C")</td>
                                         <td class="py-5">@item.Quantity</td>
-                                        <td class="py-5">@item.TotalPrice.ToString("C")</td>
+                                        <td class="py-5">@item.Total.ToString("C")</td>
                                     </tr>
                                 }
                                 }
                                 <tr>
                                     <td colspan="4" class="text-end py-4"><strong>Total:</strong></td>
-                                    <td class="py-4">@((Model?.Subtotal ?? 0).ToString("C"))</td>
+                                    <td class="py-4">@(total.ToString("C"))</td>
 
                                 </tr>
                             </tbody>

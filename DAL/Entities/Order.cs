@@ -64,7 +64,7 @@
     {
         if (user == null) return false;
 
-        Subtotal = Subtotal;
+        Subtotal = subtotal;
         PhoneNumber = phoneNumber;
         City = city;
         Street = street;

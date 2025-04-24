@@ -16,11 +16,8 @@ namespace BLL.ModelVM.Order
         public string City { get; set; }
 
         [Required]
-        public string Street { get; set; }
-
-        [Required]
         public string PaymentMethod { get; set; }
-        public string Address { get; set; }  
+        public string Street { get; set; }  
 
         public List<OrderProductVM> Products { get; set; } = new();
         public List<DisplayCartDetailsVM> CartItems { get; set; } = new List<DisplayCartDetailsVM>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Repo.Implementation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BLL.Services.Implementation
@@ -40,66 +41,90 @@ namespace BLL.Services.Implementation
 
         }
 
+        //public async Task<bool> CreateOrderAsync(CreateOrderVM model, string userId)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByIdAsync(userId);
+        //        if (user == null) return false;
+
+        //        decimal totalPrice = model.Products.Sum(p => p.UnitPrice * p.Quantity);
+
+        //        var order = new Order(
+        //            totalPrice,
+        //            isPaied: false,
+        //            isDelivered: false,
+        //            model.PhoneNumber,
+        //            model.Street,
+        //            model.City,
+        //            model.PaymentMethod,
+        //            userId
+        //        );
+
+        //        var orderDetails = model.Products.Select(p => new OrderDetails(
+        //            productId: p.Id,
+        //            orderId: order.Id,
+        //            price: p.UnitPrice,
+        //            quantity: p.Quantity
+        //        )).ToList();
+
+        //        foreach (var detail in orderDetails)
+        //        {
+        //            order.AddOrderDetail(detail);
+        //        }
+
+        //        foreach (var detail in orderDetails)
+        //        {
+        //            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id ==1);
+        //            if (product == null || product.Quantity < detail.Quantity)
+        //                return false;
+
+        //            product.ReduceQuantity(detail.Quantity);
+        //        }
+
+        //        await _context.SaveChangesAsync(); // Ensure inventory updates are saved
+
+        //        var success = await _orderRepo.BulkCreateAsync(order, orderDetails);
+        //        if (!success) return false;
+
+        //        await _orderRepo.ClearCartAsync(userId);
+
+        //        await SendOrderConfirmationEmailAsync(user.Email, order.Id);
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // TODO: Log the exception (e.g., using ILogger)
+        //        Console.WriteLine($"[OrderService] Error while creating order: {ex.Message}");
+        //        return false;
+        //    }
+        //}
         public async Task<bool> CreateOrderAsync(CreateOrderVM model, string userId)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user == null) return false;
-
-                decimal totalPrice = model.Products.Sum(p => p.UnitPrice * p.Quantity);
-
-                var order = new Order(
-                    totalPrice,
-                    isPaied: false,
-                    isDelivered: false,
-                    model.PhoneNumber,
-                    model.City,
-                    model.Street,
-                    model.PaymentMethod,
-                    userId
-                );
-
-                var orderDetails = model.Products.Select(p => new OrderDetails(
-                    productId: p.Id,
-                    orderId: order.Id,
-                    price: p.UnitPrice,
-                    quantity: p.Quantity
-                )).ToList();
-
-                foreach (var detail in orderDetails)
+               var order =new Order(model.Subtotal,false,false,model.PhoneNumber,model.City,model.Street,model.PaymentMethod,userId);
+               var orderResult = await _orderRepo.CreateAsync(order);
+                if (!orderResult.Item1)
+                    return false;
+                foreach (var product in model.Products) 
                 {
-                    order.AddOrderDetail(detail);
-                }
-
-                foreach (var detail in orderDetails)
-                {
-                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == detail.ProductId);
-                    if (product == null || product.Quantity < detail.Quantity)
+                    var orderDetails = new OrderDetails(product.Id, order.Id, product.Total, product.Quantity);
+                    var result= await _orderDetailsRepo.CreateAsync(orderDetails);
+                    if (!result.Item1)
+                    {
                         return false;
-
-                    product.ReduceQuantity(detail.Quantity);
+                    }
                 }
-
-                await _context.SaveChangesAsync(); // Ensure inventory updates are saved
-
-                var success = await _orderRepo.BulkCreateAsync(order, orderDetails);
-                if (!success) return false;
-
                 await _orderRepo.ClearCartAsync(userId);
-
-                await SendOrderConfirmationEmailAsync(user.Email, order.Id);
-
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
-                // TODO: Log the exception (e.g., using ILogger)
-                Console.WriteLine($"[OrderService] Error while creating order: {ex.Message}");
                 return false;
             }
         }
-
         public async Task SendOrderConfirmationEmailAsync(string userEmail, long orderId)
         {
             try
@@ -129,13 +154,13 @@ namespace BLL.Services.Implementation
 
      
 
-        public async Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string? userId = null)
+        public async Task<List<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string? userId = null)
         {
             var allOrders = string.IsNullOrEmpty(userId)
                 ? await _orderRepo.GetAllAsync()
                 : await _orderRepo.GetAllByUserIdAsync(userId);
 
-            return PaginatedList<Order>.Create(allOrders.AsQueryable(), pageNumber, pageSize);
+            return allOrders;
         }
 
         public Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus status, string updatedBy)

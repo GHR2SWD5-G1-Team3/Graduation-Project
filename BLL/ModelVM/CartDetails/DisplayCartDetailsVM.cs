@@ -8,7 +8,7 @@
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         public decimal TotalPrice => Price * Quantity; 
-        public string? ImageUrl { get; set; }
+        public string? ImagePath { get; set; }
        
     }
 }
