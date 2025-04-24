@@ -71,7 +71,7 @@
             if (result.isConfirmed) {
                 // Make an AJAX request to delete the product
                 $.ajax({
-                    url: '@Url.Action("PrementDelete", "Product")/' + productId,
+                    url: '@Url.Action("PermentDelete", "Product")/' + productId,
                     type: 'POST',
                     success: function () {
                         Swal.fire(
