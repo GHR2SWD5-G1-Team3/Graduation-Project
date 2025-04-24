@@ -1,14 +1,9 @@
-﻿namespace BLL.Services.Abstract
+﻿public interface IOrderService
 {
-    public interface IOrderService
-    {
-        Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus newStatus);
-        Task<Order> GetOrderByIdAsync(long orderId);
-        Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string userId = null);
-        Task<bool> CreateOrderAsync(CreateOrderVM model, string userId);
-        Task SendOrderConfirmationEmailAsync(string userEmail, long orderId); // Ensure this method is in the interface
-
-    }
-
+    Task<bool> CreateOrderAsync(CreateOrderVM model, string userId);
+    Task<Order?> GetOrderWithDetailsAsync(long id);
+    Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus status, string updatedBy);
+    Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string? userId = null);
+    Task SendOrderConfirmationEmailAsync(string userEmail, long orderId);
 
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace DAL.Repo.Implementation
+﻿namespace DAL.Repo.Implementation
 {
     public class OrderRepo : GenericRepo<Order>, IOrderRepo
     {
@@ -14,7 +12,7 @@ namespace DAL.Repo.Implementation
         public async Task<Order?> GetOrderWithDetailsAsync(long orderId)
         {
             return await _context.Orders
-                .Include(o => o.Details)
+                .Include(o => o.OrderDetails)
                 .ThenInclude(d => d.Product)
                 .FirstOrDefaultAsync(o => o.Id == orderId && !o.IsDeleted);
         }
@@ -22,7 +20,7 @@ namespace DAL.Repo.Implementation
         public async Task<List<Order>> GetOrdersByUserAsync(string userId)
         {
             return await _context.Orders
-                .Include(o => o.Details)
+                .Include(o => o.OrderDetails)
                 .ThenInclude(d => d.Product)
                 .Where(o => o.UserId == userId && !o.IsDeleted)
                 .ToListAsync();
@@ -52,7 +50,7 @@ namespace DAL.Repo.Implementation
 
             var result = existingOrder.Edit(
                 user,
-                updatedOrder.TotalPrice,
+                updatedOrder.Subtotal,
                 updatedOrder.PhoneNumber,
                 updatedOrder.City,
                 updatedOrder.Street,
@@ -131,10 +129,22 @@ namespace DAL.Repo.Implementation
                 return false;
             }
         }
-        Task<bool> IOrderRepo.SaveAsync()
+        public async Task ClearCartAsync(string userId)
+        {
+            var cartItems = await Db.Carts.Where(c => c.UserId == userId).ToListAsync();
+            foreach (var item in cartItems)
+            {
+                Db.Carts.Remove(item);
+            }
+            await Db.SaveChangesAsync();
+        }
+
+        Task IOrderRepo.SaveAsync()
         {
             throw new NotImplementedException();
         }
+
+
 
 
         //public async Task<bool> UpdateStatusAsync(long orderId, OrderStatus newStatus)

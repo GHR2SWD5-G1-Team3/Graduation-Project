@@ -30,16 +30,22 @@ namespace DAL.DataBase
             modelBuilder.Entity<CartDetails>()
                 .Property(cd => cd.Quantity)
                 .HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<CartDetails>()
+               .Property(cd => cd.Price)
+                 .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Order>()
-                .Property(o => o.TotalPrice)
+                .Property(o => o.Subtotal)
                 .HasColumnType("decimal(18, 2)");
-
             modelBuilder.Entity<OrderDetails>()
+                .Property(o => o.Price)
+                .HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<OrderDetails>()
+
                 .Property(od => od.Quantity)
                 .HasColumnType("decimal(18, 2)");
             modelBuilder.Entity<Order>()
-                .HasMany(o => o.Details)
+                .HasMany(o => o.OrderDetails)
                    .WithOne(d => d.Order)
                    .HasForeignKey(d => d.OrderId);
 
@@ -50,6 +56,9 @@ namespace DAL.DataBase
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.UnitPrice)
+                .HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Quantity)
                 .HasColumnType("decimal(18, 2)");
 
             modelBuilder.Entity<Review>()

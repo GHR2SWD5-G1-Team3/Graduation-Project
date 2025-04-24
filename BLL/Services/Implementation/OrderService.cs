@@ -1,160 +1,146 @@
-﻿namespace BLL.Services.Implementation
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace BLL.Services.Implementation
 {
     public class OrderService : IOrderService
     {
         private readonly IOrderRepo _orderRepo;
-        private readonly IEmailSender _emailSender;
-        private readonly IUserServices _userService;
+        private readonly IOrderDetailsRepo _orderDetailsRepo;
+        private readonly ICartRepo _cartRepo;
         private readonly IMapper _mapper;
+        private readonly IEmailSender _emailSender;
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ApplicationDBContext _context;
+        //private readonly ILogger _logger;
 
-        public OrderService(IOrderRepo orderRepo, IEmailSender emailSender, IUserServices userService, IMapper mapper)
+
+        public OrderService(
+            IOrderRepo orderRepo,
+            IOrderDetailsRepo orderDetailsRepo,
+            ICartRepo cartRepo,
+            IMapper mapper,
+            IEmailSender emailSender,
+            UserManager<User> userManager,
+            IHttpContextAccessor httpContextAccessor,
+            ApplicationDBContext context
+            //, ILogger logger
+            )
         {
             _orderRepo = orderRepo;
-            _emailSender = emailSender;
-            _userService = userService;
+            _orderDetailsRepo = orderDetailsRepo;
+            _cartRepo = cartRepo;
             _mapper = mapper;
+            _emailSender = emailSender;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+            _context = context;
+            //_logger = logger;
+
         }
 
-        // Create a new order
         public async Task<bool> CreateOrderAsync(CreateOrderVM model, string userId)
         {
             try
             {
-                // Create a new Order instance, passing userId to the constructor
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null) return false;
+
+                decimal totalPrice = model.Products.Sum(p => p.UnitPrice * p.Quantity);
+
                 var order = new Order(
-                    model.TotalPrice,
-                    model.IsPaid,
-                    model.IsDelivered,
+                    totalPrice,
+                    isPaied: false,
+                    isDelivered: false,
                     model.PhoneNumber,
                     model.City,
                     model.Street,
                     model.PaymentMethod,
-                    userId  // Pass the userId to the constructor
+                    userId
                 );
 
-                // Add the order to the repository
-                var result = await _orderRepo.AddAsync(order);
-                if (result)
+                var orderDetails = model.Products.Select(p => new OrderDetails(
+                    productId: p.Id,
+                    orderId: order.Id,
+                    price: p.UnitPrice,
+                    quantity: p.Quantity
+                )).ToList();
+
+                foreach (var detail in orderDetails)
                 {
-                    // Send confirmation email after order creation
-                    await SendOrderConfirmationEmailAsync(userId, order.Id);
-                    return true;  // Return true on success
+                    order.AddOrderDetail(detail);
                 }
 
-                return false;  // Return false if creation failed
+                foreach (var detail in orderDetails)
+                {
+                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == detail.ProductId);
+                    if (product == null || product.Quantity < detail.Quantity)
+                        return false;
+
+                    product.ReduceQuantity(detail.Quantity);
+                }
+
+                await _context.SaveChangesAsync(); // Ensure inventory updates are saved
+
+                var success = await _orderRepo.BulkCreateAsync(order, orderDetails);
+                if (!success) return false;
+
+                await _orderRepo.ClearCartAsync(userId);
+
+                await SendOrderConfirmationEmailAsync(user.Email, order.Id);
+
+                return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // TODO: Log the exception (e.g., using ILogger)
+                Console.WriteLine($"[OrderService] Error while creating order: {ex.Message}");
                 return false;
             }
         }
 
-        // Update an existing order
-        public async Task<bool> UpdateOrderAsync(long id, UpdateOrderVM updateOrderVM)
-        {
-            try
-            {
-                var order = await _orderRepo.GetByIdAsync(id);
-                if (order == null)
-                {
-                    return false;
-                }
-
-                // Update the order using the Edit method (assuming this method exists in your Order class)
-                order.Edit(updateOrderVM.ModifiedBy, updateOrderVM.TotalPrice, updateOrderVM.PhoneNumber, updateOrderVM.City, updateOrderVM.Street, updateOrderVM.PaymentMethod);
-                var updateResult = await _orderRepo.SaveAsync(); // Assuming SaveAsync persists changes to the database
-
-                return updateResult;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        // Delete an existing order
-        public async Task<bool> DeleteOrderAsync(long id, string deletedBy)
-        {
-            try
-            {
-                var order = await _orderRepo.GetByIdAsync(id);
-                if (order == null)
-                {
-                    return false;
-                }
-
-                var result = order.Delete(deletedBy);
-                if (result)
-                {
-                    await _orderRepo.SaveAsync(); // Persist the deletion
-                    return true;
-                }
-
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        // Retrieve order by Id
-        public async Task<Order> GetOrderByIdAsync(long id)
-        {
-            try
-            {
-                return await _orderRepo.GetByIdAsync(id); // Returning an Order object instead of DisplayOrderVM
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        // Retrieve all orders with pagination
-        public async Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string userId = null)
-        {
-            try
-            {
-                var orders = userId == null
-                    ? await _orderRepo.GetAllAsync()
-                    : await _orderRepo.GetAllByUserIdAsync(userId);
-
-                return PaginatedList<Order>.Create(orders, pageNumber, pageSize); // Adjusted return type
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        // Send order confirmation email
         public async Task SendOrderConfirmationEmailAsync(string userEmail, long orderId)
         {
-            var order = await _orderRepo.GetByIdAsync(orderId);
-            if (order == null) return;
+            try
+            {
+                var order = await _orderRepo.GetOrderWithDetailsAsync(orderId);
+                if (order == null) return;
 
-            var subject = "Order Confirmation";
-            var body = $"Your order with ID {orderId} has been placed successfully. The total price is {order.TotalPrice:C}.";
-            await _emailSender.SendEmailAsync(userEmail, subject, body);
+                var subject = $"Order #{order.Id} Confirmation";
+                var message = $"Thank you for your order. Your order status is: {order.Status}.<br/>" +
+                              $"Total items: {order.OrderDetails?.Count}<br/>" +
+                              $"Total price: {order.OrderDetails?.Sum(od => od.Quantity * od.Price)}";
+
+                await _emailSender.SendEmailAsync(userEmail, subject, message);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log the exception (e.g., using ILogger)
+                //_logger.LogError(ex, "An error occurred while creating an order.");
+                throw new  Exception("An error occurred while creating an order.");
+            }
         }
 
-        // Update the order status (Pending, Delivered, Cancelled)
-        public async Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus newStatus)
+        public async Task<Order?> GetOrderWithDetailsAsync(long id)
         {
-            var order = await _orderRepo.GetByIdAsync(orderId);
-            if (order == null)
-            {
-                return false;
-            }
+            return await _orderRepo.GetOrderWithDetailsAsync(id);
+        }
 
-            var isUpdated = order.UpdateStatus(newStatus);
-            if (isUpdated)
-            {
-                await _orderRepo.SaveAsync(); // Assuming you have a method to commit changes in the repository
-            }
+     
 
-            return isUpdated;
+        public async Task<PaginatedList<Order>> GetAllOrdersAsync(int pageNumber, int pageSize, string? userId = null)
+        {
+            var allOrders = string.IsNullOrEmpty(userId)
+                ? await _orderRepo.GetAllAsync()
+                : await _orderRepo.GetAllByUserIdAsync(userId);
+
+            return PaginatedList<Order>.Create(allOrders.AsQueryable(), pageNumber, pageSize);
+        }
+
+        public Task<bool> UpdateOrderStatusAsync(long orderId, OrderStatus status, string updatedBy)
+        {
+            throw new NotImplementedException();
         }
     }
 }

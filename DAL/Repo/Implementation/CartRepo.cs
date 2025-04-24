@@ -1,31 +1,38 @@
-﻿namespace DAL.Repo.Implementation
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DAL.Repo.Implementation
 {
     public class CartRepo : GenericRepo<Cart>, ICartRepo
     {
         public CartRepo(ApplicationDBContext context) : base(context)
         {
         }
-        public (bool, string?) Edit(string user, Cart cart , long Id)
+        
+        public async Task AddCartItemAsync(CartDetails item)
         {
-            try
-            {
-                var Cart = Db.Carts.Where(c => c.Id == Id).FirstOrDefault();
-                if (Cart == null)
-                    return (false, "Cart Not Found in Database");
-                var result = Cart.Edit(user,Cart.UserId );
-                if (result)
-                {
-                    Db.SaveChanges();
-                    return (true, null);
-                }
-                return (false, "Please Enter User Modifier");
-
-            }
-            catch (Exception ex)
-            {
-                return (false, ex.Message);
-            }
+            await Db.CartDetails.AddAsync(item);
+            await Db.SaveChangesAsync();
         }
+
+        
+        public async Task<CartDetails?> GetCartItemAsync(long cartId, long productId)
+        {
+            return await Db.CartDetails
+            .FirstOrDefaultAsync(cd => cd.CartId == cartId && cd.ProductId == productId);
+        }
+        public async Task UpdateCartItemAsync(CartDetails item)
+        {
+            var existingItem = await Db.CartDetails
+            .FirstOrDefaultAsync(cd => cd.CartId == item.CartId && cd.ProductId == item.ProductId);
+
+            if (existingItem != null)
+            {
+                existingItem.Edit(item.Quantity, item.Price, item.Name);
+                await Db.SaveChangesAsync();
+            } 
+
+        }
+        
         public async Task<bool> DeleteById(string user, long Id)
         {
             try
@@ -36,7 +43,7 @@
                 var result = cart.Delete(user);
                 if (result)
                 {
-                   await Db.SaveChangesAsync();
+                    await Db.SaveChangesAsync();
                     return (true);
                 }
                 return (false);
@@ -46,6 +53,8 @@
                 Console.WriteLine($"Error deleting entity: {ex.Message}");
                 return false;
             }
+
         }
+
     }
 }

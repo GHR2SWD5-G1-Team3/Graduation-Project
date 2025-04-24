@@ -10,7 +10,6 @@
 </div>
 <!-- Single Page Header End -->
 
-
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
@@ -61,7 +60,11 @@
                         </li>
                     </ul>
                 </div>
-           </div>
+            </div>
+            <form id="anti-forgery-form" style="display:none;">
+                @Html.AntiForgeryToken()
+            </form>
+
             <div class="tab-content">
                 <!-- All Products Tab -->
                 <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -76,7 +79,7 @@
                                              style="cursor: pointer;">
 
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
 
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
@@ -94,9 +97,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary no-click">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,9 +121,9 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -133,9 +139,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,9 +163,9 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -171,9 +180,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,9 +204,9 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Fresh Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -210,9 +222,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,9 +246,9 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Fruits" && p.SubCategoryName == "Organic Fruits"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
                                                 <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
@@ -249,9 +264,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,20 +288,12 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Fresh Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
-                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
-                                                            data-product-id="@product.Id"
-                                                            title="Add to favorites"
-                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                        <i class="fa-regular fa-heart text-dark"></i>
-                                                    </button>
-                                                </div>
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
                                                 <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
                                                         data-product-id="@product.Id"
                                                         title="Add to favorites"
@@ -296,9 +306,12 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,24 +330,17 @@
                                 @foreach (var product in Model.Where(p => p.CategoryName == "Vegetables" && p.SubCategoryName == "Organic Vegetables"))
                                 {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("Details", "Product", new { id = product.Id })">
+                                        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })">
                                             <div class="fruite-img">
-                                                <img src="~/img/Products/@product.ImagePath" class="img-fluid w-100 rounded-top" alt="@product.Name">
+                                                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
                                             </div>
                                             <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                                    <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
-                                                    <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
-                                                            data-product-id="@product.Id"
-                                                            title="Add to favorites"
-                                                            style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                        <i class="fa-regular fa-heart text-dark"></i>
-                                                    </button>
-                                                </div>
-                                                <button class="btn p-0 border-0 bg-transparent favourite-btn"
+                                                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                                                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
                                                         data-product-id="@product.Id"
-                                                        title="Add to favorites">
-                                                    <i class="fa-regular fa-heart fs-5"></i>
+                                                        title="Add to favorites"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-heart text-dark"></i>
                                                 </button>
                                             </div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -342,27 +348,31 @@
                                                 <p>@product.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                                                            data-product-id="@product.Id"
+                                                            data-product-price="@product.UnitPrice"
+                                                            data-product-quantity="1">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 }
 
-
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 <!-- Fruits Shop End-->
-   <script>
-    // Focus function (kept from your original code)
+<!-- Search start -->
+<script>
+    // Focus function 
     function focusSearchInput() {
       const searchInput = document.getElementById('searchInput');
       searchInput.focus();
@@ -374,17 +384,17 @@
         const input = document.getElementById('searchInput').value.toLowerCase();
         const productCards = document.querySelectorAll('.fruite-item');
         let hasResults = false;
-        
+
         productCards.forEach(function(card) {
             const productName = card.querySelector('h4').textContent.toLowerCase();
             const productDescription = card.querySelector('p').textContent.toLowerCase();
             const productCategory = card.querySelector('.text-white').textContent.toLowerCase();
-            
+
             const parentCol = card.closest('.col-md-6');
-            
-            if (input === '' || 
-                productName.includes(input) || 
-                productDescription.includes(input) || 
+
+            if (input === '' ||
+                productName.includes(input) ||
+                productDescription.includes(input) ||
                 productCategory.includes(input)) {
                 parentCol.style.display = '';
                 hasResults = true;
@@ -392,11 +402,11 @@
                 parentCol.style.display = 'none';
             }
         });
-        
+
         // Handle no results message
         const resultsContainer = document.querySelector('#tab-1 .row.g-4');
         let noResultsMsg = resultsContainer.querySelector('.no-results-message');
-        
+
         if (!hasResults && input.length > 0) {
             if (!noResultsMsg) {
                 noResultsMsg = document.createElement('div');
@@ -408,26 +418,26 @@
             noResultsMsg.remove();
         }
     }
-    
+
     // Initialize all search functionality
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchInput');
-        
-        // Original blur handler (kept from your code)
+
+        // Original blur handler 
         searchInput.addEventListener('blur', () => {
             searchInput.classList.remove('focused');
         });
-        
+
         // Search as you type
         searchInput.addEventListener('input', filterProducts);
-        
+
         // Search on Enter key
         searchInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 filterProducts();
             }
         });
-        
+
         // Optional: Clear search when switching tabs
         document.querySelectorAll('.nav-link[data-bs-toggle="pill"]').forEach(tab => {
             tab.addEventListener('shown.bs.tab', function() {
@@ -437,32 +447,9 @@
         });
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.favourite-btn').forEach(btn => {
-        // Check initial state from server if needed
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            this.classList.toggle('active');
-
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-solid');
-            icon.classList.toggle('fa-regular');
-
-            const productId = this.getAttribute('data-product-id');
-            fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
-        });
-    });
-
-        document.querySelectorAll('.card-clickable').forEach(card => {
-            card.addEventListener('click', function () {
-                const url = this.getAttribute('data-url');
-                if (url) {
-                    window.location.href = url;
-                }
-            });
-        });
-    });
-</script>
+<!-- Search End-->
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
+<!-- Pagination Start-->
+<!-- Pagination End -->

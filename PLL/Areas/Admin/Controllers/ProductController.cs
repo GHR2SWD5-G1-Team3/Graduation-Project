@@ -121,5 +121,13 @@
             await productService.EditAsync(updatedProduct.Id,updatedProduct, userName);
             return RedirectToAction("Index","Product");
         }
+        public async Task<IActionResult> Restore(long id)
+        {
+            var product = await productService.GetProductAsync(p => p.Id == id);
+            if (product == null)
+                return NotFound();
+            await productService.DeleteAsync(id, User.Identity.Name);
+            return RedirectToAction("DeletedProducts", "TrashBin");
+        }
     }
 }

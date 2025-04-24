@@ -1,16 +1,31 @@
-﻿using System.IO;
-
+﻿
 namespace BLL.ModelVM.Order
 {
-    public class CreateOrderVM(decimal totalPrice, bool isPaied, bool isDelivered, string phoneNumber, string city, string street, string paymentMethod)
+    public class CreateOrderVM
     {
-        public decimal TotalPrice { get;  set; } = totalPrice;
-        public bool IsPaied { get;  set; } = isPaied;
-        public bool IsDelivered { get;  set; } = isDelivered;
-        public string PhoneNumber { get;  set; } = phoneNumber;
-        public string City { get;  set; } = city;
-        public string Street { get;  set; } = street;
-        public string PaymentMethod { get;  set; } = paymentMethod;
-        public bool IsPaid { get; internal set; }
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string Street { get; set; }
+
+        [Required]
+        public string PaymentMethod { get; set; }
+        public string Address { get; set; }  
+
+        public List<OrderProductVM> Products { get; set; } = new();
+        public List<DisplayCartDetailsVM> CartItems { get; set; } = new List<DisplayCartDetailsVM>();
+        public decimal Subtotal => CartItems?.Sum(item => item.TotalPrice) ?? 0;
+
+        public string FullAddress => $"{Street}, {City}";
     }
 }
