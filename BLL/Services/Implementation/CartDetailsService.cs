@@ -1,5 +1,6 @@
 ﻿using BLL.ModelVM.CartDetails;
 using DAL.Entities;
+using DAL.Repo.Implementation;
 
 namespace BLL.Services.Implementation
 {
@@ -38,6 +39,22 @@ namespace BLL.Services.Implementation
         public decimal GetCartPrice(List<DisplayCartDetailsVM> cartDetails)
         {
             return cartDetails.Sum(x => x.TotalPrice);
+        }
+
+        public async Task<DisplayCartDetailsVM> GetCartDetails(string userId, long productId)
+        {
+            var cart = await cartRepo.GetAsync(c=>c.UserId == userId);
+            var target =  await _cartDetailsRepo.GetAsync(cd => cd.CartId == cart.Id && cd.ProductId == productId);
+            var VM = _mapper.Map<DisplayCartDetailsVM>(target);
+            return VM;
+        }
+
+
+        public async Task UpdateAsync(DisplayCartDetailsVM cartDetailsVM)
+        {
+            var cartDetails = await _cartDetailsRepo.GetAsync(c => c.Id == cartDetailsVM.Id);
+            cartDetails.Edit(cartDetailsVM.Quantity, cartDetailsVM.Price, cartDetailsVM.Name);
+            await _cartDetailsRepo.UpdateAsync(cartDetails);
         }
     }
 }

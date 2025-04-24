@@ -7,5 +7,6 @@
         Task<List<Coupon>> GetAllCouponsAsync(Expression<Func<Coupon, bool>>? filter = null, params Expression<Func<Coupon, object>>[] includeProperty);
         Task<Coupon> GetCouponAsync(Expression<Func<Coupon, bool>>? filter = null);
         Task<bool> DeleteCouponAsync(long couponId, string userName);
+        Task<bool> PermentDelete(Coupon target);
     }
 }
