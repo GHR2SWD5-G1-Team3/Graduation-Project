@@ -35,9 +35,10 @@ namespace PLL.Controllers
         public async Task<IActionResult> Start(long orderId)
         {
             var order = await orderService.GetOrderAsync(o=>o.Id==orderId);
-            if (order == null || order.IsPaied)
+            if (order == null)
                 return NotFound();
-
+            if (order.IsPaied)
+                return RedirectToAction("Index", "Home");
             // Create Stripe Session
             var sessionUrl = await paymentService.CreateStripeSessionAsync(order.Subtotal, order.Id);
 

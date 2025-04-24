@@ -177,6 +177,7 @@ namespace BLL.Services.Implementation
             if (order != null)
             {
                  order.Edit(user, order.Subtotal, order.PhoneNumber, order.City, order.Street, order.PaymentMethod);
+                 order.ToggleIsPaied();
                  await _orderRepo.UpdateOrderAsync(order);
             }
         }

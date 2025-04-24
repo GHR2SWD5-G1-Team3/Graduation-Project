@@ -73,7 +73,10 @@
         ModifiedOn = DateTime.UtcNow;
         return true;
     }
-
+    public void ToggleIsPaied()
+    {
+        IsPaied = !IsPaied;
+    }
     public void AddOrderDetail(OrderDetails detail)
     {
         OrderDetails.Add(detail); // Uses EF-mapped collection
