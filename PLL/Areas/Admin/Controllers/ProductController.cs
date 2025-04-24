@@ -129,5 +129,21 @@
             await productService.DeleteAsync(id, User.Identity.Name);
             return RedirectToAction("DeletedProducts", "TrashBin");
         }
+        [HttpPost]
+        public async Task<IActionResult> PermentDelete(long id)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
+            var product = await productService.GetProductAsync(p => p.Id == id);
+            if (product == null)
+                return NotFound();
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            var isOwner = product.UserId == user.Id;
+            if (!isAdmin && !isOwner)
+                return Forbid();
+            await productService.PermentDelete(product);
+            return RedirectToAction("Index", "Product");
+        }
     }
 }

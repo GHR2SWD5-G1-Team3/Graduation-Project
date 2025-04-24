@@ -56,8 +56,12 @@
                 </table>
             </div>
             <div class="mt-5">
-                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+            <input type="text" id="couponCodeInput" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Enter Coupon Code" />
+            <button id="applyCouponBtn" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+
+            <div id="couponResult" class="mt-2"></div> <!-- for success/error message -->
+@*                 <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
+                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button> *@
             </div>
             <div class="row g-4 justify-content-end">
                 <div class="col-8"></div>
@@ -99,3 +103,38 @@
         </div>
     </div>
     <!-- Cart Page End -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#applyCouponBtn').on('click', function () {
+            var couponCode = $('#couponCodeInput').val();
+
+            $.ajax({
+                url: '/CartDetails/ApplyCoupon',
+                type: 'POST',
+                data: { couponCode: couponCode },
+                success: function (response) {
+                    var messageHtml = response.success
+                        ? '<span class="text-success">' + response.message + '</span>'
+                        : '<span class="text-danger">' + response.message + '</span>';
+
+                    $('#couponResult').html(messageHtml);
+
+                    if (response.success) {
+                        // Wait 1.5 seconds then reload
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                },
+                error: function () {
+                    $('#couponResult').html('<span class="text-danger">Something went wrong. Please try again.</span>');
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace PLL.Areas.Admin.Controllers
+﻿namespace PLL.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin, Vendor")]
     [Area("Admin")]

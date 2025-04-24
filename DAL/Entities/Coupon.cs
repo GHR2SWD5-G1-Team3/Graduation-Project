@@ -37,6 +37,9 @@
             ModifiedOn = DateTime.Now;
             return true;
         }
-
+        public void IncreaseUsageNumber(int newUsedNumber)
+        {
+            UsedNumber = newUsedNumber;
+        }
     }
 }

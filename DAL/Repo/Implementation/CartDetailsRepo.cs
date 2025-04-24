@@ -1,4 +1,5 @@
-﻿namespace DAL.Repo.Implementation
+﻿
+namespace DAL.Repo.Implementation
 {
     public class CartDetailsRepo : GenericRepo<CartDetails>, ICartDetailsRepo
     {
@@ -24,6 +25,12 @@
             }
             _context.CartDetails.Remove(targetItem);
             _context.SaveChanges();
+        }
+
+        public async Task UpdateAsync(CartDetails cartDetails)
+        {
+            _context.CartDetails.Update(cartDetails);
+            await _context.SaveChangesAsync();
         }
     }
 }

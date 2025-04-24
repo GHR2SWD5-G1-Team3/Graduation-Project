@@ -86,6 +86,21 @@
             var result = mapper.Map<List<DisplayProductInShopVM>>(products);
             return result;
         }
-
+        public async Task<bool> PermentDelete(Product target)
+        {
+            try
+            {
+                var product = await productRepo.GetAsync(p=>p.Id == target.Id);
+                if(product == null)
+                    return false;
+                var result = await productRepo.PermentDelete(product);
+                if(!result) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

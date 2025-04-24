@@ -109,5 +109,18 @@
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> PermentDelete(T target)
+        {
+            try
+            {
+                Db.Set<T>().Remove(target);
+                await Db.SaveChangesAsync();
+                return true;
+            } catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
