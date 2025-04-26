@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     position: 'top-end',
                     icon: 'error',
                     title: 'Failed to add to cart',
-                    text: 'Please try again',
+                    text: 'Please try again or login first',
                     showConfirmButton: false,
                     timer: 2000,
                     toast: true
