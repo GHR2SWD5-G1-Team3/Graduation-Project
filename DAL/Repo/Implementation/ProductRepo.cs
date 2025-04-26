@@ -73,6 +73,29 @@
                 .Take(count)
                 .ToListAsync();
         }
+
+        public async Task<List<Product>> GetProducts(string category, string subCategory, int page, int pageSize)
+        {
+            var query = Db.Products
+                .Include(p => p.SubCategory)
+                .Include(p => p.SubCategory.Category)
+                .Where(p => !p.IsDeleted)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(p => p.SubCategory.Category.Name == category);
+
+            if (!string.IsNullOrEmpty(subCategory))
+                query = query.Where(p => p.SubCategory.Name == subCategory);
+
+            return await query
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+
         //public async Task<int> GetAllProductsCountAsync()
         //{
         //    return await Db.Products.Where(p => p.IsDeleted == false).CountAsync();

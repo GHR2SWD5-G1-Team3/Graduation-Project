@@ -10,5 +10,7 @@
         Task<bool> PermentDelete(Product target);
         Task<List<DisplayProductInShopVM>> TopProducts();
         Task<List<DisplayProductInShopVM>> BestProducts();
+        Task<List<DisplayProductInShopVM>> GetProducts(string category, string subCategory, int page, int pageSize);
+
     }
 }

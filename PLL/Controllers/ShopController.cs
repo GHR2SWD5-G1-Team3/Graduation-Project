@@ -1,7 +1,4 @@
-﻿using BLL.ModelVM.CartDetails;
-using BLL.ModelVM.Product;
-
-namespace PLL.Controllers
+﻿namespace PLL.Controllers
 {
     public class ShopController(IProductService productService, IMapper mapper, ICartDetailsService _cartDetailsService) : Controller
     {
@@ -11,10 +8,32 @@ namespace PLL.Controllers
         
         public async Task<IActionResult> Index()
         {
-            var products = await productService.GetAllProductsAsync(filter: p => p.IsDeleted == false, p => p.SubCategory, p => p.SubCategory.Category);
-            var mappedProduct = mapper.Map<List<DisplayProductInShopVM>>(products);
-            return View(mappedProduct);
+            return View(new List<DisplayProductInShopVM>());
         }
+        [HttpGet]
+        public async Task<IActionResult> GetProductsPage(string category, string subCategory, int page = 1, int pageSize = 8)
+        {
+            var products = await productService.GetProducts(category, subCategory, page, pageSize);
+            return PartialView("_ProductCards", products);
+        }
+        [HttpGet]
+        public async Task<IActionResult> SearchProducts(string query)
+        {
+            var products = await productService.GetProducts("", "", 1, int.MaxValue); 
+            var filtered = products.Where(p =>
+                p.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                p.Description.Contains(query, StringComparison.OrdinalIgnoreCase)
+            ).ToList();
+
+            return Ok(mapper.Map<List<DisplayProductInShopVM>>(filtered));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RenderProductCards([FromBody] List<DisplayProductInShopVM> products)
+        {
+            return PartialView("_ProductCards", products);
+        }
+
         public async Task<IActionResult> ProductDetails(long id)
         {
             var product = await productService.GetProductAsync(p => p.Id == id, p => p.SubCategory, product => product.Reviews);

@@ -102,5 +102,10 @@
                 return false;
             }
         }
+        public async Task<List<DisplayProductInShopVM>> GetProducts(string category, string subCategory, int page, int pageSize)
+        {
+            var products = await productRepo.GetProducts(category, subCategory, page, pageSize);
+            return mapper.Map<List<DisplayProductInShopVM>>(products) ?? new();
+        }
     }
 }

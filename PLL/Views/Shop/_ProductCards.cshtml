@@ -1,0 +1,39 @@
+﻿@model List<DisplayProductInShopVM>
+
+@foreach (var product in Model)
+{
+    <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="rounded position-relative fruite-item card-clickable cursor-pointer"
+             data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })"
+             style="cursor: pointer;">
+
+            <div class="fruite-img">
+                <img src="~/img/Products/@product.ImagePath" style="width:261px;height:209px" class="img-fluid w-100 rounded-top" alt="@product.Name">
+            </div>
+
+            <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                <div class="text-white bg-secondary px-3 py-1 rounded">@product.CategoryName</div>
+                <button class="btn p-1 border border-dark bg-white rounded-circle favourite-btn"
+                        data-product-id="@product.Id"
+                        title="Add to favorites"
+                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-regular fa-heart text-dark"></i>
+                </button>
+            </div>
+
+            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                <h4>@product.Name</h4>
+                <p>@product.Description</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                    <p class="text-dark fs-5 fw-bold mb-0">$@product.UnitPrice.ToString("0.00") / Kg</p>
+                    <button class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart-btn"
+                            data-product-id="@product.Id"
+                            data-product-price="@product.UnitPrice"
+                            data-product-quantity="1">
+                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

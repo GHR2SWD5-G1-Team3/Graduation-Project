@@ -7,6 +7,6 @@ namespace DAL.Repo.Abstract
         Task<bool> DeleteById(string user, long id);
         Task<List<Product>> TopProducts(int count);
         Task<List<Product>> BestProducts(int count);
-
+        Task<List<Product>> GetProducts(string category, string subCategory, int page, int pageSize);
     }
 }
