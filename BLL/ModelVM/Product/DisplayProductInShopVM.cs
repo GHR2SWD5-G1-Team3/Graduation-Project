@@ -9,5 +9,6 @@
         public string ImagePath { get; set; }
         public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
+        public bool IsFavorite { get; set; }
     }
 }

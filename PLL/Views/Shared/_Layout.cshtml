@@ -27,6 +27,9 @@
 </head>
 
 <body>
+    <form id="anti-forgery-form" style="display:none;">
+        @Html.AntiForgeryToken()
+    </form>
     <partial name="~/Views/Shared/_Header.cshtml" />
         @RenderBody()
     <partial name="~/Views/Shared/_Footer.cshtml" />
@@ -42,13 +45,10 @@
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/Favourite.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            updateCartCounter();
-        });
 
-    </script>
+   
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

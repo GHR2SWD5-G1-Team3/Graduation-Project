@@ -1,11 +1,20 @@
 ﻿namespace PLL.Controllers
 {
-    public class ShopController(IProductService productService, IMapper mapper, ICartDetailsService _cartDetailsService) : Controller
+    public class ShopController : Controller
     {
-        private readonly IProductService productService = productService;
-        private readonly IMapper mapper = mapper;
-        private readonly ICartDetailsService cartDetailsService = _cartDetailsService;
-        
+        private readonly IProductService productService;
+        private readonly IMapper mapper;
+        private readonly ICartDetailsService cartDetailsService;
+        private readonly IFavoriteProductServices favoriteService;
+        private readonly UserManager<User> userManager;
+        public ShopController(IProductService productService, IMapper mapper, ICartDetailsService cartDetailsService, IFavoriteProductServices favoriteService, UserManager<User> userManager)
+        {
+            this.productService = productService;
+            this.mapper = mapper;
+            this.cartDetailsService = cartDetailsService;
+            this.favoriteService = favoriteService;
+            this.userManager = userManager;
+        }
         public async Task<IActionResult> Index()
         {
             return View(new List<DisplayProductInShopVM>());
@@ -13,8 +22,15 @@
         [HttpGet]
         public async Task<IActionResult> GetProductsPage(string category, string subCategory, int page = 1, int pageSize = 8)
         {
+            var userId = userManager.GetUserId(User);
             var products = await productService.GetProducts(category, subCategory, page, pageSize);
-            return PartialView("_ProductCards", products);
+            var favoriteProductIds = await favoriteService.GetFavoriteProductIds(userId);
+            var productVMs = mapper.Map<List<DisplayProductInShopVM>>(products);
+            foreach (var vm in productVMs)
+            {
+                vm.IsFavorite = favoriteProductIds.Contains(vm.Id);
+            }
+            return PartialView("_ProductCards", productVMs);
         }
         [HttpGet]
         public async Task<IActionResult> SearchProducts(string query)
@@ -37,8 +53,9 @@
         public async Task<IActionResult> ProductDetails(long id)
         {
             var product = await productService.GetProductAsync(p => p.Id == id, p => p.SubCategory, product => product.Reviews);
-            var relatedProducts = await productService.GetAllProductsAsync(p => p.SubCategory.Name == product.SubCategory.Name && p.Id != id, p => p.SubCategory);
-            var relatedVMs = relatedProducts.Take(10).Select(p => new RealtedProductsVM
+            var relatedProducts = await productService.GetAllProductsAsync(
+            p => p.SubCategory.Name == product.SubCategory.Name && p.Id != id &&!p.IsDeleted, p => p.SubCategory);
+            var relatedVMs = relatedProducts.Take(6).Select(p => new RealtedProductsVM
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -55,5 +72,7 @@
             var productVM = mapper.Map<ProductDetailsVM>(product);
             return View(productVM);
         }
+
+        
     }
 }

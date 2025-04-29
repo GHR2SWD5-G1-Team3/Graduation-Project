@@ -50,9 +50,12 @@
                         <div class="card h-100 shadow-sm position-relative">
                             @if (Model.IsCurrentUser)
                             {
-                                <div class="position-absolute top-0 end-0 p-2">
-                                    <i class="@(Model.WishList.Any(f => f.Id == product.Id) ? "fa-solid" : "fa-regular") fa-heart text-danger favorite-icon"
-                                       onclick="toggleFavorite(@product.Id, this)"></i>
+                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                    <button class="favourite-btn @(product.IsFavorite ? "active" : "")"
+                                            data-product-id="@product.Id"
+                                            title="@(product.IsFavorite ? "Remove from favorites" : "Add to favorites")">
+                                        <i class="@(product.IsFavorite ? "fa-solid" : "fa-regular") fa-heart"></i>
+                                    </button>
                                 </div>
                             }
 
@@ -96,11 +99,14 @@
                     {
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card h-100 shadow-sm position-relative">
-                                <div class="position-absolute top-0 end-0 p-2">
-                                    <i class="fa-solid fa-heart text-danger favorite-icon"
-                                       onclick="toggleFavorite(@favorite.Id, this)"></i>
+                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                    
+                                    <button class="favourite-btn @(favorite.IsFavorite ? "active" : "")"
+                                            data-product-id="@favorite.Id"
+                                            title="@(favorite.IsFavorite ? "Remove from favorites" : "Add to favorites")">
+                                        <i class="@(favorite.IsFavorite ? "fa-solid" : "fa-regular") fa-heart"></i>
+                                    </button>
                                 </div>
-
                                 <img src="@Url.Content("~/img/Products/" + favorite.ImagePath)" class="card-img-top img-fluid" style="height: 210px; object-fit: cover;" alt="@favorite.Name" />
                                 <div class="card-body">
                                     <h5 class="card-title">@favorite.Name</h5>

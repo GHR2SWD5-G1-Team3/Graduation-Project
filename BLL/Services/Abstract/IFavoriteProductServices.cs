@@ -8,5 +8,6 @@
         //Query
         Task<bool> IsFavouriteAsync(string userId, long productId);
         Task<List<DisplayProductInShopVM>> GetUserFavourites(string userId);
+        Task<List<long>> GetFavoriteProductIds(string userId);
     }
 }

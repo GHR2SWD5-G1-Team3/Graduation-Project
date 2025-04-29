@@ -25,7 +25,7 @@
                 MyProducts = [],
                 WishList = []
             };
-            var myproducts= await _productService.GetAllProductsAsync(a => a.UserId == user.Id);
+            var myproducts= await _productService.GetAllProductsAsync(a => a.UserId == user.Id && a.IsDeleted ==false);
             model.MyProducts=_mapper.Map<List<DisplayProductInShopVM>>(myproducts);
             if (model.IsCurrentUser)
             { 

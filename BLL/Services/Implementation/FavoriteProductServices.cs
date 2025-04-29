@@ -57,10 +57,28 @@ namespace BLL.Services.Implementation
      
         public async Task<List<DisplayProductInShopVM>> GetUserFavourites(string userId)
         {
-            var favorites = await _favoriteProductRepo.GetAllAsync(a => a.UserId == userId, a => a.Product);
-            List<DisplayProductInShopVM> displayProductsfav = _mapper.Map<List<DisplayProductInShopVM>>(favorites);
-            return displayProductsfav;
+            try
+            {
+                var favorites = await dbContext.FavoriteProducts
+                .Where(fp => fp.UserId == userId)
+                .Include(fp => fp.Product)  
+                    .ThenInclude(p => p.SubCategory)  
+                    .ThenInclude(sc => sc.Category)  
+                    .ToListAsync();
+                List<DisplayProductInShopVM> displayProductsfav = _mapper.Map<List<DisplayProductInShopVM>>(favorites);
+                return displayProductsfav;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-
+        public async Task<List<long>> GetFavoriteProductIds(string userId)
+        {
+            return await dbContext.FavoriteProducts
+                .Where(fp => fp.UserId == userId)
+                .Select(fp => fp.ProductId)
+                .ToListAsync();
+        }
     }
 }

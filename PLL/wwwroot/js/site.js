@@ -5,23 +5,6 @@ console.log("site.js loaded successfully!");
 document.addEventListener('DOMContentLoaded', function () {
     updateCartCounter();
 
-    // Favorite button functionality
-    document.querySelectorAll('.favourite-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            this.classList.toggle('active');
-
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-solid');
-            icon.classList.toggle('fa-regular');
-
-            const productId = this.getAttribute('data-product-id');
-            fetch(`/Favorite/Toggle?productId=${productId}`, { method: 'POST' });
-        });
-    });
-
     // Modified click handler with proper event propagation control
     document.body.addEventListener('click', async function (e) {
         // Handle Add to Cart button clicks

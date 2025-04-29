@@ -156,6 +156,19 @@
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice));
+            //favourite product
+            CreateMap<FavoriteProduct, DisplayProductInShopVM>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product.Description))
+            .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice))
+            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.Product.ImagePath))
+            .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(_ => true))
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Product.SubCategory.Category.Name))
+            .ForMember(dest => dest.SubCategoryName, opt => opt.MapFrom(src => src.Product.SubCategory.Name));
+
+
+
 
         }
     }
