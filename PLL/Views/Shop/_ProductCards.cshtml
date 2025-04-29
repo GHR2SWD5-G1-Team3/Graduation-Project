@@ -3,7 +3,7 @@
 @foreach (var product in Model)
 {
     <div class="col-md-6 col-lg-4 col-xl-3">
-        <div class="rounded position-relative fruite-item card-clickable cursor-pointer"
+        <div class="rounded position-relative fruite-item card-clickable cursor-pointer" style="border: 1px solid #ffb524;"
              data-url="@Url.Action("ProductDetails", "Shop", new { id = product.Id })"
              style="cursor: pointer; user-select: none;">
 
@@ -20,7 +20,7 @@
                 </button>
             </div>
 
-            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <div class="p-4 border-0 border-top-0 rounded-bottom">
                 <h4>@product.Name</h4>
                 <p>@product.Description</p>
                 <div class="d-flex justify-content-between flex-lg-wrap">
