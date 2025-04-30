@@ -22,6 +22,7 @@
                 Government = user.Government,
                 CreatedAt = user.CreatedAt,
                 IsCurrentUser = user.Id == currentUserId,
+                RoleName = user.RoleName,
                 MyProducts = [],
                 WishList = []
             };

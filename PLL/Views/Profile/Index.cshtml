@@ -36,55 +36,58 @@
             <p><i class="fa-solid fa-calendar me-2 text-success"></i><strong>Joined:</strong> @Model.CreatedAt</p>
         </div>
     </div>
-
-    <section class="mb-5">
-        <h4 class="mb-4 d-flex align-items-center">
-            <i class="fa-solid fa-box-open text-success me-2"></i> <span>Products</span>
-        </h4>
-        <div class="row g-3">
-            @if (Model.MyProducts?.Any() == true)
-            {
-                foreach (var product in Model.MyProducts)
+    @if (Model.RoleName == "Admin" || Model.RoleName == "Vendor")
+    {
+        <section class="mb-5">
+            <h4 class="mb-4 d-flex align-items-center">
+                <i class="fa-solid fa-box-open text-success me-2"></i> <span>Products</span>
+            </h4>
+            <div class="row g-3">
+                @if (Model.MyProducts?.Any() == true)
                 {
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card h-100 shadow-sm position-relative">
-                            @if (Model.IsCurrentUser)
-                            {
-                                <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
-                                    <button class="favourite-btn @(product.IsFavorite ? "active" : "")"
-                                            data-product-id="@product.Id"
-                                            title="@(product.IsFavorite ? "Remove from favorites" : "Add to favorites")">
-                                        <i class="@(product.IsFavorite ? "fa-solid" : "fa-regular") fa-heart"></i>
-                                    </button>
-                                </div>
-                            }
-
-                            <a href="@Url.Action("ProductDetails", "Shop", new { id = product.Id })" class="text-decoration-none text-dark">
-                                <img src="~/img/Products/@product.ImagePath" class="card-img-top img-fluid" style="height: 210px; object-fit: cover;" alt="@product.Name" />
-                                <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <p class="card-text">@product.Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold text-success">$@product.UnitPrice.ToString("0.00") / Kg</span>
-                                        <button class="btn btn-outline-primary btn-sm add-to-cart-btn"
+                    foreach (var product in Model.MyProducts)
+                    {
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm position-relative">
+                                @if (Model.IsCurrentUser)
+                                {
+                                    <div class="position-absolute d-flex align-items-center justify-content-between w-100 px-2" style="top: 10px; left: 0; right: 0;">
+                                        <button class="favourite-btn @(product.IsFavorite ? "active" : "")"
                                                 data-product-id="@product.Id"
-                                                data-product-price="@product.UnitPrice"
-                                                data-product-quantity="1">
-                                            <i class="fa fa-shopping-bag me-1"></i> Add to cart
+                                                title="@(product.IsFavorite ? "Remove from favorites" : "Add to favorites")">
+                                            <i class="@(product.IsFavorite ? "fa-solid" : "fa-regular") fa-heart"></i>
                                         </button>
                                     </div>
-                                </div>
-                            </a>
+                                }
+
+                                <a href="@Url.Action("ProductDetails", "Shop", new { id = product.Id })" class="text-decoration-none text-dark">
+                                    <img src="~/img/Products/@product.ImagePath" class="card-img-top img-fluid" style="height: 210px; object-fit: cover;" alt="@product.Name" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@product.Name</h5>
+                                        <p class="card-text">@product.Description</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="fw-bold text-success">$@product.UnitPrice.ToString("0.00") / Kg</span>
+                                            <button class="btn btn-outline-primary btn-sm add-to-cart-btn"
+                                                    data-product-id="@product.Id"
+                                                    data-product-price="@product.UnitPrice"
+                                                    data-product-quantity="1">
+                                                <i class="fa fa-shopping-bag me-1"></i> Add to cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
-            else
-            {
-                <p class="text-muted">No products available.</p>
-            }
-        </div>
-    </section>
+                else
+                {
+                    <p class="text-muted">No products available.</p>
+                }
+            </div>
+        </section>
+    }
+    
 
     @if (Model.IsCurrentUser)
     {
@@ -153,41 +156,7 @@
             });
         }
 
-        function toggleFavorite(productId, iconElement) {
-            const isFavorite = iconElement.classList.contains("fa-solid");
-
-            fetch(`/Favorite/Toggle/${productId}`, {
-                method: "POST",
-                headers: {
-                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                }
-            }).then(response => {
-                if (response.ok) {
-                    iconElement.classList.toggle("fa-solid");
-                    iconElement.classList.toggle("fa-regular");
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: isFavorite ? 'Removed from Favorites' : 'Added to Favorites',
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                } else {
-                    throw new Error("Request failed");
-                }
-            }).catch(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Something went wrong!',
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            });
-        }
+        
     </script>
 
     @Html.AntiForgeryToken()

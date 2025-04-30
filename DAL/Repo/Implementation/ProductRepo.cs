@@ -95,11 +95,5 @@
                 .ToListAsync();
         }
 
-
-        //public async Task<int> GetAllProductsCountAsync()
-        //{
-        //    return await Db.Products.Where(p => p.IsDeleted == false).CountAsync();
-        //}
-
     }
 }
